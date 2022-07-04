@@ -1546,6 +1546,19 @@ SR_mission:
 					SET_PLAYER_CYCLE_WEAPON_BUTTON Player1 TRUE
 
 					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_PISTOL
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_PISTOL_SILENCED 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_DESERT_EAGLE 
+
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_MICRO_UZI 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_MP5 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_TEC9 
+
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_SHOTGUN 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_SAWNOFF_SHOTGUN 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_SPAS12_SHOTGUN 
+					
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_AK47 
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_M4 
 
 					IF ammo[0] > 0
  
@@ -1557,8 +1570,6 @@ SR_mission:
 						GIVE_WEAPON_TO_CHAR scplayer weapontype[0] ammo[0]
 					ENDIF
 
-					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_MICRO_UZI
-
 					IF ammo[1] > 0
 						WHILE NOT HAS_MODEL_LOADED ModelForweapontype[1]
 							REQUEST_MODEL ModelForweapontype[1]
@@ -1567,8 +1578,6 @@ SR_mission:
 						
 						GIVE_WEAPON_TO_CHAR scplayer weapontype[1] ammo[1]
 					ENDIF
-
-					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_SHOTGUN
 
 					IF ammo[2] > 0
 					   	WHILE NOT HAS_MODEL_LOADED ModelForweapontype[2]
@@ -1579,8 +1588,6 @@ SR_mission:
 						GIVE_WEAPON_TO_CHAR scplayer weapontype[2] ammo[2]
 					ENDIF
 
-					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_AK47
-					
 					IF ammo[3] > 0
 						
 						WHILE NOT HAS_MODEL_LOADED ModelForweapontype[3]

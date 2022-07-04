@@ -1990,7 +1990,7 @@ pl_stage_7:
 		LVAR_INT back_from_shooting
 		
 		IF IS_BUTTON_PRESSED current_pad BUTTON_CANCEL  // Go back to the aiming screen.
-			
+		AND shot_played = 0
 			IF triangle_is_pressed  = 0
 				m_stage = 5
 				m_goals = 0

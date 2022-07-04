@@ -219,6 +219,9 @@ wof_script: 	////////////////////////////////////////////////////////////////
 									ENDIF
 
 									IF NOT IS_CHAR_DEAD croupier 
+										IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR croupier scplayer
+											iSetCasinoPanic = 1
+										ENDIF
 										GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table 0.0 -1.0 0.0 x y z
 										IF iSetCasinoPanic = 0
 											IF LOCATE_CHAR_ON_FOOT_3D scplayer x y z 0.5 0.5 2.0 FALSE
@@ -322,6 +325,8 @@ wof_script: 	////////////////////////////////////////////////////////////////
 												ENDIF	
 											ENDIF
 										ENDIF
+									ELSE
+										iSetCasinoPanic = 1
 									ENDIF
 								ENDIF
 	

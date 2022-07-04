@@ -1736,6 +1736,10 @@ WHILE NOT IS_CHAR_DEAD scplayer
 				
 				IF IS_BUTTON_PRESSED PAD1 CIRCLE
 
+					WAIT 1000
+
+					GOSUB s7_fade_out
+
 					s7_mission = 4
 
 					CLEAR_HELP
@@ -1928,6 +1932,10 @@ WHILE NOT IS_CHAR_DEAD scplayer
 						TASK_PLAY_ANIM s7_cavalry[4] point_loop ON_LOOKERS 8.0 FALSE FALSE FALSE FALSE 4000						
 
 					ENDIF
+
+					WAIT 500
+
+					GOSUB s7_fade_in
 
 					PRINT_NOW ( SYN7_37 ) 4000 1 // ~s~Get out of the warehouse before the timer runs out
 

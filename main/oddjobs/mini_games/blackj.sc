@@ -289,12 +289,16 @@ max_bet = -99
 								IF m_stage = 1
 
 									// player triggers game
-									IF NOT IS_CHAR_DEAD croupier 
+									IF NOT IS_CHAR_DEAD croupier
+										IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR croupier scplayer
+											iSetCasinoPanic = 1
+										ENDIF
 										IF iSetCasinoPanic = 0
 											GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table 0.0 0.4 0.0 x y z
 											IF LOCATE_CHAR_ON_FOOT_3D croupier x y z 0.4 0.4 2.0 FALSE	
 												GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table 0.0 -1.5 0.0 x y z
 												IF LOCATE_CHAR_ON_FOOT_3D scplayer x y z 0.5 0.5 2.0 FALSE
+												AND CAN_PLAYER_START_MISSION player1
 													IF IS_CHAR_ON_FOOT scplayer
 														IF tri_is_pressed= 0
 															
@@ -432,6 +436,8 @@ max_bet = -99
 												help_flag = 0
 											ENDIF	
 										ENDIF
+									ELSE
+										iSetCasinoPanic = 1
 									ENDIF
 								ENDIF
 

@@ -473,15 +473,22 @@ IF startexbike_flag = 1
 			bike_txt = 1
 		ENDIF
 
-		IF TIMERB > 4000
+		IF TIMERA > 4000
 		AND bike_txt = 1
 			CLEAR_HELP
-			PRINT_HELP_FOREVER GYM1_41
+			PRINT_HELP_FOREVER GYM1_25
 			bike_txt = 2
 		ENDIF
 
 		IF TIMERB > 8000
 		AND bike_txt = 2
+			CLEAR_HELP
+			PRINT_HELP_FOREVER GYM1_41
+			bike_txt = 3
+		ENDIF
+
+		IF TIMERB > 14000
+		AND bike_txt = 3
  	        CLEAR_HELP
             bike_txt = 101
 		ENDIF
@@ -878,6 +885,8 @@ IF startexbike_flag = 1
 
 					SET_PLAYER_CONTROL player1 ON
 					SET_CHAR_COLLISION scplayer TRUE
+
+					bike_txt = 0
 
 					WHILE IS_BUTTON_PRESSED PAD1 CROSS
 						WAIT 0

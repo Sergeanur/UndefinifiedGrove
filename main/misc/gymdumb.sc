@@ -1252,7 +1252,7 @@ IF startdumbell_flag = 1
 					CLEAR_MISSION_AUDIO 4
 					DELETE_MENU main_menu_bell
                     CLEAR_HELP
-
+					dumbell_txt = 0
 					are_anims_loaded = 0
 
 				ENDIF
@@ -1295,6 +1295,7 @@ IF startdumbell_flag = 1
 			DELETE_MENU main_menu_bell
             CLEAR_HELP
 
+			dumbell_txt = 0
 			are_anims_loaded = 0
 
 		ENDIF
