@@ -446,7 +446,13 @@ none_frontend_loop://///////////////////////////////////////////////////////////
 			if menu_selection = 2//quit
 				REMOVE_TEXTURE_DICTIONARY
 				do_fade 0 fade_out
-				wait 0
+				IF IS_JAPANESE_VERSION
+					WHILE IS_BUTTON_PRESSED PAD1 CIRCLE
+						WAIT 0
+					ENDWHILE
+				ELSE
+					wait 0
+				ENDIF
 				IF IS_PLAYER_PLAYING player1
 					set_player_control player1 on
 				ENDIF

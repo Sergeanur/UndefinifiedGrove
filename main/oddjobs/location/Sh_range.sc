@@ -301,14 +301,27 @@ TERMINATE_THIS_SCRIPT	//	should never get here
 
 SR_mission:
 
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-		IF NOT SR_mission_state = 0
-			CLEAR_PRINTS
-			
-			SR_quit_range = 1
-			SR_mission_state = 20
-			SR_flag = 1
-			SR_time_check = 0
+	IF NOT IS_JAPANESE_VERSION
+		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF NOT SR_mission_state = 0
+				CLEAR_PRINTS
+				
+				SR_quit_range = 1
+				SR_mission_state = 20
+				SR_flag = 1
+				SR_time_check = 0
+			ENDIF
+		ENDIF
+	ELSE
+		IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF NOT SR_mission_state = 0
+				CLEAR_PRINTS
+				
+				SR_quit_range = 1
+				SR_mission_state = 20
+				SR_flag = 1
+				SR_time_check = 0
+			ENDIF
 		ENDIF
 	ENDIF
 
@@ -1545,7 +1558,7 @@ SR_mission:
 
 					SET_PLAYER_CYCLE_WEAPON_BUTTON Player1 TRUE
 
-					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_PISTOL
+					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_PISTOL 
 					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_PISTOL_SILENCED 
 					REMOVE_WEAPON_FROM_CHAR scplayer WEAPONTYPE_DESERT_EAGLE 
 
@@ -1587,7 +1600,7 @@ SR_mission:
 						
 						GIVE_WEAPON_TO_CHAR scplayer weapontype[2] ammo[2]
 					ENDIF
-
+					
 					IF ammo[3] > 0
 						
 						WHILE NOT HAS_MODEL_LOADED ModelForweapontype[3]

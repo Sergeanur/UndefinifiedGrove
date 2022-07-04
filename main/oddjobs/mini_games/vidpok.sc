@@ -604,12 +604,12 @@ TEXT_COLOUR_B[0] = 0
 
 TEXT_FONT[0] = 1
 TEXT_CENTRE[0] = 1 
-TEXT_EDGE[0] = 1
+TEXT_EDGE[0] = 2
 
 //GET_HUD_COLOUR HUD_COLOUR_YELLOW TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] temp_int
 
-TEXT_EDGE_R[0] = vp_yellow
-TEXT_EDGE_G[0] = vp_yellow
+TEXT_EDGE_R[0] = 0
+TEXT_EDGE_G[0] = 0
 TEXT_EDGE_B[0] = 0
 
 TEXT_SCALE_X[1] = 0.5200 
@@ -631,8 +631,8 @@ TEXT_EDGE_R[1] = vp_yellow
 TEXT_EDGE_G[1] = vp_yellow
 TEXT_EDGE_B[1] = 0
 
-TEXT_SCALE_X[2] = 0.3600 
-TEXT_SCALE_Y[2] = 1.5300 
+TEXT_SCALE_X[2] = 0.4300 
+TEXT_SCALE_Y[2] = 1.4500 
 
 //GET_HUD_COLOUR HUD_COLOUR_YELLOW TEXT_COLOUR_R[2] TEXT_COLOUR_G[2] TEXT_COLOUR_B[2] temp_int
 TEXT_COLOUR_R[2] = vp_yellow
@@ -3224,16 +3224,16 @@ vidpok_draw_hud:
 	
 	// draw lines in table  
 
-	DRAW_RECT vp_line_x[0] vp_line_y[0]	vp_line_width[0] vp_line_height[0] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255 
-	DRAW_RECT vp_line_x[1] vp_line_y[1]	vp_line_width[1] vp_line_height[1] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[2] vp_line_y[2]	vp_line_width[2] vp_line_height[2] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[3] vp_line_y[3]	vp_line_width[3] vp_line_height[3] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[4] vp_line_y[4]	vp_line_width[4] vp_line_height[4] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
+	DRAW_RECT vp_line_x[0] vp_line_y[0]	vp_line_width[0] vp_line_height[0] 200 200 0 255 
+	DRAW_RECT vp_line_x[1] vp_line_y[1]	vp_line_width[1] vp_line_height[1] 200 200 0 255 
+	DRAW_RECT vp_line_x[2] vp_line_y[2]	vp_line_width[2] vp_line_height[2] 200 200 0 255 
+	DRAW_RECT vp_line_x[3] vp_line_y[3]	vp_line_width[3] vp_line_height[3] 200 200 0 255 
+	DRAW_RECT vp_line_x[4] vp_line_y[4]	vp_line_width[4] vp_line_height[4] 200 200 0 255 
 	
-	DRAW_RECT vp_line_x[5] vp_line_y[5]	vp_line_width[5] vp_line_height[5] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[6] vp_line_y[6]	vp_line_width[6] vp_line_height[6] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[7] vp_line_y[7]	vp_line_width[7] vp_line_height[7] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
-	DRAW_RECT vp_line_x[8] vp_line_y[8]	vp_line_width[8] vp_line_height[8] TEXT_EDGE_R[0] TEXT_EDGE_G[0] TEXT_EDGE_B[0] 255
+	DRAW_RECT vp_line_x[5] vp_line_y[5]	vp_line_width[5] vp_line_height[5] 200 200 0 255 
+	DRAW_RECT vp_line_x[6] vp_line_y[6]	vp_line_width[6] vp_line_height[6] 200 200 0 255 
+	DRAW_RECT vp_line_x[7] vp_line_y[7]	vp_line_width[7] vp_line_height[7] 200 200 0 255 
+	DRAW_RECT vp_line_x[8] vp_line_y[8]	vp_line_width[8] vp_line_height[8] 200 200 0 255 
 	
 	vphud_int = 0
 	WHILE vphud_int < 5

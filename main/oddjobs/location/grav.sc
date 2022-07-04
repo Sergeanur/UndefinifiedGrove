@@ -705,7 +705,8 @@ ENDIF
 ENDIF
 
 // quit mid-game
-IF nGameState = INACTIVE
+IF nGameState = PLAYING_GAME
+OR nGameState = INACTIVE
 
 	IF IS_JAPANESE_VERSION
 		IF IS_BUTTON_PRESSED PAD1 CROSS
@@ -725,7 +726,7 @@ ENDIF
 IF nGameState = INACTIVE
 	IF grav_on_table = GAME_OVER_INIT
 		GOSUB grav_text_gosub
-		SET_TEXT_SCALE 2.0 4.0
+		SET_TEXT_SCALE 1.0 2.0
 		DISPLAY_TEXT 320.0 196.0 GR_A_5  // game over
 		GET_GAME_TIMER grav_start_time
 		grav_on_table = GAME_OVER_WAITING
@@ -733,7 +734,7 @@ IF nGameState = INACTIVE
 	
 	IF grav_on_table = GAME_OVER_WAITING
 		GOSUB grav_text_gosub
-		SET_TEXT_SCALE 2.0 4.0
+		SET_TEXT_SCALE 1.0 2.0
 		DISPLAY_TEXT 320.0 196.0 GR_A_5  // game over
 		GET_GAME_TIMER grav_end_time
 		GET_GAME_TIMER grav_end_time
@@ -872,6 +873,13 @@ mission_cleanup_grav:
 
 CLEAR_MISSION_AUDIO 4
 
+DO_FADE 0 FADE_OUT
+IF IS_JAPANESE_VERSION
+	WHILE IS_BUTTON_PRESSED PAD1 CIRCLE
+		WAIT 0
+	ENDWHILE
+ENDIF
+
 CLEAR_THIS_PRINT BUSY
 
 SHUT_ALL_CHARS_UP FALSE
@@ -888,7 +896,7 @@ IF IS_PLAYER_PLAYING player1
 		FREEZE_CHAR_POSITION scplayer FALSE
 		SET_PLAYER_CONTROL player1 ON
 	ENDIF
-	DO_FADE 1500 FADE_IN
+	DO_FADE 500 FADE_IN
 ENDIF
 
 SET_MUSIC_DOES_FADE TRUE
@@ -1031,17 +1039,34 @@ grav_checkcollision:
 				grav_temp_y = grav_plyr_y + 12.0
 				IF grav_temp_y < grav_ground_y[grav_current_plat]
 					IF grav_ground = 0
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-						OR grav_speed_y < 0.0
-							grav_temp_x = grav_ground_x[grav_current_plat] - 52.0
-							IF NOT grav_plyr_x < grav_temp_x
-								grav_temp_x = grav_ground_x[grav_current_plat] + 52.0
-								IF NOT grav_plyr_x > grav_temp_x
-									//grav_speed_x *= -0.1
-								   	grav_speed_y *= -0.1
-									grav_plyr_y = grav_ground_y[grav_current_plat]
-									grav_plyr_y -= 38.0
-									grav_ground = 1
+						IF IS_JAPANESE_VERSION
+							IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+							OR grav_speed_y < 0.0
+								grav_temp_x = grav_ground_x[grav_current_plat] - 52.0
+								IF NOT grav_plyr_x < grav_temp_x
+									grav_temp_x = grav_ground_x[grav_current_plat] + 52.0
+									IF NOT grav_plyr_x > grav_temp_x
+										//grav_speed_x *= -0.1
+										grav_speed_y *= -0.1
+										grav_plyr_y = grav_ground_y[grav_current_plat]
+										grav_plyr_y -= 38.0
+										grav_ground = 1
+									ENDIF
+								ENDIF
+							ENDIF
+						ELSE
+							IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+							OR grav_speed_y < 0.0
+								grav_temp_x = grav_ground_x[grav_current_plat] - 52.0
+								IF NOT grav_plyr_x < grav_temp_x
+									grav_temp_x = grav_ground_x[grav_current_plat] + 52.0
+									IF NOT grav_plyr_x > grav_temp_x
+										//grav_speed_x *= -0.1
+										grav_speed_y *= -0.1
+										grav_plyr_y = grav_ground_y[grav_current_plat]
+										grav_plyr_y -= 38.0
+										grav_ground = 1
+									ENDIF
 								ENDIF
 							ENDIF
 						ENDIF
@@ -1242,20 +1267,40 @@ grav_update_player:
 			grav_plyr_x = 590.0
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS   // Accelerate up.
-		
-			IF grav_ground = 1
-				grav_ground = 0
-				grav_speed_y += 4.0
+		IF NOT IS_JAPANESE_VERSION
+			IF IS_BUTTON_PRESSED PAD1 CROSS   // Accelerate up.
+			
+				IF grav_ground = 1
+					grav_ground = 0
+					grav_speed_y += 4.0
+				ENDIF
+				IF grav_speed_y < 20.0
+					grav_speed_y += 0.4
+				ENDIF
 			ENDIF
-			IF grav_speed_y < 20.0
-				grav_speed_y += 0.4
+			IF IS_BUTTON_PRESSED PAD1 SQUARE
+				IF grav_ground = 0
+					IF grav_speed_y > 0.0
+						grav_speed_y -= 0.2
+					ENDIF
+				ENDIF
 			ENDIF
-		ENDIF
-		IF IS_BUTTON_PRESSED PAD1 SQUARE
-			IF grav_ground = 0
-				IF grav_speed_y > 0.0
-					grav_speed_y -= 0.2
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CIRCLE   // Accelerate up.
+			
+				IF grav_ground = 1
+					grav_ground = 0
+					grav_speed_y += 4.0
+				ENDIF
+				IF grav_speed_y < 20.0
+					grav_speed_y += 0.4
+				ENDIF
+			ENDIF
+			IF IS_BUTTON_PRESSED PAD1 SQUARE
+				IF grav_ground = 0
+					IF grav_speed_y > 0.0
+						grav_speed_y -= 0.2
+					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
@@ -1350,11 +1395,20 @@ grav_draw_screen:
 	grav_temp_y = grav_plyr_y - grav_screen_y
     
 	IF grav_player_alive = 1
-		IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-			DRAW_SPRITE_WITH_ROTATION 12 grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
+		IF IS_JAPANESE_VERSION
+			IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+				DRAW_SPRITE_WITH_ROTATION 12 grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
+			ELSE
+				DRAW_SPRITE_WITH_ROTATION grav_buzz grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BEE_BUZZ
+			ENDIF
 		ELSE
-			DRAW_SPRITE_WITH_ROTATION grav_buzz grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
-			REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BEE_BUZZ
+			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+				DRAW_SPRITE_WITH_ROTATION 12 grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
+			ELSE
+				DRAW_SPRITE_WITH_ROTATION grav_buzz grav_temp_x grav_temp_y 48.0 48.0 grav_rotation 150 150 150 255
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BEE_BUZZ
+			ENDIF
 		ENDIF
 	ELSE
 		IF grav_player_alive = 2

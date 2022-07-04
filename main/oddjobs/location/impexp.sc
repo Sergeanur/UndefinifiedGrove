@@ -550,7 +550,7 @@ WAIT 0
 
 						PRINT_NOW IE24 5000 1  // ~s~You have successfully delivered this vehicle for export.
 												
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
 							cross_is_pressed = 1
 						ENDIF
 
@@ -563,7 +563,7 @@ WAIT 0
 					IF m_goals = 2
 						
 						IF TIMERA > 5000
-						OR IS_BUTTON_PRESSED PAD1 CROSS
+						OR IS_BUTTON_PRESSED PAD1 TRIANGLE
 							IF cross_is_pressed = 0
 								m_goals++
 							ENDIF
@@ -571,7 +571,7 @@ WAIT 0
 						
 						IF cross_is_pressed = 1
 							
-							IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+							IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
 								cross_is_pressed = 0
 							ENDIF
 						ENDIF
@@ -654,13 +654,13 @@ WAIT 0
 							ENDIF
 							SET_PLAYER_ENTER_CAR_BUTTON player1 FALSE
 							IF tri_is_pressed = 0
-								IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
 									tri_is_pressed = 1
 									impexp_mode = 1
 									GOTO impexp_main
 								ENDIF
 							ELSE
-								IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL	
+								IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE	
 									tri_is_pressed = 0
 								ENDIF
 							ENDIF

@@ -609,7 +609,13 @@ dual_frontend_loop://///////////////////////////////////////////////////////////
 				if menu_selection = 1//QUIT
 					REMOVE_TEXTURE_DICTIONARY
 					do_fade 0 fade_out
-					wait 0
+					IF IS_JAPANESE_VERSION
+						WHILE IS_BUTTON_PRESSED PAD1 CIRCLE
+							WAIT 0
+						ENDWHILE
+					ELSE
+						wait 0
+					ENDIF
 					IF IS_PLAYER_PLAYING player1
 						set_player_control player1 on
 					ENDIF
@@ -854,13 +860,24 @@ endif
 LVAR_INT left_stick_x left_stick_y
 
 //CONTROL CHECKS////
-IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-	if pad1_triangle_pressed = 1
-		pad1_triangle_pressed = 0
-		quit_game = 1
-	endif
-else
-	pad1_triangle_pressed = 1
+IF IS_JAPANESE_VERSION
+	IF IS_BUTTON_PRESSED PAD1 CROSS
+		if pad1_triangle_pressed = 1
+			pad1_triangle_pressed = 0
+			quit_game = 1
+		endif
+	else
+		pad1_triangle_pressed = 1
+	ENDIF
+ELSE
+	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		if pad1_triangle_pressed = 1
+			pad1_triangle_pressed = 0
+			quit_game = 1
+		endif
+	else
+		pad1_triangle_pressed = 1
+	ENDIF
 ENDIF
 	IF IS_BUTTON_PRESSED PAD1 DPADRIGHT
     	ship_heading +=@ 5.0
@@ -1012,30 +1029,59 @@ ENDWHILE
 
 if ship_dead_timer < game_timer
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS  // Thrusters.
+	IF NOT IS_JAPANESE_VERSION
+		IF IS_BUTTON_PRESSED PAD1 CROSS  // Thrusters.
 
-		IF ship_power > 0.2
-		OR ship_power = 0.2
-			//THIS TURNS A HEADING IN DEGREES INTO A VECTOR
-			SIN ship_heading x
-			COS ship_heading y
+			IF ship_power > 0.2
+			OR ship_power = 0.2
+				//THIS TURNS A HEADING IN DEGREES INTO A VECTOR
+				SIN ship_heading x
+				COS ship_heading y
 
-			//ADD THE FORCE OF THE THRUSTERS TO THE TOTAL FORCES ACTING ON THE SHIP
-			x *= -20000.0
-			y *= 20000.0
-			ship_forces_x += x
-			ship_forces_y += y
-			draw_thruster += 50
-			IF draw_thruster > 200
-				draw_thruster = 200
+				//ADD THE FORCE OF THE THRUSTERS TO THE TOTAL FORCES ACTING ON THE SHIP
+				x *= -20000.0
+				y *= 20000.0
+				ship_forces_x += x
+				ship_forces_y += y
+				draw_thruster += 50
+				IF draw_thruster > 200
+					draw_thruster = 200
+				ENDIF
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DUAL_THRUST
+				ship_power -=@ 0.2
 			ENDIF
-			REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DUAL_THRUST
-			ship_power -=@ 0.2
+		ELSE
+			draw_thruster -= 20
+			IF draw_thruster < 0
+				draw_thruster = 0
+			ENDIF
 		ENDIF
 	ELSE
-		draw_thruster -= 20
-		IF draw_thruster < 0
-			draw_thruster = 0
+		IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Thrusters.
+
+			IF ship_power > 0.2
+			OR ship_power = 0.2
+				//THIS TURNS A HEADING IN DEGREES INTO A VECTOR
+				SIN ship_heading x
+				COS ship_heading y
+
+				//ADD THE FORCE OF THE THRUSTERS TO THE TOTAL FORCES ACTING ON THE SHIP
+				x *= -20000.0
+				y *= 20000.0
+				ship_forces_x += x
+				ship_forces_y += y
+				draw_thruster += 50
+				IF draw_thruster > 200
+					draw_thruster = 200
+				ENDIF
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DUAL_THRUST
+				ship_power -=@ 0.2
+			ENDIF
+		ELSE
+			draw_thruster -= 20
+			IF draw_thruster < 0
+				draw_thruster = 0
+			ENDIF
 		ENDIF
 	ENDIF
 

@@ -12,7 +12,7 @@ ENDIF
 
 exit:
 
-DO_FADE 500 FADE_IN
+DO_FADE 1000 FADE_IN
 WHILE GET_FADING_STATUS
 WAIT 0
 ENDWHILE
@@ -423,18 +423,35 @@ IF shtr_front_end = 0
 		GET_GAME_TIMER shtr_reload_end
 		shtr_reload_diff = shtr_reload_end - shtr_reload_start
 		
-		IF shtr_auto_pickup	= 0
+		IF NOT IS_JAPANESE_VERSION
+			IF shtr_auto_pickup	= 0
+				
+				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF shtr_reload_diff > shtr_speed_pickup
+						shtr_button1 = 0
+					ENDIF
+				ENDIF
 			
-			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-				IF shtr_reload_diff > shtr_speed_pickup
+			ELSE
+				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+				OR shtr_reload_diff > shtr_speed_pickup
 					shtr_button1 = 0
 				ENDIF
 			ENDIF
-		
 		ELSE
-			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-			OR shtr_reload_diff > shtr_speed_pickup
-				shtr_button1 = 0
+			IF shtr_auto_pickup	= 0
+				
+				IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF shtr_reload_diff > shtr_speed_pickup
+						shtr_button1 = 0
+					ENDIF
+				ENDIF
+			
+			ELSE
+				IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+				OR shtr_reload_diff > shtr_speed_pickup
+					shtr_button1 = 0
+				ENDIF
 			ENDIF
 		ENDIF
 	ENDIF
@@ -448,50 +465,95 @@ IF shtr_front_end = 0
 	OR shtr_player_alive = 3
 		IF shtr_heat_bar < 1000
 		   	IF shtr_button1 = 0
-				
-				IF IS_BUTTON_PRESSED PAD1 CROSS
-				
-					REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_PLAYER_FIRE
-					COS shtr_shot_angle	shtr_cos_shot_angle
-					shtr_x_add = shtr_fire_speed * shtr_cos_shot_angle
-					SIN shtr_shot_angle shtr_sin_shot_angle
-					shtr_y_add = shtr_fire_speed * shtr_sin_shot_angle
+				IF NOT IS_JAPANESE_VERSION
+					IF IS_BUTTON_PRESSED PAD1 CROSS
 					
-					IF shtr_projectile_alive[shtr_current_projectile_fired] = 0
-						shtr_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
-						shtr_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
-						shtr_projectile_x[shtr_current_projectile_fired] = shtr_projectile_origin[shtr_current_projectile_fired] + 16.0
-						shtr_projectile_alive[shtr_current_projectile_fired] = 1
-					ENDIF
-					
-					IF shtr_multi_pickup = 1
-					OR shtr_multi_pickup = 2
-						IF shtr_up_projectile_alive[shtr_current_projectile_fired] = 0
-							shtr_up_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
-							shtr_up_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
-							shtr_up_projectile_x[shtr_current_projectile_fired] = shtr_up_projectile_origin[shtr_current_projectile_fired] + 16.0
-							shtr_up_projectile_alive[shtr_current_projectile_fired] = 1
+						REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_PLAYER_FIRE
+						COS shtr_shot_angle	shtr_cos_shot_angle
+						shtr_x_add = shtr_fire_speed * shtr_cos_shot_angle
+						SIN shtr_shot_angle shtr_sin_shot_angle
+						shtr_y_add = shtr_fire_speed * shtr_sin_shot_angle
+						
+						IF shtr_projectile_alive[shtr_current_projectile_fired] = 0
+							shtr_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+							shtr_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+							shtr_projectile_x[shtr_current_projectile_fired] = shtr_projectile_origin[shtr_current_projectile_fired] + 16.0
+							shtr_projectile_alive[shtr_current_projectile_fired] = 1
+						ENDIF
+						
+						IF shtr_multi_pickup = 1
+						OR shtr_multi_pickup = 2
+							IF shtr_up_projectile_alive[shtr_current_projectile_fired] = 0
+								shtr_up_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+								shtr_up_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+								shtr_up_projectile_x[shtr_current_projectile_fired] = shtr_up_projectile_origin[shtr_current_projectile_fired] + 16.0
+								shtr_up_projectile_alive[shtr_current_projectile_fired] = 1
+							ENDIF
+						ENDIF
+						
+						IF shtr_multi_pickup = 2
+							IF shtr_down_projectile_alive[shtr_current_projectile_fired] = 0
+								shtr_down_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+								shtr_down_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+								shtr_down_projectile_x[shtr_current_projectile_fired] = shtr_down_projectile_origin[shtr_current_projectile_fired] + 16.0
+								shtr_down_projectile_alive[shtr_current_projectile_fired] = 1
+							ENDIF
+						ENDIF
+						
+						GET_GAME_TIMER shtr_reload_start
+						
+						shtr_current_projectile_fired++
+						shtr_button1 = 1
+						
+						IF shtr_current_projectile_fired = 16
+							shtr_current_projectile_fired = 0
 						ENDIF
 					ENDIF
+				ELSE
+					IF IS_BUTTON_PRESSED PAD1 CIRCLE
 					
-					IF shtr_multi_pickup = 2
-						IF shtr_down_projectile_alive[shtr_current_projectile_fired] = 0
-							shtr_down_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
-							shtr_down_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
-							shtr_down_projectile_x[shtr_current_projectile_fired] = shtr_down_projectile_origin[shtr_current_projectile_fired] + 16.0
-							shtr_down_projectile_alive[shtr_current_projectile_fired] = 1
+						REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_PLAYER_FIRE
+						COS shtr_shot_angle	shtr_cos_shot_angle
+						shtr_x_add = shtr_fire_speed * shtr_cos_shot_angle
+						SIN shtr_shot_angle shtr_sin_shot_angle
+						shtr_y_add = shtr_fire_speed * shtr_sin_shot_angle
+						
+						IF shtr_projectile_alive[shtr_current_projectile_fired] = 0
+							shtr_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+							shtr_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+							shtr_projectile_x[shtr_current_projectile_fired] = shtr_projectile_origin[shtr_current_projectile_fired] + 16.0
+							shtr_projectile_alive[shtr_current_projectile_fired] = 1
+						ENDIF
+						
+						IF shtr_multi_pickup = 1
+						OR shtr_multi_pickup = 2
+							IF shtr_up_projectile_alive[shtr_current_projectile_fired] = 0
+								shtr_up_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+								shtr_up_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+								shtr_up_projectile_x[shtr_current_projectile_fired] = shtr_up_projectile_origin[shtr_current_projectile_fired] + 16.0
+								shtr_up_projectile_alive[shtr_current_projectile_fired] = 1
+							ENDIF
+						ENDIF
+						
+						IF shtr_multi_pickup = 2
+							IF shtr_down_projectile_alive[shtr_current_projectile_fired] = 0
+								shtr_down_projectile_origin[shtr_current_projectile_fired] = shtr_plyr_x 
+								shtr_down_projectile_y[shtr_current_projectile_fired] = shtr_plyr_y
+								shtr_down_projectile_x[shtr_current_projectile_fired] = shtr_down_projectile_origin[shtr_current_projectile_fired] + 16.0
+								shtr_down_projectile_alive[shtr_current_projectile_fired] = 1
+							ENDIF
+						ENDIF
+						
+						GET_GAME_TIMER shtr_reload_start
+						
+						shtr_current_projectile_fired++
+						shtr_button1 = 1
+						
+						IF shtr_current_projectile_fired = 16
+							shtr_current_projectile_fired = 0
 						ENDIF
 					ENDIF
-					
-					GET_GAME_TIMER shtr_reload_start
-					
-					shtr_current_projectile_fired++
-					shtr_button1 = 1
-					
-					IF shtr_current_projectile_fired = 16
-						shtr_current_projectile_fired = 0
-					ENDIF
-			   	ENDIF
+				ENDIF
 			ENDIF
 		ENDIF
 	ENDIF
@@ -792,7 +854,7 @@ ENDIF
 IF shtr_front_end = 4
 	IF shtr_on_table = 0
 		GOSUB shtr_text_gosub
-		SET_TEXT_SCALE 2.0 4.0
+		SET_TEXT_SCALE 1.0 2.0
 		DISPLAY_TEXT 320.0 196.0 SHTR_3b // game over
 		
 		GET_GAME_TIMER shtr_start_time
@@ -800,7 +862,7 @@ IF shtr_front_end = 4
 	ENDIF
 	IF shtr_on_table = 1
 		GOSUB shtr_text_gosub
-		SET_TEXT_SCALE 2.0 4.0
+		SET_TEXT_SCALE 1.0 2.0
 		DISPLAY_TEXT 320.0 196.0 SHTR_3b
 		GET_GAME_TIMER shtr_end_time
 		shtr_time_diff = shtr_end_time - shtr_start_time
@@ -825,7 +887,8 @@ IF shtr_front_end = 4
 ENDIF
 
 // Quit to front end ----------------------------------------------------------
-IF shtr_front_end = 4
+IF shtr_front_end = 0
+OR shtr_front_end = 4
 	IF IS_JAPANESE_VERSION
 		IF IS_BUTTON_PRESSED PAD1 CROSS
 		AND NOT shtr_on_table = 1
@@ -889,8 +952,13 @@ mission_shtr_passed:
 RETURN
 
 mission_cleanup_shtr:
-
+DO_FADE 0 FADE_OUT
 CLEAR_THIS_PRINT BUSY
+IF IS_JAPANESE_VERSION
+	WHILE IS_BUTTON_PRESSED PAD1 CIRCLE
+		WAIT 0
+	ENDWHILE
+ENDIF
 REMOVE_TEXTURE_DICTIONARY 
 CLEAR_MISSION_AUDIO 4
 SHUT_ALL_CHARS_UP FALSE
@@ -905,6 +973,7 @@ IF IS_PLAYER_PLAYING player1
 	SET_PLAYER_CONTROL player1 ON
 	
 ENDIF
+DO_FADE 500 FADE_IN
 flag_player_on_mission = 0
 
 MISSION_HAS_FINISHED
@@ -1477,12 +1546,20 @@ shtr_write_name:
 				REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_SELECT
 				shtr_press = 1
 			ENDIF
-			
-			IF IS_BUTTON_PRESSED PAD1 CROSS
-				shtr_write = 3
-				shtr_press = 1
-				shtr_on_table = 4
-				REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_ACCEPT
+			IF IS_JAPANESE_VERSION
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					shtr_write = 3
+					shtr_press = 1
+					shtr_on_table = 4
+					REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_ACCEPT
+				ENDIF
+			ELSE
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+					shtr_write = 3
+					shtr_press = 1
+					shtr_on_table = 4
+					REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_ACCEPT
+				ENDIF
 			ENDIF
 		ENDIF
 	ENDIF
