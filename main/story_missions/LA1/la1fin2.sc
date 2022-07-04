@@ -1597,13 +1597,14 @@ LVAR_INT lf2_sequence
 
 		LVAR_INT lf2_task_status
 		lf2_scene_flag = 4
+		SET_AREA_VISIBLE 0
+		SET_CHAR_AREA_VISIBLE scplayer 0
 		lf2_time_check = TIMERA + 300											 
 	ENDIF																		  
 
 	IF lf2_scene_flag = 4
 		IF TIMERA > lf2_time_check
 			DO_FADE 600 FADE_IN
-			SET_CHAR_AREA_VISIBLE scplayer 0
 			IF NOT IS_CAR_DEAD copcar_bust_cut[1]
 			AND NOT IS_CAR_DEAD copcar_bust_cut[2]
 				IF HAS_CAR_RECORDING_BEEN_LOADED 162
