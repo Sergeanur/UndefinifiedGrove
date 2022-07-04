@@ -1477,6 +1477,7 @@ ryder2_m_stage_2:
 		// skip cutscene
 		IF m_goals > 2
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				m_goals = 99
 			ENDIF
 		ENDIF
@@ -4237,6 +4238,7 @@ ryder2_m_stage_7:
 			ENDIF
 		ELSE
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				m_goals++
 			ENDIF		 
 		ENDIF

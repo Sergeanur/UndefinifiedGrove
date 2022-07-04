@@ -912,10 +912,11 @@ Mansion2_Initial_Cutscene_Part1:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		// Cutscene was skipped
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			// Cutscene was skipped
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 
 
@@ -1311,10 +1312,11 @@ Mansion2_Initial_Cutscene_Part2:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		// Cutscene was skipped
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			// Cutscene was skipped
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 
 
@@ -1690,9 +1692,10 @@ Mansion2_Head_Towards_Carrier:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 	
 
@@ -2293,9 +2296,10 @@ Mansion2_Enter_Aircraft_Carrier:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 
 
@@ -2736,10 +2740,11 @@ Mansion2_Enter_Harrier:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		// Cutscene was skipped
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			// Cutscene was skipped
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 	
 	// fade out

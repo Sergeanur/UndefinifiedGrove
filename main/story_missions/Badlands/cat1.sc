@@ -1427,6 +1427,7 @@ cat1_m_stage_1:
 
 	IF m_goals > 1
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			m_goals = 99
 			skipped_cutscene = 1
 		ENDIF

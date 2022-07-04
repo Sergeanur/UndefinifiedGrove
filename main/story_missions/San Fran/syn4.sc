@@ -672,7 +672,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 							TIMERB = 0
 							WHILE TIMERB < 4000
 								WAIT 0
-								IF IS_BUTTON_PRESSED PAD1 CROSS
+								IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 									GOTO s4_skip_the_cut
 								ENDIF
 							ENDWHILE
@@ -696,7 +696,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 							TIMERB = 0
 							WHILE TIMERB < 4000
 								WAIT 0
-								IF IS_BUTTON_PRESSED PAD1 CROSS
+								IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 									GOTO s4_skip_the_cut
 								ENDIF
 							ENDWHILE
@@ -720,7 +720,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 							TIMERB = 0
 							WHILE TIMERB < 4000
 								WAIT 0
-								IF IS_BUTTON_PRESSED PAD1 CROSS
+								IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 									GOTO s4_skip_the_cut
 								ENDIF
 							ENDWHILE
@@ -732,7 +732,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 					TIMERB = 0
 					WHILE TIMERB < 1000
 						WAIT 0
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 							s4_txt_skylight = 1
 							GOTO s4_skip_the_cut
 						ENDIF
@@ -752,7 +752,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 			TIMERB = 0
 			WHILE TIMERB < 5000
 				WAIT 0
-				IF IS_BUTTON_PRESSED PAD1 CROSS
+				IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 					GOTO s4_skip_the_cut
 				ENDIF
 			ENDWHILE
@@ -1431,7 +1431,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 			TIMERB = 0
 			WHILE TIMERB < 3000
 				WAIT 0
-				IF IS_BUTTON_PRESSED PAD1 CROSS
+				IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 					GOTO s4_the_skip
 				ENDIF
 			ENDWHILE
@@ -1834,9 +1834,10 @@ WHILE NOT IS_CHAR_DEAD scplayer
 						WAIT 0
 						
 						
-                        IF IS_BUTTON_PRESSED PAD1 CROSS
-						AND IS_CHAR_DEAD s4_pizzaboy
-							//GOTO s4_skip_the_cut_5
+                        IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+							IF IS_CHAR_DEAD s4_pizzaboy
+								//GOTO s4_skip_the_cut_5
+							ENDIF
 						ENDIF
 
 					ENDWHILE 		
@@ -2917,7 +2918,7 @@ syn4_keys:
 		TIMERB = 0
 		WHILE TIMERB < 750
 			WAIT 0
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 				GOTO s4_save_the_deer2
 			ENDIF
 		ENDWHILE 
@@ -2927,7 +2928,7 @@ syn4_keys:
 		TIMERB = 0
 		WHILE TIMERB < 1500
 			WAIT 0
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 				GOTO s4_save_the_deer2
 			ENDIF
 		ENDWHILE 
