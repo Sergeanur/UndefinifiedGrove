@@ -4389,6 +4389,10 @@ st4_reset_crane_position:
 		SET_ROPE_HEIGHT_FOR_OBJECT magno_arm crane_rope_length
 	ENDIF
 
+	IF DOES_OBJECT_EXIST magno_base
+		SET_OBJECT_VELOCITY magno_base 0.0 0.0 0.0
+	ENDIF
+
 
 RETURN
 

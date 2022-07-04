@@ -516,6 +516,7 @@ d3_m_stage_1:
 				WAIT 0
 			ENDWHILE
 
+			FORCE_WEATHER_NOW WEATHER_EXTRASUNNY_DESERT
 			CLEAR_AREA -691.0 941.0 13.0 10.0 TRUE 
 
 			LOAD_CUTSCENE DESERT3
@@ -554,7 +555,7 @@ d3_m_stage_1:
 			SET_CAMERA_BEHIND_PLAYER 
 			RESTORE_CAMERA_JUMPCUT
 					
-			FORCE_WEATHER WEATHER_EXTRASUNNY_DESERT
+			//FORCE_WEATHER WEATHER_EXTRASUNNY_DESERT
 			//SET_WANTED_MULTIPLIER 0.5
 
 			ADD_BLIP_FOR_COORD -429.0250 2226.2227 41.4297 location_blip
@@ -1565,24 +1566,45 @@ d3_m_stage_3:
 
 			DO_FADE 0 FADE_OUT
 	
+			// re-create flare object
 			IF DOES_OBJECT_EXIST smoke_flare_object
-				IF IS_CHAR_HOLDING_OBJECT scplayer smoke_flare_object
-					DROP_OBJECT	scplayer TRUE
-				ENDIF
-				IF m_fx = 0
-					CREATE_FX_SYSTEM_ON_OBJECT smoke_flare smoke_flare_object 0.0 0.0 0.1 TRUE m_fx
-					PLAY_FX_SYSTEM m_fx
-				ENDIF
-			ELSE
-				x =	-800.8441 
-				y =	2408.3540 
-				z =	155.4525
-				GET_GROUND_Z_FOR_3D_COORD x y z z
-				z += 1.0
-				CREATE_OBJECT TEARGAS x y z smoke_flare_object
-				CREATE_FX_SYSTEM_ON_OBJECT smoke_flare smoke_flare_object 0.0 0.0 0.1 TRUE m_fx
-				PLAY_FX_SYSTEM m_fx
+				DELETE_OBJECT smoke_flare_object
 			ENDIF
+			x =	-800.8441 
+			y =	2408.3540 
+			z =	155.4525
+			GET_GROUND_Z_FOR_3D_COORD x y z z
+			z += 0.05
+			CREATE_OBJECT TEARGAS x y z smoke_flare_object
+			FREEZE_OBJECT_POSITION smoke_flare_object TRUE
+
+			// re-create smoke flare particle
+			IF NOT m_fx = 0
+				KILL_FX_SYSTEM m_fx
+			ENDIF
+			CREATE_FX_SYSTEM_ON_OBJECT smoke_flare smoke_flare_object 0.0 0.0 0.1 TRUE m_fx
+			PLAY_FX_SYSTEM m_fx
+
+
+	
+//			IF DOES_OBJECT_EXIST smoke_flare_object
+//				IF IS_CHAR_HOLDING_OBJECT scplayer smoke_flare_object
+//					DROP_OBJECT	scplayer TRUE
+//				ENDIF
+//				IF m_fx = 0
+//					CREATE_FX_SYSTEM_ON_OBJECT smoke_flare smoke_flare_object 0.0 0.0 0.1 TRUE m_fx
+//					PLAY_FX_SYSTEM m_fx
+//				ENDIF
+//			ELSE
+//				x =	-800.8441 
+//				y =	2408.3540 
+//				z =	155.4525
+//				GET_GROUND_Z_FOR_3D_COORD x y z z
+//				z += 1.0
+//				CREATE_OBJECT TEARGAS x y z smoke_flare_object
+//				CREATE_FX_SYSTEM_ON_OBJECT smoke_flare smoke_flare_object 0.0 0.0 0.1 TRUE m_fx
+//				PLAY_FX_SYSTEM m_fx
+//			ENDIF
 
 			CAMERA_RESET_NEW_SCRIPTABLES
 			CLEAR_CHAR_TASKS_IMMEDIATELY scplayer
