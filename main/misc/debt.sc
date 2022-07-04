@@ -360,7 +360,7 @@ if flag = 3
 									else
 										mark_car_as_no_longer_needed collector_car
 										if not locate_char_any_means_char_2d scplayer debt_collector[0] 60.0 60.0 0
-											IF NOT IS_CAR_ON_SCREEN collector_car
+											//IF NOT IS_CAR_ON_SCREEN collector_car
 												get_char_coordinates debt_collector[0] x y z
 												GET_CLOSEST_CAR_NODE_WITH_HEADING x y z x y z heading
 												IF NOT IS_POINT_OBSCURED_BY_A_MISSION_ENTITY x y z 4.0 4.0 4.0
@@ -373,7 +373,7 @@ if flag = 3
 														ADD_STUCK_CAR_CHECK_WITH_WARP collector_car 4.0 4000 true true true -1
 													endif
 												endif
-											endif
+											//endif
 										else
 											get_script_task_status debt_collector[0] TASK_KILL_CHAR_ON_FOOT_TIMED task_status
 											if task_status = finished_task
@@ -417,7 +417,7 @@ if flag = 3
 										IF LOCATE_CHAR_ANY_MEANS_CHAR_2D debt_collector[an] debt_collector[0] 30.0 30.0 0
 											SET_GROUP_MEMBER collector_group debt_collector[an]
 										ELSE
-											GET_SCRIPT_TASK_STATUS debt_collector[an] TASK_KILL_CHAR_ON_FOOT task_status
+											GET_SCRIPT_TASK_STATUS debt_collector[an] TASK_KILL_CHAR_ON_FOOT_TIMED task_status
 											IF task_status = FINISHED_TASK
 												mark_char_as_no_longer_needed debt_collector[an]
 												TASK_KILL_CHAR_ON_FOOT_TIMED debt_collector[an] scplayer 5000
@@ -464,6 +464,9 @@ if flag = 3
 endif
 
 GOTO debt_collectors_loop
+
+IF NOT IS_CAR_ON_SCREEN collector_car
+ENDIF
 
 cleaup_debt_collectors:
 //	remove_blip tempy_tempy_blip[0]

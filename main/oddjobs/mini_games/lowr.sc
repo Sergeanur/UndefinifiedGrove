@@ -252,6 +252,14 @@ LOWR_m_stage_0:
 		camera_mode					= 0
 		select_pressed				= 0
 
+		// added to get byte size the same
+		select_pressed				= camera_mode
+		select_pressed				= camera_mode
+		select_pressed				= camera_mode
+		select_pressed				= camera_mode
+		select_pressed				= camera_mode
+		select_pressed				= 0
+
 		// set floats
 		force_multiplier = 0.01
 
@@ -1097,11 +1105,6 @@ LOWR_m_stage_3:
 
 			ELSE
 
-				IF IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
-					PRINT_NOW LOW_35 5000 1 // ~r~The meeting is dispersing.
-					m_failed = 1
-				ELSE
-
 					// check if player has arrived
 					IF LOCATE_CHAR_IN_CAR_3D scplayer 1793.0676 -1904.2538 12.3989 4.0 4.0 4.0 TRUE
 						STORE_CAR_CHAR_IS_IN_NO_SAVE scplayer car
@@ -1140,7 +1143,6 @@ LOWR_m_stage_3:
 							dialogue_flag = 0
 						ENDIF
 					ENDIF
-				ENDIF
 			ENDIF
 		ENDIF	
 
@@ -1333,6 +1335,13 @@ LOWR_m_stage_4:
 
 		// wager screen
 		IF m_Goals = 6
+
+			// check for language change
+			IF HAS_GAME_JUST_RETURNED_FROM_FRONTEND
+			AND HAS_LANGUAGE_CHANGED
+				CLEAR_HELP 
+				PRINT_HELP_FOREVER LOW_37
+			ENDIF
 
 			
 			// ' X '  to increase bet

@@ -260,11 +260,13 @@ IF NOT IS_BIT_SET iDateFlags 1
 			//--- GENERIC DRIVE-BY
 			IF NOT IS_BIT_SET iDateFlags DESTINATION_BACK_HOME //Take GF home			
 				IF IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_GANG_FIGHTS
+				OR IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_GANG_ZONES
 					//--- Store the current zone this frame (IMPORTANT! txtCurrZone will be read by a few states)
 					GET_CHAR_COORDINATES scplayer fX[0] fY[0] fZ[0] 
 					GET_NAME_OF_INFO_ZONE fX[0] fY[0] fZ[0] txtCurrZone
 					//--- Date specific: check if the girl did enough shooting, but not if this is a DRIVE date
-					IF NOT IS_BIT_SET iDateReport DRIVE 
+					IF IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_GANG_FIGHTS
+					AND NOT IS_BIT_SET iDateReport DRIVE 
 						GET_AMMO_IN_CHAR_WEAPON iGF_ped WEAPONTYPE_MICRO_UZI iTemp				
 						IF iTemp = 0 // No more ammo			
 							ADD_AMMO_TO_CHAR iGF_ped WEAPONTYPE_MICRO_UZI GF_AMMO_IN_UZI // Add some spare ammo
@@ -1172,6 +1174,9 @@ GF_Date_State3:
 						IF iGFLikesPlayer[iGFidx] <= GF_LIKES_PLAYER_LOW_LIMIT
 							//--- Dump him!						 			
 							iGFSayContext = CONTEXT_GLOBAL_GFRIEND_DUMP_PLAYER_LIVE
+						ELSE
+							//--- Girl is upset
+							iGFSayContext = CONTEXT_GLOBAL_GFRIEND_GOODBYE_ANGRY
 						ENDIF
 						//--- Skip to the end
 						TIMERB = 0
@@ -1319,7 +1324,8 @@ GF_Date_State4:
 				SET_BIT iDateFlags READY_FOR_RANDOM_SPEECH
 			ENDIF
 		ENDIF
-		++iSubStateStatus
+		//--- Loop back
+		iSubStateStatus = 0
 	BREAK
 
 	CASE 3
@@ -1403,6 +1409,7 @@ GF_Date_State6:
 		//--- Rotate player and GF to face each other		
 		TASK_TURN_CHAR_TO_FACE_CHAR scplayer iGF_ped
 		TASK_TURN_CHAR_TO_FACE_CHAR iGF_ped scplayer
+		TIMERB = 0
 		++iSubStateStatus
 	BREAK
 	
@@ -1461,6 +1468,11 @@ GF_Date_State6:
 					TASK_STAND_STILL iGF_ped -1
 				ENDIF
 			ENDIF
+			//--- emergency timout
+			IF TIMERB > 6000
+				iSubStateStatus = 6
+				BREAK
+			ENDIF
 		ENDIF
 	BREAK
 
@@ -1489,7 +1501,22 @@ GF_Date_State6:
 				TASK_PLAY_ANIM scplayer PLAYA_KISS_03 KISSING 4.0 FALSE FALSE FALSE FALSE 0
 				TASK_PLAY_ANIM iGF_ped GRLFRD_KISS_03 KISSING 4.0 FALSE FALSE FALSE FALSE 0
 
-				IF ARE_ANY_CHARS_NEAR_CHAR iGF_ped 25.0
+				//--- Check if there are other peds around there
+				GET_CHAR_COORDINATES iGF_ped fX[0] fY[0] fZ[0]
+				GET_RANDOM_CHAR_IN_SPHERE fX[0] fY[0] fZ[0] GF_PROXIMITY_OF_PEDS_AS_PUBLIC TRUE TRUE TRUE iTempPed
+				IF iTempPed = -1 
+					//--- No one here
+					IF iCensoredVersion = 0
+						//--- Uncensored game
+						++iSubStateStatus // move on to BJ
+					ELSE
+						//--- Censored game
+						SET_BIT iDateFlags FOOT_BLOW_GIVEN
+						iSubStateStatus = 6 // Jump to the end
+					ENDIF
+				ELSE
+					//--- At least one ped here
+					MARK_CHAR_AS_NO_LONGER_NEEDED iTempPed // release the ped right away!!!
 					IF IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_SNOGGING_IN_PUBLIC						
 						IF IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_SEX_IN_PUBLIC
 							//--- Check if we are running a censored version of the game
@@ -1507,15 +1534,6 @@ GF_Date_State6:
 					ELSE // Doesn't like snogging
 						iSubStateStatus = 6 // Jump to the end				
 					ENDIF								
-				ELSE
-					IF iCensoredVersion = 0 
-						//--- Uncensored game
-						iSubStateStatus++
-					ELSE
-						//--- Censored game
-						SET_BIT iDateFlags FOOT_BLOW_GIVEN
-						iSubStateStatus = 6 // Jump to the end				
-					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
@@ -1536,6 +1554,15 @@ GF_Date_State6:
 					SET_FIXED_CAMERA_POSITION fX[0] fY[0] fZ[0] 0.0 0.0 0.0
 					POINT_CAMERA_AT_POINT fX[1] fY[1] fZ[1] JUMP_CUT
 				ENDIF
+
+				//--- Re-Update Player and GF co-ords to match anim 			
+				GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 1.0 0.0 fX[1] fY[1] fZ[1]
+				GET_GROUND_Z_FOR_3D_COORD fX[1] fY[1] fZ[1] fZ[1]	
+				//--- Now move the girl in the right spot
+				SET_CHAR_COORDINATES iGF_ped fX[1] fY[1] fZ[1] 
+				GET_CHAR_HEADING scplayer fTemp[0]
+				fTemp[0] += 180.0
+				SET_CHAR_HEADING iGF_ped fTemp[0]  
 
 				TASK_PLAY_ANIM SCPLAYER BJ_STAND_START_P BLOWJOBZ 4.0 FALSE FALSE FALSE TRUE 0
 				TASK_PLAY_ANIM iGF_ped BJ_STAND_START_W BLOWJOBZ 4.0 FALSE FALSE FALSE TRUE 0
@@ -1727,8 +1754,14 @@ GF_Date_State7:
 			AND NOT IS_CAR_PASSENGER_SEAT_FREE iCurrentCar 0
 				GET_CHAR_IN_CAR_PASSENGER_SEAT iCurrentCar 0 iTempPed 
 				IF iTempPed = iGF_ped // If the GF is sitting on the passenger seat
-					IF ARE_ANY_CHARS_NEAR_CHAR iGF_ped 25.0
-						//--- There is at least a ped around here...							
+					GET_CHAR_COORDINATES iGF_ped fX[0] fY[0] fZ[0]
+					GET_RANDOM_CHAR_IN_SPHERE fX[0] fY[0] fZ[0] GF_PROXIMITY_OF_PEDS_AS_PUBLIC TRUE TRUE TRUE iTempPed
+					IF iTempPed = -1 
+						//--- No One here, go on...
+						++iSubStateStatus
+					ELSE
+						//--- There is at least a ped around here...										
+						MARK_CHAR_AS_NO_LONGER_NEEDED iTempPed // release the ped right away!!!
 						IF IS_BIT_SET iGFLikesOnDate[iGFidx] LIKES_SEX_IN_PUBLIC
 							//--- She likes doing it with people around, so go on...
 							++iSubStateStatus
@@ -1740,8 +1773,7 @@ GF_Date_State7:
 							iDateState = 4
 							iSubStateStatus = 0
 						ENDIF
-					ELSE
-						++iSubStateStatus
+
 					ENDIF
 				ELSE // Someone else is sitting on the passenger seat
 					//--- State Complete - Back to IDLE In Car
@@ -1780,6 +1812,7 @@ GF_Date_State7:
 	CASE 2
 		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			iSubStateStatus = 5
+			BREAK
 		ENDIF
 		
 		TASK_PLAY_ANIM_NON_INTERRUPTABLE SCPLAYER BJ_CAR_START_P BLOWJOBZ 4.0 FALSE FALSE FALSE TRUE 0
@@ -1791,21 +1824,27 @@ GF_Date_State7:
 	CASE 3
 		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			iSubStateStatus = 5
+			BREAK
 		ENDIF
 
-		GET_CHAR_ANIM_CURRENT_TIME scplayer BJ_CAR_START_P fTemp[0]
-		IF fTemp[0] = 1.0 
-			TASK_PLAY_ANIM_NON_INTERRUPTABLE scplayer BJ_CAR_LOOP_P BLOWJOBZ 4.0 TRUE FALSE FALSE TRUE 6000
-			TASK_PLAY_ANIM_NON_INTERRUPTABLE iGF_ped BJ_CAR_LOOP_W BLOWJOBZ 4.0 TRUE FALSE FALSE TRUE 6000
-			iGFSayContext = CONTEXT_GLOBAL_GFRIEND_HEAD
-			TIMERB = 0
-			++iSubStateStatus
+		IF IS_CHAR_PLAYING_ANIM scplayer BJ_CAR_START_P 
+			GET_CHAR_ANIM_CURRENT_TIME scplayer BJ_CAR_START_P fTemp[0]
+			IF fTemp[0] = 1.0 
+				TASK_PLAY_ANIM_NON_INTERRUPTABLE scplayer BJ_CAR_LOOP_P BLOWJOBZ 4.0 TRUE FALSE FALSE TRUE 6000
+				TASK_PLAY_ANIM_NON_INTERRUPTABLE iGF_ped BJ_CAR_LOOP_W BLOWJOBZ 4.0 TRUE FALSE FALSE TRUE 6000
+				iGFSayContext = CONTEXT_GLOBAL_GFRIEND_HEAD
+				TIMERB = 0
+				++iSubStateStatus
+			ENDIF
+		ELSE
+			iSubStateStatus = 5
 		ENDIF
 	BREAK
 
 	CASE 4
 		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			iSubStateStatus = 5
+			BREAK
 		ENDIF
 		
 		IF TIMERB > 6000
@@ -1883,8 +1922,12 @@ GF_Date_State8:
 			AND NOT IS_CHAR_IN_FLYING_VEHICLE iGF_ped
 				GET_MAXIMUM_NUMBER_OF_PASSENGERS iCurrentCar iTemp
 				IF iTemp > 0				
-					SET_BIT iDateFlags 1 // At this point we cannot allow more transitions
-					++iSubStateStatus
+					IF IS_CHAR_SITTING_IN_ANY_CAR scplayer
+					AND IS_CHAR_SITTING_IN_ANY_CAR iGF_ped
+						SET_EVERYONE_IGNORE_PLAYER player1 TRUE
+						SET_BIT iDateFlags 1 // At this point we cannot allow more transitions
+						++iSubStateStatus
+					ENDIF
 				ELSE
 					IF NOT IS_MESSAGE_BEING_DISPLAYED 
 					AND NOT IS_BIT_SET iDateFlags GIRL_DRIVE_HELP_ON 
@@ -1912,10 +1955,10 @@ GF_Date_State8:
 		SET_PLAYER_CONTROL player1 OFF
 		HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer TRUE
 		HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE iGF_ped TRUE
-		SET_EVERYONE_IGNORE_PLAYER player1 ON
 		
 		//--- Camera Cut
 		IF NOT IS_CAR_DEAD iCurrentCar
+			SET_CAR_CRUISE_SPEED iCurrentCar 0.0
 			ATTACH_CAMERA_TO_VEHICLE iCurrentCar 4.0 4.0 1.0 0.0 0.0 0.0 0.0 JUMP_CUT
 		ENDIF
 	
@@ -2625,6 +2668,9 @@ GF_Date_DeclareDesiresForThisDate:
 	IF IS_BIT_SET iDateReport GIRL_DRIVE
 		iGFSayContext = CONTEXT_GLOBAL_GFRIEND_REQUEST_TO_DRIVE_CAR		
 		iCJSayContext = CONTEXT_GLOBAL_AGREE_TO_LET_DRIVE
+		IF IS_PLAYER_PLAYING PLAYER1
+			SET_CHAR_CANT_BE_DRAGGED_OUT scplayer TRUE
+		ENDIF		
 		RETURN
 	ENDIF
 RETURN
@@ -3917,6 +3963,7 @@ GF_Date_GetCurrentCarDataIfAvailable:
 			ENDIF
 	ELSE
 		//--- GF has left the car, reset the health readings
+		iCurrentCar = -1
 		iCurrentCarHealth = -1
 	ENDIF
 
@@ -4768,6 +4815,7 @@ GF_Date_Cleanup:
 
 	//--- Always set this in case something bad happened during one of the cut-scenes
 	IF IS_PLAYER_PLAYING player1
+		SET_CHAR_CANT_BE_DRAGGED_OUT scplayer FALSE // in case we set this earlier - STATE 8
 		SET_PLAYER_CONTROL player1 ON
 		SWITCH_WIDESCREEN OFF
 		//--- Restore the player's group back to its default settings

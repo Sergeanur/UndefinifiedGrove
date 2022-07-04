@@ -2275,8 +2275,8 @@ IF NOT IS_CHAR_DEAD	gosub_ped
 			ENDIF
 		ENDIF
 	ENDIF
-ELSE
-	BREAKPOINT gosub_ped_is_dead
+//ELSE
+//	BREAKPOINT gosub_ped_is_dead
 ENDIF
 
 ////////////////////////////////////////////////////////////////////////////
@@ -2290,66 +2290,75 @@ criminal_car_stuck_checks://////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
 GET_GAME_TIMER game_time
-IF NOT IS_CAR_DEAD gosub_stuck_car
-	IF IS_CAR_UPSIDEDOWN gosub_stuck_car
-	AND IS_CAR_STOPPED gosub_stuck_car
-		break_convoy_flag = 1
-		IF LOCATE_CHAR_ANY_MEANS_CAR_2D scplayer gosub_stuck_car 90.0 90.0 0
-			SET_UPSIDEDOWN_CAR_NOT_DAMAGED gosub_stuck_car FALSE
-			car_stuck_flag = -9
-		ELSE
-			IF NOT IS_CAR_ON_SCREEN gosub_stuck_car
-				GET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
-				GET_CLOSEST_CAR_NODE_WITH_HEADING coord_c1_x coord_c1_y coord_c1_z coord_c1_x coord_c1_y coord_c1_z heading
-				IF NOT IS_POINT_ON_SCREEN coord_c1_x coord_c1_y coord_c1_z 4.0
-					SET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
-					SET_CAR_HEADING	gosub_stuck_car heading
+GET_AREA_VISIBLE temp_integer_1
+if temp_integer_1 = 0
+	IF NOT IS_CAR_DEAD gosub_stuck_car
+		IF IS_CAR_UPSIDEDOWN gosub_stuck_car
+		AND IS_CAR_STOPPED gosub_stuck_car
+			break_convoy_flag = 1
+			IF LOCATE_CHAR_ANY_MEANS_CAR_2D scplayer gosub_stuck_car 90.0 90.0 0
+				SET_UPSIDEDOWN_CAR_NOT_DAMAGED gosub_stuck_car FALSE
+				car_stuck_flag = -9
+			ELSE
+				IF NOT IS_CAR_ON_SCREEN gosub_stuck_car
+					GET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
+					GET_CLOSEST_CAR_NODE_WITH_HEADING coord_c1_x coord_c1_y coord_c1_z coord_c1_x coord_c1_y coord_c1_z heading
+					IF NOT IS_POINT_ON_SCREEN coord_c1_x coord_c1_y coord_c1_z 4.0
+						SET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
+						SET_CAR_HEADING	gosub_stuck_car heading
+					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
-	ENDIF
 
-	IF LOCATE_CAR_3D gosub_stuck_car stuck_x stuck_y stuck_z 4.0 4.0 4.0 0
-		IF car_stuck_flag = 0
-			stuck_timer_start = game_time
-			car_stuck_flag = 1
-		ENDIF
+		IF LOCATE_CAR_3D gosub_stuck_car stuck_x stuck_y stuck_z 4.0 4.0 4.0 0
+			IF car_stuck_flag = 0
+				stuck_timer_start = game_time
+				car_stuck_flag = 1
+			ENDIF
 
-		game_time = game_time - stuck_timer_start
-		IF car_stuck_flag = 1
-			IF game_time > 8000
-				IF LOCATE_CHAR_ANY_MEANS_CAR_2D scplayer gosub_stuck_car 90.0 90.0 0
-					SET_UPSIDEDOWN_CAR_NOT_DAMAGED gosub_stuck_car FALSE
-					stuck_timer_start = game_time
-					car_stuck_flag = -9
-				ELSE
-					IF NOT IS_CAR_ON_SCREEN gosub_stuck_car
-						GET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
-						GET_CLOSEST_CAR_NODE_WITH_HEADING coord_c1_x coord_c1_y coord_c1_z coord_c1_x coord_c1_y coord_c1_z heading
-						IF NOT IS_POINT_OBSCURED_BY_A_MISSION_ENTITY coord_c1_x coord_c1_y coord_c1_z 4.0 4.0 4.0
-							IF NOT IS_POINT_ON_SCREEN coord_c1_x coord_c1_y coord_c1_z 4.0
-								SET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
-								SET_CAR_HEADING gosub_stuck_car heading
-								stuck_timer_start = game_time
-								car_stuck_flag = 0
-								break_convoy_flag = 1
+			game_time = game_time - stuck_timer_start
+			IF car_stuck_flag = 1
+				IF game_time > 8000
+					IF LOCATE_CHAR_ANY_MEANS_CAR_2D scplayer gosub_stuck_car 90.0 90.0 0
+						SET_UPSIDEDOWN_CAR_NOT_DAMAGED gosub_stuck_car FALSE
+						//stuck_timer_start = game_time
+						GET_GAME_TIMER stuck_timer_start
+						car_stuck_flag = -9
+					ELSE
+						IF NOT IS_CAR_ON_SCREEN gosub_stuck_car
+							GET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
+							GET_CLOSEST_CAR_NODE_WITH_HEADING coord_c1_x coord_c1_y coord_c1_z coord_c1_x coord_c1_y coord_c1_z heading
+							IF NOT IS_POINT_OBSCURED_BY_A_MISSION_ENTITY coord_c1_x coord_c1_y coord_c1_z 4.0 4.0 4.0
+								IF NOT IS_POINT_ON_SCREEN coord_c1_x coord_c1_y coord_c1_z 4.0
+									SET_CAR_COORDINATES gosub_stuck_car coord_c1_x coord_c1_y coord_c1_z
+									SET_CAR_HEADING gosub_stuck_car heading
+									//stuck_timer_start = game_time
+									GET_GAME_TIMER stuck_timer_start
+									car_stuck_flag = 0
+									break_convoy_flag = 1
+								ENDIF
 							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
-	ENDIF
 
-	IF NOT LOCATE_CAR_3D gosub_stuck_car stuck_x stuck_y stuck_z 4.0 4.0 4.0 0
-		GET_CAR_COORDINATES gosub_stuck_car stuck_x stuck_y stuck_z
-		car_stuck_flag = 0
+		IF NOT LOCATE_CAR_3D gosub_stuck_car stuck_x stuck_y stuck_z 4.0 4.0 4.0 0
+			GET_CAR_COORDINATES gosub_stuck_car stuck_x stuck_y stuck_z
+			car_stuck_flag = 0
+		ENDIF
 	ENDIF
 ENDIF
 
 ////////////////////////////////////////////////////////////////////////////
 RETURN//////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
+GET_GAME_TIMER game_timer
+return
+return
+return
 
 ////////////////////////////////////////////////////////////////////////////
 criminal1_group_breaking:////////////////////////////////////////////////////

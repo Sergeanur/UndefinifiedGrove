@@ -176,7 +176,7 @@ IF NOT DOES_OBJECT_EXIST exercise_tread
 
 ENDIF
 
-IF NOT IS_CHAR_DEAD scplayer
+IF IS_PLAYER_PLAYING player1
 
 //////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////	   TREADMILL	//////////////////////////////////
@@ -187,6 +187,7 @@ IF playerexercising_flag = 0
 AND NOT IS_CHAR_DEAD scplayer
 
 	IF starttreadmill_flag = 0
+	AND NOT IS_PLAYER_USING_JETPACK player1
 
 		IF finishedtread_flag = 0
 			IF LOCATE_CHAR_ON_FOOT_3D scplayer treadmillx treadmilly treadmillz 1.2 1.2 4.0 FALSE

@@ -2401,7 +2401,7 @@ flag_on_doberman_mission = 0
 VAR_INT flag_gang_war_active
 flag_gang_war_active = 0
 
-VAR_INT ammu_shop_blip[10] mod_garage_blips[3] barbers_blips[5] pizza_blips[8] burger_blips[10] chicken_blips[11] tattoo_blips[4] gym_blips[2] clothes_blips[17] spray_shop[6]
+VAR_INT ammu_shop_blip[10] mod_garage_blips[3] barbers_blips[5] pizza_blips[8] burger_blips[10] chicken_blips[12] tattoo_blips[4] gym_blips[2] clothes_blips[17] spray_shop[6]
 
 
 ADD_SHORT_RANGE_SPRITE_BLIP_FOR_COORD 2067.4 -1831.2 13.5 RADAR_SPRITE_SPRAY spray_shop1

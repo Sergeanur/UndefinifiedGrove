@@ -45,6 +45,7 @@ LVAR_FLOAT vec_x vec_y vec_z
 LVAR_FLOAT vec2_x vec2_y vec2_z
 LVAR_FLOAT x2 y2 z2
 LVAR_FLOAT x3 y3 z3
+LVAR_INT vis_area
 // commonly used flags
 LVAR_INT dialogue_flag
 LVAR_INT help_flag
@@ -1142,6 +1143,10 @@ CLEAR_HELP
 	            WAIT 0
 			ENDWHILE
 			SWITCH_WIDESCREEN ON
+
+			// set visible area
+			GET_AREA_VISIBLE vis_area
+			SET_AREA_VISIBLE 0
 			
 
 			// set player's position
@@ -1442,6 +1447,7 @@ CLEAR_HELP
 				do_not_update_camera_crane1 = 0
 			ENDIF
 			
+			SET_AREA_VISIBLE vis_area
 			RESTORE_CAMERA_JUMPCUT 
 			SET_CAMERA_BEHIND_PLAYER
 			SWITCH_WIDESCREEN OFF

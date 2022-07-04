@@ -4371,6 +4371,7 @@ RETURN
 mission_desert5_failed:
 CLEAR_PRINTS
 IF d5_mission_plane_dead_flag = 1
+OR NOT IS_PLAYER_PLAYING player1
 	PRINT_BIG ( M_FAIL ) 5000 1 //"Mission Failed"
 ENDIF
 

@@ -1049,10 +1049,10 @@ WAIT 0
 				SET_CHAR_COORDINATES scplayer -946.8 -1733.5 76.8
 			ENDIF   
 			
-			IF t2_speech_flag = 0
-				IF timerb > 7000
-					PRINT_HELP SYN3_22  
-					t2_speech_flag = 1
+			IF t2_speech_flag = 2 
+				IF NOT IS_THIS_HELP_MESSAGE_BEING_DISPLAYED SYN3_23
+					PRINT_HELP ( SYN3_24 ) // Use the camera movement controls to move the target position.
+					t2_speech_flag = 3
 				ENDIF
 			ENDIF
 			IF t2_speech_flag = 1 
@@ -1061,10 +1061,10 @@ WAIT 0
 					t2_speech_flag = 2
 				ENDIF
 			ENDIF
-			IF t2_speech_flag = 2 
-				IF NOT IS_THIS_HELP_MESSAGE_BEING_DISPLAYED SYN3_23
-					PRINT_HELP ( SYN3_24 ) // Use the camera movement controls to move the target position.
-					t2_speech_flag = 3
+			IF t2_speech_flag = 0
+				IF timerb > 7000
+					PRINT_HELP SYN3_22  
+					t2_speech_flag = 1
 				ENDIF
 			ENDIF
 

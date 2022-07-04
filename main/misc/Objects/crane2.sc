@@ -137,6 +137,7 @@ crane2_script_loop:
 
 								SET_PLAYER_CONTROL player1 OFF	 
 								SET_MINIGAME_IN_PROGRESS TRUE
+								player_is_in_crane = 2
 								DO_FADE 500 FADE_OUT 
 								WHILE GET_FADING_STATUS 
 									WAIT 0
@@ -162,7 +163,7 @@ crane2_script_loop:
 									SET_PLAYER_CONTROL player1 ON
 									SET_CHAR_COLLISION scplayer OFF
 									SET_CHAR_PROOFS scplayer TRUE TRUE TRUE TRUE TRUE 
-									player_is_in_crane = 2
+									
 									crane2_sound_flag = 0
 								ENDIF
 

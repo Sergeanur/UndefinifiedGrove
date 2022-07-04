@@ -2051,8 +2051,10 @@ IF hei3_progress_flag = 4
 			IF players_money >= 200 				
 				ADD_SCORE player1 -200	 				
 			ELSE
-				players_money *= -1
-				ADD_SCORE player1 players_money
+				IF players_money > 0 
+					players_money *= -1
+					ADD_SCORE player1 players_money
+				ENDIF
 			ENDIF
 
 			SET_PLAYER_CONTROL Player1 OFF
@@ -3339,7 +3341,7 @@ IF hei3_progress_flag = 11
 				SET_BIT iDateReport SEX_IN_PROGRESS
 				DISABLE_ALL_ENTRY_EXITS TRUE
 				START_NEW_STREAMED_SCRIPT GF_Sex.sc	hei3_iGirlFriend hei3_iSpankingFlag  0 2037.6515 2723.8711 9.8352 0.0702
-				WAIT 1500
+				DO_FADE 0 FADE_OUT
 				DELETE_CHAR hei3_millie_ped
 				MARK_CHAR_AS_NO_LONGER_NEEDED hei3_millie_ped
 				hei3_x_button_can_be_pressed = 1

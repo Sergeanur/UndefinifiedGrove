@@ -67,6 +67,8 @@ LVAR_INT ls_sfx
 
 // ****************************************Mission Start************************************
 
+REGISTER_MISSION_GIVEN
+
 mission_start_gymls:
 
 IF NOT IS_CHAR_DEAD scplayer
@@ -82,8 +84,6 @@ ls_has_the_knuckle_duster = 0
 INCREMENT_INT_STAT VISITS_TO_GYM 1
 
 gym_is_running = 1
-
-REGISTER_MISSION_GIVEN
 
 LOAD_MISSION_TEXT GYM
 

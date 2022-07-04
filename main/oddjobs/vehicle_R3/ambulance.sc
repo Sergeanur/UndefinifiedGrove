@@ -1272,14 +1272,8 @@ GENERATE_RANDOM_FLOAT_IN_RANGE ambulance_min_y ambulance_max_y random_y
 
 GET_CONTROLLER_MODE controlmode
 
-IF NOT controlmode = 3
-	IF IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
-		mission_end_button_ambulance = 1
-	ENDIF
-ELSE
-	IF IS_BUTTON_PRESSED PAD1 SQUARE
-		mission_end_button_ambulance = 1
-	ENDIF
+IF IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
+	mission_end_button_ambulance = 1
 ENDIF
 
 
@@ -1292,12 +1286,7 @@ IF mission_end_button_ambulance = 1
 			RETURN
 		ENDIF
 	ELSE
-		IF NOT IS_BUTTON_PRESSED PAD1 SQUARE
-			CLEAR_THIS_PRINT ALEVEL
-			PRINT_NOW A_CANC 3000 1//"~r~Ambulance mission cancelled!"
-			player_failed_mission = 1
-			RETURN
-		ENDIF
+		GET_CONTROLLER_MODE controlmode
 	ENDIF
 ENDIF
 
@@ -1591,6 +1580,53 @@ IF ped_coord_x < 1202.0
 ENDIF
 
 
+
+
+//////////////
+// SAN FRAN	//
+//////////////
+
+IF ped_coord_x < 1176.0
+	IF  ped_coord_x > 1158.0 
+		IF  ped_coord_y	< 1364.0
+			IF  ped_coord_y > 1345.0
+			 	GOTO generate_random_coord				
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+IF ped_coord_x < -2307.0
+	IF  ped_coord_x > -2333.0 
+		IF  ped_coord_y	< 1100.0
+			IF  ped_coord_y > 1036.0
+			 	GOTO generate_random_coord				
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+/////////////
+/// VEGAS ///
+/////////////
+
+// boat on the strip
+
+IF ped_coord_x < 2009.0
+	IF  ped_coord_x > 1989.0 
+		IF  ped_coord_y	< 1571.0
+			IF  ped_coord_y > 1513.0
+			 	GOTO generate_random_coord				
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
+///////////////////
+/// COUNTRYSIDE ///
+///////////////////
 //staricase
 
 IF ped_coord_x < 2632.8184 
@@ -1663,15 +1699,15 @@ WAIT 0
 //////////////////////////////
 
 
-IF IS_PS2_KEYBOARD_KEY_PRESSED PS2_KEY_SPACE
-  ped_time_limit = 999999
-ENDIF
+//IF IS_PS2_KEYBOARD_KEY_PRESSED PS2_KEY_SPACE
+  //ped_time_limit = 999999
+//ENDIF
 
-IF IS_PS2_KEYBOARD_KEY_PRESSED PS2_KEY_S
-done_ambulance_progress = 0
-saved_peds = number_of_injured_peds
-db_ambulance_level = 12
-ENDIF
+//IF IS_PS2_KEYBOARD_KEY_PRESSED PS2_KEY_S
+//done_ambulance_progress = 0
+//saved_peds = number_of_injured_peds
+//db_ambulance_level = 12
+//ENDIF
 
 
 //VIEW_INTEGER_VARIABLE 	  gangs_changed relationships_chngd
@@ -1687,28 +1723,15 @@ ENDIF
 
 GET_CONTROLLER_MODE controlmode
 
-IF NOT controlmode = 3
-	IF IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
-		mission_end_button_ambulance = 1
-	ENDIF
-ELSE
-	IF IS_BUTTON_PRESSED PAD1 SQUARE
-		mission_end_button_ambulance = 1
-	ENDIF
+IF IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
+	mission_end_button_ambulance = 1
 ENDIF
 
 IF mission_end_button_ambulance = 1	
-	IF NOT controlmode = 3
-		IF NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
-			PRINT_NOW A_CANC 3000 1//"~r~Ambulance mission cancelled!"
-			GOTO ambulance_failed
-		ENDIF	
-	ELSE
-		IF NOT IS_BUTTON_PRESSED PAD1 SQUARE
-			PRINT_NOW A_CANC 3000 1//"~r~Ambulance mission cancelled!"
-			GOTO ambulance_failed
-		ENDIF	
-	ENDIF
+	IF NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOCK
+		PRINT_NOW A_CANC 3000 1//"~r~Ambulance mission cancelled!"
+		GOTO ambulance_failed
+	ENDIF	
 ENDIF
 
 IF NOT IS_CHAR_IN_MODEL scplayer AMBULAN

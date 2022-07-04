@@ -595,7 +595,7 @@ if mission_flag = 19
 		HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer FALSE
 		SET_EVERYONE_IGNORE_PLAYER player1 FALSE
 		SWITCH_WIDESCREEN OFF
-		SET_ALL_CARS_CAN_BE_DAMAGED TRUE
+		//SET_ALL_CARS_CAN_BE_DAMAGED TRUE
 		SET_CAMERA_BEHIND_PLAYER
 		RESTORE_CAMERA_JUMPCUT
 
@@ -640,6 +640,7 @@ unload_special_character 1
 mark_model_as_no_longer_needed bandito
 mark_model_as_no_longer_needed buffalo
 mark_model_as_no_longer_needed desert_eagle
+SET_MUSIC_DOES_FADE TRUE
 
 if is_player_playing player1
 	CLEAR_CHAR_RELATIONSHIP scplayer ACQUAINTANCE_TYPE_PED_HATE PEDTYPE_MISSION1

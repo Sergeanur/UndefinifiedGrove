@@ -1097,19 +1097,21 @@ valet_mission_control:
 						DISPLAY_NTH_ONSCREEN_COUNTER_WITH_STRING valet_time_bonus COUNTER_DISPLAY_NUMBER 2 VAL_A17
 						
 						GET_PARKING_NODE_IN_AREA car_park_area_x1[val_area] car_park_area_y1[val_area] car_park_area_z1[val_area] car_park_area_x2[val_area] car_park_area_y2[val_area] car_park_area_z2[val_area] target_x target_y target_z											
+						IF NOT target_x = 0.0
 
-						CLEAR_AREA target_x target_y target_z 5.0 FALSE
+							CLEAR_AREA target_x target_y target_z 5.0 FALSE
 
-						parking_x = target_x
-						parking_y = target_y
-						parking_z = target_z
-						LVAR_FLOAT a_heading
+							parking_x = target_x
+							parking_y = target_y
+							parking_z = target_z
+							LVAR_FLOAT a_heading
 //						VIEW_FLOAT_VARIABLE a_heading a_heading
 
-						REMOVE_BLIP parking_space_blip
-						ADD_BLIP_FOR_COORD target_x target_y target_z parking_space_blip
+							REMOVE_BLIP parking_space_blip
+							ADD_BLIP_FOR_COORD target_x target_y target_z parking_space_blip
 
-						valet_mission_flag = 6
+							valet_mission_flag = 6
+						ENDIF
 
 					ELSE
 						IF a_ped = valet[0]
@@ -1758,24 +1760,28 @@ valets:
 							IF NOT IS_CAR_DEAD valet_car[valet_i]
 								IF IS_CHAR_IN_CAR valet[valet_i] valet_car[valet_i]
 
-									IF valet_car[valet_i] = valet_pickup_car
-										valet_pickup_car = 0
-									ENDIF
 									GET_PARKING_NODE_IN_AREA car_park_area_x1[val_area] car_park_area_y1[val_area] car_park_area_z1[val_area] car_park_area_x2[val_area] car_park_area_y2[val_area] car_park_area_z2[val_area] x y z
-									
-									VAR_FLOAT parking_x parking_y parking_z
-									parking_x = x
-									parking_y = y
-									parking_z = z
-									IF IS_VEHICLE_ATTACHED valet_car[valet_i]
-										DETACH_CAR valet_car[valet_i] 0.0 0.0 0.0 FALSE
+
+									IF NOT x = 0.0
+
+										IF valet_car[valet_i] = valet_pickup_car
+											valet_pickup_car = 0
+										ENDIF
+
+										VAR_FLOAT parking_x parking_y parking_z
+										parking_x = x
+										parking_y = y
+										parking_z = z
+										IF IS_VEHICLE_ATTACHED valet_car[valet_i]
+											DETACH_CAR valet_car[valet_i] 0.0 0.0 0.0 FALSE
+										ENDIF
+										TASK_CAR_DRIVE_TO_COORD valet[valet_i] valet_car[valet_i] x y z 15.0 MODE_ACCURATE 0 DRIVINGMODE_STOPFORCARS
+										IF player_on_valet_mission = 1
+											SET_CHAR_CANT_BE_DRAGGED_OUT valet[valet_i] TRUE
+										ENDIF
+										valet_task[valet_i] = DRIVE_TO_CAR_PARK
+										valet_last_task[valet_i] = PICKING_UP_CAR
 									ENDIF
-									TASK_CAR_DRIVE_TO_COORD valet[valet_i] valet_car[valet_i] x y z 15.0 MODE_ACCURATE 0 DRIVINGMODE_STOPFORCARS
-									IF player_on_valet_mission = 1
-										SET_CHAR_CANT_BE_DRAGGED_OUT valet[valet_i] TRUE
-									ENDIF
-									valet_task[valet_i] = DRIVE_TO_CAR_PARK
-									valet_last_task[valet_i] = PICKING_UP_CAR
 								ELSE
 									IF NOT IS_CAR_DEAD valet_car[valet_i]
 										IF LOCATE_CHAR_ANY_MEANS_CAR_3D valet[valet_i] valet_car[valet_i] 20.0 20.0 20.0 FALSE

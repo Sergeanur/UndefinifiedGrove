@@ -40,6 +40,7 @@ mission_start_bskool:
 // ---- Impossible 'IF'... 
 	IF flag_player_on_mission = 0
 		CREATE_CAR BF400 car_posx car_posy perfect_positionz instructor_bike
+		CREATE_CHAR_INSIDE_CAR instructor_bike PEDTYPE_CIVFEMALE WMYMECH bs_instructor
 		CREATE_OBJECT_NO_OFFSET trafficcone 0.0 0.0 100.0 trafficcones[20]
 		CREATE_OBJECT_NO_OFFSET trafficcone 0.0 0.0 100.0 trafficcones[30]
 		CREATE_OBJECT landjump2 car_posx car_posy perfect_positionz bs_ramp
@@ -360,6 +361,7 @@ bs_start_mission:
 	ENDIF
 
 	DELETE_CAR instructor_bike
+	DELETE_CHAR bs_instructor
 	CLEAR_AREA noticeboard_x noticeboard_y noticeboard_z 300.0 TRUE
 	CLEAR_ONSCREEN_TIMER car_timer
 	FREEZE_ONSCREEN_TIMER FALSE
@@ -2253,53 +2255,87 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
     
 	GOSUB bs_small_onscreen_text 
 	SET_TEXT_COLOUR 248 211 7 255
-	DISPLAY_TEXT 105.0 375.0 BS_X_4
+	IF current_Language = LANGUAGE_FRENCH
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 BS_X_4
+	ELSE
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 BS_X_4
+	ENDIF
 
 	IF NOT bs_control_flag = 1
 		GOSUB bs_small_onscreen_text 
 		SET_TEXT_COLOUR 248 211 7 255
-		DISPLAY_TEXT 105.0 325.0 BS_X_5
+		IF current_Language = LANGUAGE_FRENCH
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 70.0 340.0 BS_X_5
+		ELSE
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 70.0 340.0 BS_X_5
+		ENDIF
 
 		IF NOT bs_open_tests = 1
 			GOSUB bs_small_onscreen_text 
 			SET_TEXT_COLOUR 248 211 7 255
-			DISPLAY_TEXT 105.0 350.0 BS_X_3
+			IF current_Language = LANGUAGE_FRENCH
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BS_X_3
+			ELSE
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BS_X_3
+			ENDIF
 		ENDIF
 
 		IF bs_open_tests = 1 
 			GOSUB bs_small_onscreen_text 
 			SET_TEXT_COLOUR 173 173 173 125
-			DISPLAY_TEXT 105.0 350.0 BS_X_3
+			IF current_Language = LANGUAGE_FRENCH
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BS_X_3
+			ELSE
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BS_X_3
+			ENDIF
 		ENDIF
 	ELSE
 		GOSUB bs_small_onscreen_text 
 		SET_TEXT_COLOUR 248 211 7 255
-		DISPLAY_TEXT 105.0 350.0 BS_X_3
+		IF current_Language = LANGUAGE_FRENCH
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 437.0 340.0 BS_X_3
+		ELSE
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 437.0 340.0 BS_X_3
+		ENDIF
 	ENDIF
 
 	GOSUB bs_small_onscreen_text 
-	SET_TEXT_SCALE 1.45 2.0 
-	SET_TEXT_COLOUR 248 211 7 255
-	DISPLAY_TEXT 70.0 372.0 BS_X04
+	SET_TEXT_SCALE 0.32 1.25 
+	SET_TEXT_COLOUR 255 255 255 255
+	DISPLAY_TEXT 150.0 360.0 BS_X04
 
 	IF NOT bs_control_flag = 1
-		SET_TEXT_COLOUR 248 211 7 255
-		SET_TEXT_SCALE 1.45 2.0 
-		DISPLAY_TEXT 70.0 322.0 BS_X05
+		GOSUB bs_small_onscreen_text 
+		SET_TEXT_COLOUR 255 255 255 255
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 150.0 340.0 BS_X05
 		IF NOT bs_open_tests = 1 
-			SET_TEXT_COLOUR 248 211 7 255
-			SET_TEXT_SCALE 1.45 2.0 
-			DISPLAY_TEXT 61.4 347.0 BS_X03
+			GOSUB bs_small_onscreen_text 
+			SET_TEXT_COLOUR 255 255 255 255
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 537.4 340.0 BS_X03
 		ENDIF
 		IF bs_open_tests = 1 
-			SET_TEXT_COLOUR 248 211 7 125
-			SET_TEXT_SCALE 1.45 2.0 
-			DISPLAY_TEXT 61.4 347.0 BS_X03
+			GOSUB bs_small_onscreen_text 
+			SET_TEXT_COLOUR 173 173 173 125
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 537.4 340.0 BS_X03
 		ENDIF
 	ELSE
-		SET_TEXT_COLOUR 248 211 7 255
-		SET_TEXT_SCALE 1.45 2.0 
-		DISPLAY_TEXT 61.4 347.0 BS_X03
+		GOSUB bs_small_onscreen_text 
+		SET_TEXT_COLOUR 255 255 255 255
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 537.4 340.0 BS_X03
 	ENDIF
 
 	SET_TEXT_SCALE 0.52 1.45 
@@ -3003,45 +3039,47 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 
 	IF NOT bs_print_top_scores_flag = 2
 		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
+		SET_TEXT_SCALE 0.52 1.45
+		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 170.0 342.0 BS_X05
+		DISPLAY_TEXT 330.0 345.0 BS_X05
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 205.0 345.0 BS_Z_5
+		DISPLAY_TEXT 170.0 345.0 BS_Z_5
 		
 		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
+		SET_TEXT_SCALE 0.52 1.45
+		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 170.0 362.0 BS_X04
+		DISPLAY_TEXT 330.0 365.0 BS_X04
 		
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 205.0 365.0 BS_Z_6
+		DISPLAY_TEXT 170.0 365.0 BS_Z_6
 	ELSE
-		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 0.52 1.45
-		SET_TEXT_COLOUR 255 255 255 255
-		DISPLAY_TEXT 170.0 345.0 BS_Z_9
-
-		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
-		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 170.0 362.0 BS_X05
+		IF NOT bs_open_tests = 6
+			GOSUB bs_small_backend_text
+			SET_TEXT_SCALE 0.52 1.45
+			SET_TEXT_COLOUR 255 255 255 255
+			DISPLAY_TEXT 170.0 345.0 BS_Z_9
+		ENDIF
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
+		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
+		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
+		DISPLAY_TEXT 330.0 365.0 BS_X05
+
+		GOSUB bs_small_backend_text
+		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 205.0 365.0 BS_Z_5
+		DISPLAY_TEXT 170.0 365.0 BS_Z_5
 	ENDIF
 
 RETURN/////////////////////////////////////////////////////////////////////////////////////

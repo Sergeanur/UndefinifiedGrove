@@ -1880,23 +1880,17 @@ ie_create_custom_plates:
 			CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &_CMACD1_
 		BREAK
 		CASE WINDSOR
-			CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &__C0S___
+			GENERATE_RANDOM_INT_IN_RANGE 0 3 temp_int
+			IF temp_int = 0
+				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &__C0S___
+			ENDIF
 		BREAK
 		CASE JESTER
-			GENERATE_RANDOM_INT_IN_RANGE 0 5 temp_int
-			IF temp_int = 0
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &__SWAV__
-			ENDIF
+			GENERATE_RANDOM_INT_IN_RANGE 0 3 temp_int
 			IF temp_int = 1
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &_GR01N__
-			ENDIF
-			IF temp_int = 2
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &_G_MAN__
-			ENDIF
-			IF temp_int = 3
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &_X2_GAV_
 			ENDIF
-			IF temp_int = 4
+			IF temp_int = 2
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &__G3PO__
 			ENDIF
 		BREAK
@@ -1917,9 +1911,6 @@ ie_create_custom_plates:
 		BREAK
 		CASE FELTZER
 			GENERATE_RANDOM_INT_IN_RANGE 0 5 temp_int
-			IF temp_int = 0
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &DR_DR_F_	
-			ENDIF
 			IF temp_int = 1
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &433_ADF_	
 			ENDIF
@@ -1927,9 +1918,6 @@ ie_create_custom_plates:
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &DR_F_MBE	
 			ENDIF	
 			IF temp_int = 3
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &GPP4YR0L	
-			ENDIF
-			IF temp_int = 4
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &ANN_F3RG	
 			ENDIF
 		BREAK
@@ -1993,12 +1981,6 @@ ie_create_custom_plates:
 			GENERATE_RANDOM_INT_IN_RANGE 0 4 temp_int
 			IF temp_int = 0
 				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &T00_FAST 
-			ENDIF
-			IF temp_int = 1
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &EA_SUCKS 
-			ENDIF
-			IF temp_int = 2
-				CUSTOM_PLATE_FOR_NEXT_CAR current_import_car_list[impexp_selected_car] &FUCK_Y0U 
 			ENDIF
 		BREAK
 		DEFAULT

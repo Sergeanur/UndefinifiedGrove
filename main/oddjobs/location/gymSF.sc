@@ -60,6 +60,8 @@ LVAR_INT sf_playing
 
 // ****************************************Mission Start************************************
 
+REGISTER_MISSION_GIVEN
+
 mission_start_gymsf:
 
 IF NOT IS_CHAR_DEAD scplayer
@@ -75,8 +77,6 @@ sf_playing = 2
 flag_player_on_mission = 1
 
 INCREMENT_INT_STAT VISITS_TO_GYM 1
-
-REGISTER_MISSION_GIVEN
 
 LOAD_MISSION_TEXT GYM
 

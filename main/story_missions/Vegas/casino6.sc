@@ -126,6 +126,7 @@ LVAR_INT never_run_this_C6
 	IF never_run_this_C6 = 1 
 		CREATE_CAR SENTINEL 0.0 0.0 0.0 player_vehicle_C6
 		ADD_BLIP_FOR_COORD 0.0 0.0 0.0 goto_blip_C6
+		ADD_BLIP_FOR_COORD 0.0 0.0 0.0 rosenberg_blip_C6
 	ENDIF
 
 // ########################
@@ -155,7 +156,7 @@ LVAR_INT never_run_this_C6
 	SET_RELATIONSHIP ACQUAINTANCE_TYPE_PED_HATE PEDTYPE_MISSION2 PEDTYPE_PLAYER1
 
 	GET_PLAYER_GROUP player1 players_group_C6
-	SET_GROUP_DEFAULT_TASK_ALLOCATOR players_group_C6 DEFAULT_TASK_ALLOCATOR_FOLLOW_ANY_MEANS
+	SET_GROUP_DEFAULT_TASK_ALLOCATOR players_group_C6 DEFAULT_TASK_ALLOCATOR_FOLLOW_LIMITED
 
 	// chars
 	LOAD_SPECIAL_CHARACTER 1 ROSE
@@ -170,6 +171,7 @@ LVAR_INT never_run_this_C6
 	SET_CHAR_HEADING rosenberg_C6 71.6745  
 	SET_CHAR_AREA_VISIBLE rosenberg_C6 0
 
+	REMOVE_BLIP rosenberg_blip_C6
 	ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 	CHANGE_BLIP_DISPLAY rosenberg_blip_C6 BLIP_ONLY
 	SET_BLIP_AS_FRIENDLY rosenberg_blip_C6 TRUE 
@@ -263,8 +265,8 @@ LVAR_INT never_run_this_C6
 	audio_sound_label_C6[18]= SOUND_CAS6_CB
 	audio_speaker_C6[18] 	= rosenberg_C6
 
-	audio_pointer_C6 = 0
-	audio_status_C6	= 0
+	//audio_pointer_C6 = 0
+	//audio_status_C6	= 0
 	TIMERB = 0
 
 
@@ -305,6 +307,7 @@ mission_casino6_MAIN_drive_to_abattoir_loop:
 				REMOVE_BLIP goto_blip_C6
 				REMOVE_BLIP rosenberg_blip_C6
 				REMOVE_CHAR_FROM_GROUP rosenberg_C6
+				rosenberg_blip_status_C6 = 0
 				GOTO mission_casino6_MAIN_goto_rosenberg_interior
 			ENDIF 	
 		ENDIF
@@ -360,6 +363,7 @@ mission_casino6_MAIN_goto_rosenberg_interior:
 			SET_CHAR_NEVER_LEAVES_GROUP rosenberg_C6 TRUE
 			SET_GROUP_MEMBER players_group_C6 rosenberg_C6	
 			
+			REMOVE_BLIP rosenberg_blip_C6
 			ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 			SET_BLIP_AS_FRIENDLY rosenberg_blip_C6 TRUE 
 			CHANGE_BLIP_DISPLAY rosenberg_blip_C6 BLIP_ONLY
@@ -802,6 +806,7 @@ LVAR_FLOAT car_pos_C6[4]
 		 
 		FREEZE_CHAR_POSITION rosenberg_C6 FALSE
 		
+		REMOVE_BLIP rosenberg_blip_C6
 		ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 		CHANGE_BLIP_DISPLAY rosenberg_blip_C6 BLIP_ONLY
 		SET_BLIP_ENTRY_EXIT rosenberg_blip_C6 968.3954 2160.9651 1.0 
@@ -982,6 +987,7 @@ LVAR_FLOAT car_pos_C6[4]
 	// ############
 	
 	CREATE_OBJECT_NO_OFFSET freezer_door 951.859 2121.648 1012.094 fd_C6
+	SET_OBJECT_PROOFS fd_C6 TRUE TRUE TRUE TRUE TRUE
 	CREATE_OBJECT_NO_OFFSET sec_keypad 950.9305 2114.3477 1011.5222 fd_switch_C6
 	SET_OBJECT_HEADING fd_switch_C6 180.0
 	FREEZE_OBJECT_POSITION fd_switch_C6 TRUE
@@ -3938,6 +3944,7 @@ mission_casino6_MAIN_drive_back_to_casino:
 		SET_CHAR_NEVER_LEAVES_GROUP rosenberg_C6 TRUE
 		SET_GROUP_MEMBER players_group_C6 rosenberg_C6
 		REMOVE_ALL_CHAR_WEAPONS rosenberg_C6
+		REMOVE_BLIP rosenberg_blip_C6
 		ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 		SET_BLIP_AS_FRIENDLY rosenberg_blip_C6 TRUE
 	ENDIF
@@ -4118,6 +4125,8 @@ mission_casino6_MAIN_drive_back_to_casino_loop:
 			REMOVE_BLIP goto_blip_C6
 			REMOVE_BLIP rosenberg_blip_C6
 			REMOVE_CHAR_FROM_GROUP rosenberg_C6
+			
+			rosenberg_blip_status_C6 = 0
 
 			GOTO mission_casino6_MAIN_rosenberg_interior 	
 		ENDIF
@@ -4144,6 +4153,7 @@ mission_casino6_MAIN_rosenberg_interior:
 			SET_CHAR_NEVER_LEAVES_GROUP rosenberg_C6 TRUE
 			SET_GROUP_MEMBER players_group_C6 rosenberg_C6	
 			
+			REMOVE_BLIP rosenberg_blip_C6
 			ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 			SET_BLIP_AS_FRIENDLY rosenberg_blip_C6 TRUE 
 			CHANGE_BLIP_DISPLAY rosenberg_blip_C6 BLIP_ONLY
@@ -4185,6 +4195,7 @@ mission_casino6_SUB_rosenberg_blip:
 
 		CASE 1
 			IF NOT IS_CHAR_IN_ANY_CAR rosenberg_C6
+				REMOVE_BLIP rosenberg_blip_C6
 				ADD_BLIP_FOR_CHAR rosenberg_C6 rosenberg_blip_C6
 				SET_BLIP_AS_FRIENDLY rosenberg_blip_C6 TRUE
 				CHANGE_BLIP_DISPLAY rosenberg_blip_C6 BLIP_ONLY

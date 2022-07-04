@@ -190,7 +190,7 @@ cat1_debug_tools:
 		CAT1_view_debug[4] = help_flag
 		CAT1_view_debug[5] = help_timer
 		CAT1_view_debug[6] = TIMERA
-		CAT1_view_debug[7]	= TIMERB
+		//CAT1_view_debug[7]	= TIMERB
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[0] m_stage
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[1] m_goals
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[2] dialogue_flag
@@ -198,12 +198,12 @@ cat1_debug_tools:
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[4] help_flag
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[5] help_timer
 		VIEW_INTEGER_VARIABLE CAT1_view_debug[6] TIMERA
-		VIEW_INTEGER_VARIABLE CAT1_view_debug[7] TIMERB
+		//VIEW_INTEGER_VARIABLE CAT1_view_debug[7] TIMERB
 	ENDIF
 	IF display_debug = 2
 	// put mission variable for display in here
-		CAT1_view_debug[0] = disable_group
-		CAT1_view_debug[1] = in_group		
+		CAT1_view_debug[0] = 0 //disable_group
+		CAT1_view_debug[1] = 0 //in_group		
 		CAT1_view_debug[2] = cat1_pickups_collected
 		CAT1_view_debug[3] = paused[0]
 		CAT1_view_debug[4] = paused[1]
@@ -1911,6 +1911,7 @@ cat1_m_stage_1:
 
 		MARK_CHAR_AS_NO_LONGER_NEEDED shop_keeper
 		MARK_CHAR_AS_NO_LONGER_NEEDED customer
+		MARK_CHAR_AS_NO_LONGER_NEEDED robber[3]
 
 		MARK_MODEL_AS_NO_LONGER_NEEDED QUAD
 		MARK_MODEL_AS_NO_LONGER_NEEDED CWMYFR
@@ -2238,6 +2239,8 @@ cat1_m_stage_2:
 						CHANGE_BLIP_COLOUR briefcase_blip[temp_int] GREEN
 						briefcase_text_timer = 29000
 						robber_pickup_been_created[temp_int] = 1
+						MARK_CHAR_AS_NO_LONGER_NEEDED robber[temp_int]
+						MARK_CAR_AS_NO_LONGER_NEEDED robber_quad[temp_int]
 					ENDIF
 				ENDIF
 			ENDIF

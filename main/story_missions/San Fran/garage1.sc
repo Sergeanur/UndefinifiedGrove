@@ -3885,22 +3885,26 @@ going_to_destinations_garage1:
 				// BAnter and text
 				// Starting the journey with truth and player
 				IF flag_go_to_mechanic1_garag1 = 1
-					IF flag_cutscene_garage1 >= 0
-					AND flag_cutscene_garage1 <= 7
-						GOSUB load_and_play_audio_garage1
-					ENDIF
+					IF flag_is_truth_in_car = 0
+
 				
-					//	IS char in vietnam area
-					IF IS_CHAR_IN_ZONE scplayer EASB
-						IF flag_cutscene_garage1 = 8
+						IF flag_cutscene_garage1 >= 0
+						AND flag_cutscene_garage1 <= 7
 							GOSUB load_and_play_audio_garage1
 						ENDIF
-					ENDIF 
+					
+				  	 //	IS char in vietnam area
+						IF IS_CHAR_IN_ZONE scplayer EASB
+							IF flag_cutscene_garage1 = 8
+								GOSUB load_and_play_audio_garage1
+							ENDIF
+						ENDIF 
 
-					IF flag_cutscene_garage1 = 9
-					OR flag_cutscene_garage1 = 10 
-						GOSUB load_and_play_audio_garage1
-					ENDIF 
+						IF flag_cutscene_garage1 = 9
+						OR flag_cutscene_garage1 = 10 
+							GOSUB load_and_play_audio_garage1
+						ENDIF 
+					ENDIF
 				ENDIF
 
 				// going to the hospital
@@ -4147,7 +4151,7 @@ checking_buddies_garage1:
 				ENDIF
 
 				IF flag_is_truth_in_car = 1
-					IF NOT LOCATE_CHAR_ON_FOOT_CHAR_3D char_truth_garag1 scplayer 300.0 300.0 300.0 FALSE
+					IF NOT LOCATE_CHAR_ON_FOOT_CHAR_3D char_truth_garag1 scplayer 150.0 150.0 150.0 FALSE
 
 						flag_go_to_hub_garag1 = 0
 						flag_go_to_mechanic1_garag1	= 0

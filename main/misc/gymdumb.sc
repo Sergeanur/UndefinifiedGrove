@@ -211,11 +211,12 @@ WAIT 0
 
 	ENDIF
 
-IF NOT IS_CHAR_DEAD scplayer
+IF IS_PLAYER_PLAYING player1
  //locate around the dumbell area - locate around the dumbell area - locate around the dumbell area - 
 IF playerexercising_flag = 0
 
 	IF startdumbell_flag = 0
+	AND NOT IS_PLAYER_USING_JETPACK player1
 
 		IF finisheddumbell_flag = 0
 

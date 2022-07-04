@@ -2813,7 +2813,8 @@ vidpok_draw_hud:
 	
 	// instructions
 	GOSUB vp_txt_3
-	DISPLAY_TEXT_WITH_NUMBER vp_screen_x[4] vp_screen_y[4] VP17 temp_int
+	SET_TEXT_CENTRE ON	  
+	DISPLAY_TEXT 320.0 vp_screen_y[4] VP17
 	DRAW_RECT VP_TABLE_X VP_TABLE_Y VP_TABLE_WIDTH VP_TABLE_HEIGHT 0 0 0 255
 	
 	

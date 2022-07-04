@@ -357,7 +357,6 @@ grav_restart:
 		grav_pickups=0
 		grav_speed_x=0.0
 		grav_speed_y=0.0
-		grav_temp_score= 0
 		grav_temp_score2= 0
 		
 		GET_GAME_TIMER grav_countdown_start
@@ -701,6 +700,7 @@ IF nGameState = INACTIVE
 		SET_TEXT_SCALE 2.0 4.0
 		DISPLAY_TEXT 320.0 196.0 GR_A_5  // game over
 		GET_GAME_TIMER grav_end_time
+		GET_GAME_TIMER grav_end_time
 		grav_time_diff = grav_end_time - grav_start_time
 		
 		IF grav_time_diff > 5000
@@ -976,6 +976,7 @@ grav_checkcollision:
 					timera = 0
 				ENDIF
 				grav_pick_x[grav_current_plat]=-999.00
+				RETURN
 			ENDIF
 		ENDIF
 		grav_current_plat++

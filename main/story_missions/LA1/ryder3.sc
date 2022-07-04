@@ -1207,6 +1207,12 @@ WHILE NOT IS_CHAR_DEAD scplayer
 
 				REMOVE_BLIP mission_blip
 
+				IF DOES_BLIP_EXIST r3_ryders_car_blip
+
+					CHANGE_BLIP_DISPLAY r3_ryders_car_blip NEITHER
+
+				ENDIF
+
 				IF NOT IS_CHAR_DEAD r3_enemy[0]
 				OR NOT IS_CHAR_DEAD r3_enemy[1]
 				OR NOT IS_CHAR_DEAD r3_enemy[2]
@@ -3419,6 +3425,18 @@ mission_ryder3_cleanup:
 	REMOVE_CAR_RECORDING 490
 	REMOVE_CAR_RECORDING 486
 	REMOVE_CAR_RECORDING 104
+
+	IF NOT IS_CHAR_DEAD r3_dead_grove
+
+		DELETE_CHAR r3_dead_grove
+
+	ENDIF
+
+	IF NOT IS_CHAR_DEAD r3_dead_lsv
+
+		DELETE_CHAR r3_dead_lsv
+
+	ENDIF
 
 	REPEAT 4 v
 
