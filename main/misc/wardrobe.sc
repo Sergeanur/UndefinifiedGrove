@@ -403,11 +403,11 @@ shop_wardrobe_inner:
 
 				IF shop_progress_wardrobe = 0
 					
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						shop_progress_wardrobe = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_wardrobe = 2
 					ENDIF
 
@@ -416,7 +416,7 @@ shop_wardrobe_inner:
 				// ******* PLAYER HAS PRESSED CROSS IN FIRST MENU TO SELECT SHOP ***********
 				IF shop_progress_wardrobe = 1
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						
 						GET_MENU_ITEM_ACCEPTED main_menu_wardrobe shop_main_item_picked_wardrobe
 					    
@@ -457,7 +457,7 @@ shop_wardrobe_inner:
 			// ******************** PLAYER HAS PRESSED TRIANGLE IN FIRST MENU *****************
 				IF shop_progress_wardrobe = 2
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF main_menu_drawn_wardrobe = 1
 							DELETE_MENU main_menu_wardrobe
@@ -531,12 +531,12 @@ shop_wardrobe_inner:
 				IF shop_progress_wardrobe = 0
 
 					// quit to menu 1						
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_wardrobe = 1
 					ENDIF
 
 					// choose area
-				   	IF IS_BUTTON_PRESSED PAD1 CROSS
+				   	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						GET_MENU_ITEM_SELECTED second_menu_wardrobe second_menu_item_picked_wardrobe
 					    
@@ -556,7 +556,7 @@ shop_wardrobe_inner:
 				//	Player has pressed triangle in second menu							
 				IF shop_progress_wardrobe = 1	
 						
-				   	IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+				   	IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 					  	shop_progress_wardrobe = 0
 						flag_wardrobe = 5
 
@@ -578,7 +578,7 @@ shop_wardrobe_inner:
 
 				IF shop_progress_wardrobe = 2
 
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						IF second_menu_drawn_wardrobe = 1
 							CLEAR_HELP
 							DELETE_MENU second_menu_wardrobe
@@ -645,12 +645,12 @@ shop_wardrobe_inner:
 				IF shop_progress_wardrobe = 0
 
 					// quit to menu 2						
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_wardrobe = 1
 					ENDIF
 
 					// choose area
-				   	IF IS_BUTTON_PRESSED PAD1 CROSS
+				   	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						GET_MENU_ITEM_SELECTED third_menu_wardrobe third_menu_item_picked_wardrobe
 					    
@@ -665,7 +665,7 @@ shop_wardrobe_inner:
 
 				IF shop_progress_wardrobe = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						IF third_menu_drawn_wardrobe = 1
 							DELETE_MENU third_menu_wardrobe
 							CLEAR_HELP
@@ -705,7 +705,7 @@ shop_wardrobe_inner:
 				
 				IF shop_progress_wardrobe = 2
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						IF third_menu_drawn_wardrobe = 1
 							DELETE_MENU third_menu_wardrobe
@@ -845,7 +845,7 @@ shop_wardrobe_inner:
 				
 				IF shop_progress_wardrobe = 0
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						CLEAR_THIS_PRINT (WARDNO)
 						CLEAR_THIS_PRINT (WARDNO2)
 						flag_bought_item_already_shops = 0		
@@ -854,7 +854,7 @@ shop_wardrobe_inner:
 						shop_progress_wardrobe = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						CLEAR_THIS_PRINT (WARDNO)
 						CLEAR_THIS_PRINT (WARDNO2)
 						flag_bought_item_already_shops = 0
@@ -893,7 +893,7 @@ shop_wardrobe_inner:
 				// ************************** PLAYER HAS PRESSED CROSS TO BUY ITEM ****************		
 				IF shop_progress_wardrobe = 1
 						
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						IF $shop_section[shop_main_item_picked_wardrobe] = remove
 								
 							IF NOT player_item_texture_shops = 0
@@ -1726,7 +1726,11 @@ RETURN
 
 bought_text_wardrobe:
 	IF bought_menu_drawn_shops = 0
-		CREATE_MENU CLOTCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU CLOTCHO 29.0 48.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		ELSE
+			CREATE_MENU CLOTCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		ENDIF
 		SET_MENU_COLUMN_ORIENTATION bought_menu_shops 0 FO_LEFT 
 		SET_MENU_COLUMN bought_menu_shops 0 DUMMY CHANGED DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN_WIDTH bought_menu_shops 0 140 

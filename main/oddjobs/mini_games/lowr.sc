@@ -1414,7 +1414,7 @@ LOWR_m_stage_4:
 
 				// remove wager
 				
-				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 					IF NOT square_is_pressed = 1
 
 						// sort out betting step
@@ -1473,19 +1473,19 @@ LOWR_m_stage_4:
 
 			// ' O '  to ok the bet
 			IF cross_pressed = 0
-				IF IS_BUTTON_PRESSED PAD1 CROSS
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 					temp_float =# current_wager
 					temp_float *= 0.1
 					CLEAR_HELP
 	  				m_goals++
 				ENDIF
 			ELSE
-				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+				IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 					cross_pressed = 0	
 				ENDIF
 			ENDIF
 
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			    
 				SET_CAMERA_BEHIND_PLAYER
 				RESTORE_CAMERA_JUMPCUT

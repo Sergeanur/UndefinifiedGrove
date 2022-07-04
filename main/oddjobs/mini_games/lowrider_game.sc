@@ -860,7 +860,7 @@ WAIT 0
 				
 				//SET_PLAYER_CONTROL player1 OFF  // This should be set, but breaks old saves :(
 
-				IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 					lowrider_pscore = 0
 					flag++
 				ENDIF

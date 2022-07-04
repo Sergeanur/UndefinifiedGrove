@@ -104,6 +104,12 @@ TIMERB = 0
 
 	ENDIF
 
+	IF NOT DOES_OBJECT_EXIST exercise_dumb_bell
+	
+		TERMINATE_THIS_SCRIPT
+
+	ENDIF
+
    	dumb_off_x = dumbellx
    	dumb_off_y = dumbelly
 
@@ -372,23 +378,47 @@ IF startdumbell_flag = 1
 
 			gym_TIMERC ++
 
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-			AND gym_TIMERC > 20
-				CLEAR_HELP
-				DELETE_MENU main_menu_bell
-				GOTO bell_quit_back
-		   	ENDIF 
+			IF IS_JAPANESE_VERSION
 
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bell
+					GOTO bell_quit_back
+				ENDIF 
 
-				CLEAR_HELP
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE
 
-				GET_MENU_ITEM_SELECTED main_menu_bell weight_dumbell
+					CLEAR_HELP
 
-				DELETE_MENU main_menu_bell
+					GET_MENU_ITEM_SELECTED main_menu_bell weight_dumbell
 
-				GOTO bell_out_of_loop
-		   	ENDIF 
+					DELETE_MENU main_menu_bell
+
+					GOTO bell_out_of_loop
+				ENDIF 
+
+			ELSE
+
+				IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bell
+					GOTO bell_quit_back
+				ENDIF 
+
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+
+					CLEAR_HELP
+
+					GET_MENU_ITEM_SELECTED main_menu_bell weight_dumbell
+
+					DELETE_MENU main_menu_bell
+
+					GOTO bell_out_of_loop
+				ENDIF 
+
+			ENDIF 
 
 		ENDWHILE
 

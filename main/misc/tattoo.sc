@@ -537,11 +537,11 @@ shop_tattoo_inner:
 
 				IF shop_progress_tattoo = 0
 				    
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						shop_progress_tattoo = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_tattoo = 4
 					ENDIF
 
@@ -550,7 +550,7 @@ shop_tattoo_inner:
 				// ***** PLAYER HAS PRESSED CROSS IN FIRST MENU TO SELECT POSITION OF TATTOO ******
 				IF shop_progress_tattoo = 1
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						GET_MENU_ITEM_ACCEPTED main_menu_shops shop_main_item_picked_shops
 					    
@@ -616,7 +616,7 @@ shop_tattoo_inner:
 				
 				IF shop_progress_tattoo = 4
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						
 						IF main_menu_drawn_shops = 1 
 							DELETE_MENU main_menu_shops
@@ -797,7 +797,7 @@ shop_tattoo_inner:
 
 					// Buy Item
 				   	
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						flag_no_money_shops = 0
 						flag_bought_item_already_shops = 0
 						bought_menu_drawn_shops = 0
@@ -807,7 +807,7 @@ shop_tattoo_inner:
 					 				   
 					// quit to menu 1						
 					
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						GOSUB fill_arrays_for_tattoo_info // need to recalculate the grey out stuff
 
 						flag_no_money_shops = 0
@@ -823,7 +823,7 @@ shop_tattoo_inner:
 				//	Player has pressed triangle in second menu							
 				IF shop_progress_tattoo = 8	
 						
-				   	IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+				   	IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF sub_menu_drawn_shops = 1
 							CLEAR_HELP
@@ -846,7 +846,7 @@ shop_tattoo_inner:
 				IF shop_progress_tattoo = 1
 					GOSUB draw_sprite_tattoo
 						
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						GOSUB draw_sprite_tattoo
 
@@ -897,7 +897,11 @@ shop_tattoo_inner:
 							ENDIF
 
 							IF bought_menu_drawn_shops = 0
-								CREATE_MENU TATTO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+								IF IS_XBOX_VERSION
+									CREATE_MENU TATTO 29.0 50.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+								ELSE
+									CREATE_MENU TATTO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+								ENDIF
 								SET_MENU_COLUMN_ORIENTATION bought_menu_shops 0 FO_LEFT 
 								SET_MENU_COLUMN bought_menu_shops 0 TATTO BOUGHT DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 								SET_MENU_COLUMN_ORIENTATION bought_menu_shops 1 FO_RIGHT 
@@ -1076,12 +1080,12 @@ shop_tattoo_inner:
 	
 				IF shop_progress_tattoo = 0
 				    
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						flag_no_money_shops = 0
 						shop_progress_tattoo = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS	
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT	
 						flag_no_money_shops = 0
 						shop_progress_tattoo = 2
 					ENDIF
@@ -1090,7 +1094,7 @@ shop_tattoo_inner:
 				
 				IF shop_progress_tattoo = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF remove_tats_menu_drawn = 1
 							DELETE_MENU remove_menu_tattoo
@@ -1114,7 +1118,7 @@ shop_tattoo_inner:
 				
 				IF shop_progress_tattoo = 2
 
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						STORE_SCORE player1 players_money
 
@@ -1700,26 +1704,31 @@ print_tattoo_oncreen_text2:
 		// Create and populate the inner menu with available tattoos.
 		
 		PRINT_HELP_FOREVER TATTB
-		
-		IF current_Language = LANGUAGE_ENGLISH
-			CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
+
+		IF IS_XBOX_VERSION
+			CREATE_MENU TATTO 29.0 155.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
 		ELSE
-			IF current_Language = LANGUAGE_FRENCH
+			IF current_Language = LANGUAGE_ENGLISH
 				CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
 			ELSE
-				IF current_Language = LANGUAGE_GERMAN
-					CREATE_MENU TATTO 29.0 165.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
+				IF current_Language = LANGUAGE_FRENCH
+					CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
 				ELSE
-					IF current_Language = LANGUAGE_ITALIAN
-						CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
+					IF current_Language = LANGUAGE_GERMAN
+						CREATE_MENU TATTO 29.0 165.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
 					ELSE
-						IF current_Language = LANGUAGE_SPANISH
+						IF current_Language = LANGUAGE_ITALIAN
 							CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
+						ELSE
+							IF current_Language = LANGUAGE_SPANISH
+								CREATE_MENU TATTO 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT sub_menu_shops
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
+		
 
 		SET_MENU_COLUMN_ORIENTATION sub_menu_shops 0 FO_LEFT
 		SET_MENU_COLUMN sub_menu_shops 0 TATTO $item_text_label[0] $item_text_label[1] $item_text_label[2] $item_text_label[3] $item_text_label[4] $item_text_label[5] $item_text_label[6] $item_text_label[7] $item_text_label[8] $item_text_label[9] $item_text_label[10] $item_text_label[11]
@@ -2133,9 +2142,9 @@ RETURN
 draw_sprite_tattoo:
 
     SET_SPRITES_DRAW_BEFORE_FADE TRUE
-	DRAW_RECT 280.0 58.0 70.0 70.0 0 0 0 255
+	DRAW_RECT 280.0 70.0 70.0 70.0 0 0 0 255
 	SET_SPRITES_DRAW_BEFORE_FADE TRUE
-	DRAW_SPRITE 1 280.0 58.0 64.0 64.0 255 255 255 200 // 54.0
+	DRAW_SPRITE 1 280.0 70.0 64.0 64.0 255 255 255 200 // 54.0
 
 	//DRAW_RECT 580.0 158.0 70.0 70.0 0 0 0 255
 	//DRAW_SPRITE 1 580.0 158.0 64.0 64.0 255 255 255 200 // 54.0 

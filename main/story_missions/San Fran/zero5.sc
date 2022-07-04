@@ -455,41 +455,80 @@ main_sub_function_zero5:
 								flag_self_destruct_zero2 = 1 
 							ENDIF
 
-							IF IS_BUTTON_PRESSED PAD1 CIRCLE
-								flag_mission_zero5_failed = 1
-								flag_main_sub_function_zero5 = 0
-								SET_PLAYER_CONTROL player1 OFF
-								PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+							IF IS_XBOX_VERSION
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									flag_mission_zero5_failed = 1
+									flag_main_sub_function_zero5 = 0
+									SET_PLAYER_CONTROL player1 OFF
+									PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
 
 
-								PRINT_BIG M_FAIL 5000 1
+									PRINT_BIG M_FAIL 5000 1
 
 
-								SET_CAR_HEALTH rc_playerheli_zero5 1
-								ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
-								REMOVE_RC_BUGGY
-								flag_mission_zero5_failed = 1
-								flag_main_sub_function_zero5 = 0
-								PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+									SET_CAR_HEALTH rc_playerheli_zero5 1
+									ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+									REMOVE_RC_BUGGY
+									flag_mission_zero5_failed = 1
+									flag_main_sub_function_zero5 = 0
+									PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
 
-				   
+					
 
-								WAIT 2000
-								SET_CHAR_HAS_USED_ENTRY_EXIT scplayer -2241.8535 128.3346 1.5 // inside rc shop
-								LOAD_SCENE -2241.8535 128.3346 1034.6406
+									WAIT 2000
+									SET_CHAR_HAS_USED_ENTRY_EXIT scplayer -2241.8535 128.3346 1.5 // inside rc shop
+									LOAD_SCENE -2241.8535 128.3346 1034.6406
 
 
-								IF IS_CHAR_IN_ANY_CAR scplayer
-									WARP_CHAR_FROM_CAR_TO_COORD scplayer -2220.1455 135.9560 1034.6406 
-								ELSE
-									SET_CHAR_COORDINATES scplayer -2220.1455 135.9560 1034.6406 
+									IF IS_CHAR_IN_ANY_CAR scplayer
+										WARP_CHAR_FROM_CAR_TO_COORD scplayer -2220.1455 135.9560 1034.6406 
+									ELSE
+										SET_CHAR_COORDINATES scplayer -2220.1455 135.9560 1034.6406 
+									ENDIF
+
+									SET_CHAR_HEADING scplayer 183.6951 
+									SET_AREA_VISIBLE 6	//zeros toy shop
+
+									RETURN	 
+								
 								ENDIF
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 CIRCLE
+									flag_mission_zero5_failed = 1
+									flag_main_sub_function_zero5 = 0
+									SET_PLAYER_CONTROL player1 OFF
+									PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
 
-								SET_CHAR_HEADING scplayer 183.6951 
-								SET_AREA_VISIBLE 6	//zeros toy shop
 
-								RETURN	 
-							
+									PRINT_BIG M_FAIL 5000 1
+
+
+									SET_CAR_HEALTH rc_playerheli_zero5 1
+									ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+									REMOVE_RC_BUGGY
+									flag_mission_zero5_failed = 1
+									flag_main_sub_function_zero5 = 0
+									PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+
+					
+
+									WAIT 2000
+									SET_CHAR_HAS_USED_ENTRY_EXIT scplayer -2241.8535 128.3346 1.5 // inside rc shop
+									LOAD_SCENE -2241.8535 128.3346 1034.6406
+
+
+									IF IS_CHAR_IN_ANY_CAR scplayer
+										WARP_CHAR_FROM_CAR_TO_COORD scplayer -2220.1455 135.9560 1034.6406 
+									ELSE
+										SET_CHAR_COORDINATES scplayer -2220.1455 135.9560 1034.6406 
+									ENDIF
+
+									SET_CHAR_HEADING scplayer 183.6951 
+									SET_AREA_VISIBLE 6	//zeros toy shop
+
+									RETURN	 
+								
+								ENDIF
 							ENDIF
 						ENDIF
 					ENDIF

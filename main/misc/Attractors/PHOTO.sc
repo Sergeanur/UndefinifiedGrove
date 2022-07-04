@@ -275,6 +275,7 @@ PHOTO_GlobalFlagIntercept:
 	WAIT 0 
 	//--- This case here replaces the main loop with an alternative behaviour
 	IF NOT IS_CHAR_DEAD this_ped
+	AND IS_PLAYER_PLAYING player1
 		GET_SCRIPT_TASK_STATUS this_ped	TASK_KILL_CHAR_ON_FOOT iIsKilling
 		IF iIsKilling = FINISHED_TASK
 			TASK_KILL_CHAR_ON_FOOT this_ped scplayer

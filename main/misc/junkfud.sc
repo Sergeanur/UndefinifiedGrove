@@ -953,9 +953,9 @@ shop_junkfud_inner:
 
 					// Look for a button press to buy the item.
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 										    
-						WHILE IS_BUTTON_PRESSED PAD1 CROSS
+						WHILE IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						    
 							WAIT 0
                             
@@ -1035,7 +1035,11 @@ shop_junkfud_inner:
 								ENDIF
 
 								IF bought_menu_drawn_shops = 0
-									CREATE_MENU FOODCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops 
+									IF IS_XBOX_VERSION
+										CREATE_MENU FOODCHO 29.0 48.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops 
+									ELSE
+										CREATE_MENU FOODCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops 
+									ENDIF
 									SET_MENU_COLUMN_ORIENTATION bought_menu_shops 0 FO_LEFT 
 									SET_MENU_COLUMN bought_menu_shops 0 MEAL BOUGHT DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 									SET_MENU_COLUMN_ORIENTATION bought_menu_shops 1 FO_RIGHT
@@ -1616,7 +1620,7 @@ RETURN
 
 quit_out_food:
 
-IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 	IF cost_menu_drawn_shops = 1
 		DELETE_MENU cost_menu_shops
@@ -1630,7 +1634,7 @@ IF IS_BUTTON_PRESSED PAD1 TRIANGLE
 		bought_menu_drawn_shops = 0
 	ENDIF
 
-	WHILE IS_BUTTON_PRESSED PAD1 TRIANGLE
+	WHILE IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 		WAIT 0
 

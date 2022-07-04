@@ -644,7 +644,7 @@ WAIT 0
 			ENDWHILE
 			
 			//triggering mission
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 				IF d5_mission_selection = 4 
 				OR d5_mission_selection = 6 
 					d5_control_flag = 1	
@@ -711,7 +711,7 @@ WAIT 0
 
 
 		//quitting the driving school
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			GOTO mission_desert5_failed
 		ENDIF
 
@@ -936,12 +936,12 @@ IF d5_mission_selection = 1
 
 						GOSUB d5_draw_record_text
 						
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_takeoff																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_takeoff																		  
 						ENDIF
 
@@ -1148,12 +1148,12 @@ IF d5_mission_selection = 2
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_landplane																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_landplane																		  
 						ENDIF
 
@@ -1365,12 +1365,12 @@ OR d5_mission_selection = 4
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_circleairstrip																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_circleairstrip																		  
 						ENDIF
 
@@ -1623,12 +1623,12 @@ OR d5_mission_selection = 6
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_circleairstripland																		  
 						ENDIF
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_circleairstripland																		  
 						ENDIF
 
@@ -1848,12 +1848,12 @@ IF d5_mission_selection = 7
 
 						GOSUB d5_draw_record_text
 
-						If IS_BUTTON_PRESSED PAD1 TRIANGLE
+						If IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_helitakeoff																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_helitakeoff																		  
 						ENDIF
 
@@ -2038,12 +2038,12 @@ IF d5_mission_selection = 8
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_landheli																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_landheli																		  
 						ENDIF
 
@@ -2351,12 +2351,12 @@ IF d5_mission_selection = 9
 
 						GOSUB d5_draw_record_text
 
-						If IS_BUTTON_PRESSED PAD1 TRIANGLE
+						If IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_destroytargets																		  
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_destroytargets																		  
 						ENDIF
 
@@ -2621,12 +2621,12 @@ IF d5_mission_selection = 10
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_looptheloop																		  
 						ENDIF
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_looptheloop																		  
 						ENDIF
 
@@ -2864,12 +2864,12 @@ IF d5_mission_selection = 11
 
 						GOSUB d5_draw_record_text
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							d5_mission_plane_dead_flag = 2
 							GOTO d5_after_scores_barrelroll																		  
 						ENDIF
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GOTO d5_after_scores_barrelroll																		  
 						ENDIF
 
@@ -3061,12 +3061,12 @@ IF d5_mission_selection = 12
 
 					GOSUB d5_draw_record_text
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						d5_mission_plane_dead_flag = 2
 						GOTO d5_after_scores_parachute																		  
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						GOTO d5_after_scores_parachute																		  
 					ENDIF
 					
@@ -3772,20 +3772,39 @@ d5_has_plane_started:///////////////////////////////////////////////////////////
 			GET_CAR_SPEED d5_mission_plane d5_mission_plane_speed 
 		ENDIF
 	ENDIF
-	IF IS_BUTTON_PRESSED PAD1 CROSS
-	OR IS_BUTTON_PRESSED PAD1 SQUARE
-		IF d5_mission_plane_speed > 0.1
-			CLEAR_PRINTS
+	IF IS_XBOX_VERSION
+		IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+		OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+			IF d5_mission_plane_speed > 0.1
+				CLEAR_PRINTS
 
-			IF d5_mission_selection = 1
-			OR d5_mission_selection = 3
-			OR d5_mission_selection = 4
-			OR d5_mission_selection = 5
-			OR d5_mission_selection = 6
-				DISPLAY_ONSCREEN_TIMER_WITH_STRING car_timer TIMER_UP ( DES5_T4 )
+				IF d5_mission_selection = 1
+				OR d5_mission_selection = 3
+				OR d5_mission_selection = 4
+				OR d5_mission_selection = 5
+				OR d5_mission_selection = 6
+					DISPLAY_ONSCREEN_TIMER_WITH_STRING car_timer TIMER_UP ( DES5_T4 )
+				ENDIF
+
+				d5_plane_started = 1
 			ENDIF
+		ENDIF
+	ELSE
+		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 SQUARE
+			IF d5_mission_plane_speed > 0.1
+				CLEAR_PRINTS
 
-			d5_plane_started = 1
+				IF d5_mission_selection = 1
+				OR d5_mission_selection = 3
+				OR d5_mission_selection = 4
+				OR d5_mission_selection = 5
+				OR d5_mission_selection = 6
+					DISPLAY_ONSCREEN_TIMER_WITH_STRING car_timer TIMER_UP ( DES5_T4 )
+				ENDIF
+
+				d5_plane_started = 1
+			ENDIF
 		ENDIF
 	ENDIF
 RETURN

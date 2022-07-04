@@ -1147,6 +1147,12 @@ IF sy1_stage = 1
 			PRINT ( SYN1_06 ) 5000 1 // Cesar didn't make it.
 			GOTO mission_failed_syn1
 		ENDIF
+
+		IF IS_CAR_DEAD sy1_cesar_car
+			CLEAR_PRINTS
+			PRINT ( SYN1_08 ) 5000 1 // You destroyed the car!
+			GOTO mission_failed_syn1
+		ENDIF
 	ENDIF
 ENDIF
 

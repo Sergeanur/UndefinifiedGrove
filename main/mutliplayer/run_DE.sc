@@ -198,13 +198,29 @@ GOSUB runde_set_camera
 
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD2 CROSS 
+		IF IS_JAPANESE_VERSION
 
-			GOSUB runde_restore_camera
+			IF IS_BUTTON_PRESSED PAD2 CIRCLE 
 
-			CLEAR_HELP
+				GOSUB runde_restore_camera
 
-			GOTO runde_main_loop
+				CLEAR_HELP
+
+				GOTO runde_main_loop
+
+			ENDIF
+
+		ELSE
+
+			IF IS_BUTTON_PRESSED PAD2 CROSS 
+
+				GOSUB runde_restore_camera
+
+				CLEAR_HELP
+
+				GOTO runde_main_loop
+
+			ENDIF
 
 		ENDIF
 

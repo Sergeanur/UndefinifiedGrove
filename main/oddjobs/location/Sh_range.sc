@@ -843,7 +843,7 @@ SR_mission:
 				OR SR_skill_won = 3
 				OR SR_skill_won = 6
 				OR SR_skill_won = 9
-					PRINT_BIG ANR_41 2000 1
+					PRINT_BIG ANR_41 3000 1
 				ENDIF
 
 				IF SR_skill_won = 1
@@ -851,7 +851,7 @@ SR_mission:
 				OR SR_skill_won = 7
 				OR SR_skill_won = 10
 					CLEAR_THIS_BIG_PRINT ANR_41
-					PRINT_BIG ANR_42 3000 1				
+					PRINT_BIG ANR_42 2800 1				
 				ENDIF
 
 				IF SR_skill_won = 2
@@ -1287,7 +1287,7 @@ SR_mission:
 					IF range_cuts_watched < 3
 						SET_FADING_COLOUR 0 0 0
 						DO_FADE 1000 FADE_OUT
-						
+
 					ENDIF
 					SR_flag = 2
 					SR_time_check = TIMERA + 1500
@@ -1361,7 +1361,7 @@ SR_mission:
 						DISPLAY_NTH_ONSCREEN_COUNTER_WITH_STRING sr_Score[2] COUNTER_DISPLAY_NUMBER 3 ANR_38
 
 						DO_FADE 1000 FADE_IN
-						
+
 						IF range_cuts_watched < 3
 
 							DETACH_CHAR_FROM_CAR scplayer

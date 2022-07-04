@@ -471,7 +471,11 @@ betting_otb_loop:
 	
 	SET_TEXT_SCALE 0.4753 2.2289
 	SET_TEXT_CENTRE ON
-	DISPLAY_TEXT_WITH_NUMBER 508.6669 18.0933 YOURCSH players_cash  // YOUR CASH: $~1~
+	IF IS_XBOX_VERSION
+		DISPLAY_TEXT_WITH_NUMBER 508.6669 32.0 YOURCSH players_cash  // YOUR CASH: $~1~
+	ELSE
+		DISPLAY_TEXT_WITH_NUMBER 508.6669 18.0933 YOURCSH players_cash  // YOUR CASH: $~1~
+	ENDIF
 
 
 	LVAR_INT pad1_leftstick_x pad1_leftstick_y pad1_rightstick_x pad1_rightstick_y
@@ -528,7 +532,7 @@ betting_otb_loop:
 			pad1_down_pressed = 0
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 			IF pad1_cross_pressed = 0
 				IF button_state[0] = SELECTED
 					button_state[1] = PRESSED_DOWN
@@ -569,7 +573,7 @@ betting_otb_loop:
 			pad1_cross_pressed = 0
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			IF pad1_triangle_pressed = 0
 				pad1_triangle_pressed = 1
 				DO_FADE 0 fade_out
@@ -642,7 +646,7 @@ betting_otb_loop:
 	ENDWHILE
 
 	IF depressed_button_timer = 1
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			IF pad1_triangle_pressed = 0
 				IF button_state[0] = SELECTED
 					button_state[1] = UNSELECTED
@@ -693,7 +697,7 @@ betting_otb_loop:
 			pad1_triangle_pressed = 0
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 			IF pad1_cross_pressed = 0
 
@@ -1437,11 +1441,17 @@ race_otb_loop:
 		DISPLAY_TEXT_WITH_NUMBER text_position_x text_position_y YOUWIN race_winnings 
 		rect_x = text_origin_x + -129.2806 
 		rect_y = text_origin_y + 259.5944 
-		DRAW_SPRITE 49 rect_x rect_y 239.5561 12.6761 150 150 150 255 
+		IF NOT IS_XBOX_VERSION
+			DRAW_SPRITE 49 rect_x rect_y 239.5561 12.6761 150 150 150 255 
+		ENDIF
 		GOSUB setup_text_otb 
 		SET_TEXT_SCALE 0.5496 2.1344 
 		SET_TEXT_CENTRE ON 
-		DISPLAY_TEXT 330.2087 403.5891 XTOCONT
+		IF IS_XBOX_VERSION
+			DISPLAY_TEXT 330.2087 315.5891 XTOCONT
+		ELSE
+			DISPLAY_TEXT 330.2087 403.5891 XTOCONT
+		ENDIF
  	
 		IF play_win_lose_sound = 0
 			IF race_winnings > 0
@@ -1452,7 +1462,7 @@ race_otb_loop:
 			play_win_lose_sound = 1
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 			IF pad1_cross_pressed = 0
 				pad1_cross_pressed = 1
 				increment_int_stat MONEY_SPENT_GAMBLING	cash_stake

@@ -810,7 +810,7 @@ DRAW_SPRITE 25 160.0 112.0 320.0 224.0 150 150 150 255
 DRAW_SPRITE 25 480.0 112.0 -320.0 224.0 150 150 150 255 
 DRAW_SPRITE 25 480.0 336.0 -320.0 -224.0 150 150 150 255 
 DRAW_SPRITE 25 160.0 336.0 320.0 -224.0 150 150 150 255
-
+/*
 IF shtr_front_end = 0
 	GET_GAME_TIMER shtr_help_end 
 	shtr_help_diff = shtr_help_end - shtr_help_start
@@ -824,19 +824,19 @@ IF shtr_front_end = 0
 		DISPLAY_TEXT 40.0 15.0 SH_NAV
 	ENDIF
 ENDIF
-
+*/
 IF shtr_front_end = 4
 	IF shtr_on_table = 4
 		GET_GAME_TIMER shtr_help_end 
 		shtr_help_diff = shtr_help_end - shtr_help_start
 
 		IF shtr_help_diff < 10000
-			DRAW_WINDOW 35.0 15.0 200.0 45.0 dummy SWIRLS_NONE
+			DRAW_WINDOW 35.0 24.0 200.0 50.0 dummy SWIRLS_NONE
 			SET_TEXT_CENTRE OFF
-			SET_TEXT_WRAPX 230.0
+			SET_TEXT_WRAPX 239.0
 			SET_TEXT_FONT FONT_STANDARD
 			SET_TEXT_SCALE 0.5 1.8
-			DISPLAY_TEXT 40.0 20.0 SH_BCK 
+			DISPLAY_TEXT 40.0 29.0 SH_BCK 
 		ENDIF
 	ENDIF
 ENDIF

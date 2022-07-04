@@ -478,30 +478,57 @@ Dance_State3:
 
 		CASE 1
 			GOSUB Dance_GetPadStatus
-			IF iCurrentButton = DANCE_BUTTON_CROSS
-				//--- Quit out
-				iDanceScore = 0
-				iState = 2
-				iSubState = 0				
-				BREAK
-			ENDIF	  	
-			IF iCurrentButton = DANCE_BUTTON_TRIANGLE
-				IF iState > 0 // We are past the INIT stage of the mini-game
-					//--- Restart dance
-					PAUSE_CURRENT_BEAT_TRACK FALSE
-					IF IS_CHAR_PLAYING_ANIM scplayer $txtCURR_DANCE_MOVE
-						SET_CHAR_ANIM_PLAYING_FLAG scplayer $txtCURR_DANCE_MOVE TRUE
-					ENDIF		  
-					IF NOT IS_CHAR_DEAD iPartner
-						IF IS_CHAR_PLAYING_ANIM iPartner $txtCURR_DANCE_MOVE_P
-							SET_CHAR_ANIM_PLAYING_FLAG iPartner $txtCURR_DANCE_MOVE_P TRUE
-						ENDIF
-					ENDIF
-					iState = 1
-					iSubState = STATE_DANCE_TRACK_AND_GET_BEATS	
+			IF IS_JAPANESE_VERSION
+				IF iCurrentButton = DANCE_BUTTON_CIRCLE
+					//--- Quit out
+					iDanceScore = 0
+					iState = 2
+					iSubState = 0				
 					BREAK
-				ENDIF
-			ENDIF	  	
+				ENDIF	  	
+				IF iCurrentButton = DANCE_BUTTON_CROSS
+					IF iState > 0 // We are past the INIT stage of the mini-game
+						//--- Restart dance
+						PAUSE_CURRENT_BEAT_TRACK FALSE
+						IF IS_CHAR_PLAYING_ANIM scplayer $txtCURR_DANCE_MOVE
+							SET_CHAR_ANIM_PLAYING_FLAG scplayer $txtCURR_DANCE_MOVE TRUE
+						ENDIF		  
+						IF NOT IS_CHAR_DEAD iPartner
+							IF IS_CHAR_PLAYING_ANIM iPartner $txtCURR_DANCE_MOVE_P
+								SET_CHAR_ANIM_PLAYING_FLAG iPartner $txtCURR_DANCE_MOVE_P TRUE
+							ENDIF
+						ENDIF
+						iState = 1
+						iSubState = STATE_DANCE_TRACK_AND_GET_BEATS	
+						BREAK
+					ENDIF
+				ENDIF	  	
+			ELSE
+				IF iCurrentButton = DANCE_BUTTON_CROSS
+					//--- Quit out
+					iDanceScore = 0
+					iState = 2
+					iSubState = 0				
+					BREAK
+				ENDIF	  	
+				IF iCurrentButton = DANCE_BUTTON_TRIANGLE
+					IF iState > 0 // We are past the INIT stage of the mini-game
+						//--- Restart dance
+						PAUSE_CURRENT_BEAT_TRACK FALSE
+						IF IS_CHAR_PLAYING_ANIM scplayer $txtCURR_DANCE_MOVE
+							SET_CHAR_ANIM_PLAYING_FLAG scplayer $txtCURR_DANCE_MOVE TRUE
+						ENDIF		  
+						IF NOT IS_CHAR_DEAD iPartner
+							IF IS_CHAR_PLAYING_ANIM iPartner $txtCURR_DANCE_MOVE_P
+								SET_CHAR_ANIM_PLAYING_FLAG iPartner $txtCURR_DANCE_MOVE_P TRUE
+							ENDIF
+						ENDIF
+						iState = 1
+						iSubState = STATE_DANCE_TRACK_AND_GET_BEATS	
+						BREAK
+					ENDIF
+				ENDIF	  	
+			ENDIF
 		BREAK
 
 	ENDSWITCH
@@ -555,7 +582,9 @@ SWITCH iButtonDown
 		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
 			iCurrentButton = DANCE_BUTTON_TRIANGLE
 			iButtonDown = DANCE_BUTTON_TRIANGLE
-			TIMERB = 0
+			IF NOT IS_JAPANESE_VERSION
+				TIMERB = 0
+			ENDIF
 			BREAK
 		ENDIF
 
@@ -568,6 +597,9 @@ SWITCH iButtonDown
 		IF IS_BUTTON_PRESSED PAD1 CROSS
 			iCurrentButton = DANCE_BUTTON_CROSS
 			iButtonDown = DANCE_BUTTON_CROSS
+			IF IS_JAPANESE_VERSION
+				TIMERB = 0
+			ENDIF
 			BREAK
 		ENDIF
 	BREAK
@@ -586,10 +618,22 @@ SWITCH iButtonDown
 			iButtonDown = DANCE_BUTTON_NONE
 			BREAK
 		ELSE
-			//--- Check if player is holding down TRIANGLE to QUIT
-			IF iPartner = DANCE_MISSION_NO_PARTNER
-				//--- Do all these fiddly 'on a mission' checks
-				IF NOT iStoredBeat = DANCE_BEAT_NONE
+			IF NOT IS_JAPANESE_VERSION
+				//--- Check if player is holding down TRIANGLE to QUIT
+				IF iPartner = DANCE_MISSION_NO_PARTNER
+					//--- Do all these fiddly 'on a mission' checks
+					IF NOT iStoredBeat = DANCE_BEAT_NONE
+						IF NOT iState = 3 // Not paused yet
+						AND TIMERB >= DANCE_TIME_TO_HOLD_QUIT
+							//--- Button has been held down				
+							CLEAR_HELP
+							iState = 3
+							iSubState = 0				
+							RETURN  
+						ENDIF
+					ENDIF  
+				ELSE
+					//--- Not on a mission, just the simple state checks 
 					IF NOT iState = 3 // Not paused yet
 					AND TIMERB >= DANCE_TIME_TO_HOLD_QUIT
 						//--- Button has been held down				
@@ -598,16 +642,6 @@ SWITCH iButtonDown
 						iSubState = 0				
 						RETURN  
 					ENDIF
-				ENDIF  
-			ELSE
-				//--- Not on a mission, just the simple state checks 
-				IF NOT iState = 3 // Not paused yet
-				AND TIMERB >= DANCE_TIME_TO_HOLD_QUIT
-					//--- Button has been held down				
-					CLEAR_HELP
-					iState = 3
-					iSubState = 0				
-					RETURN  
 				ENDIF
 			ENDIF
 		ENDIF
@@ -626,6 +660,33 @@ SWITCH iButtonDown
 		IF NOT IS_BUTTON_PRESSED PAD1 CROSS
 			iButtonDown = DANCE_BUTTON_NONE
 			BREAK
+		ELSE
+			IF IS_JAPANESE_VERSION
+				//--- Check if player is holding down CROSS to QUIT
+				IF iPartner = DANCE_MISSION_NO_PARTNER
+					//--- Do all these fiddly 'on a mission' checks
+					IF NOT iStoredBeat = DANCE_BEAT_NONE
+						IF NOT iState = 3 // Not paused yet
+						AND TIMERB >= DANCE_TIME_TO_HOLD_QUIT
+							//--- Button has been held down				
+							CLEAR_HELP
+							iState = 3
+							iSubState = 0				
+							RETURN  
+						ENDIF
+					ENDIF  
+				ELSE
+					//--- Not on a mission, just the simple state checks 
+					IF NOT iState = 3 // Not paused yet
+					AND TIMERB >= DANCE_TIME_TO_HOLD_QUIT
+						//--- Button has been held down				
+						CLEAR_HELP
+						iState = 3
+						iSubState = 0				
+						RETURN  
+					ENDIF
+				ENDIF
+			ENDIF
 		ENDIF
 	BREAK
 ENDSWITCH

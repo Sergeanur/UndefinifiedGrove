@@ -585,18 +585,18 @@ shop_barbers_inner:
 
 				IF control_flag_barbers = 0
 				    
-					IF IS_BUTTON_PRESSED PAD1 CROSS  // They want to see the hairdo; move to preview.
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT  // They want to see the hairdo; move to preview.
 						control_flag_barbers = 10	 
 					ENDIF
 					 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Leave shop all together.
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL  // Leave shop all together.
 						control_flag_barbers = 1
 					ENDIF
 				ENDIF
 
 				IF control_flag_barbers = 1
 				    
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE  // Player is going to leave the shop all together.
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL  // Player is going to leave the shop all together.
 					
 					    IF cost_menu_drawn_shops = 1
 							DELETE_MENU cost_menu_shops
@@ -648,16 +648,16 @@ shop_barbers_inner:
 							cut_hair_flag_barber = 1
 						ENDIF
 
-					ENDIF
+						IF cut_hair_flag_barber = 1
 
-					IF cut_hair_flag_barber = 1
-
-						IF HAS_MISSION_AUDIO_FINISHED 4
-							TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 4.0 FALSE FALSE FALSE TRUE -1
-							return_animation_time_barbers = 0.0
-							control_flag_barbers = 4
-							cut_hair_flag_barber = 0
+							IF HAS_MISSION_AUDIO_FINISHED 4
+								TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 4.0 FALSE FALSE FALSE TRUE -1
+								return_animation_time_barbers = 0.0
+								control_flag_barbers = 4
+								cut_hair_flag_barber = 0
+							ENDIF
 						ENDIF
+
 					ENDIF
 				ENDIF
 
@@ -767,7 +767,7 @@ shop_barbers_inner:
    		 		
 				IF control_flag_barbers = 10
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS  // Player accepts the hairdo. Let's preview it.
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT  // Player accepts the hairdo. Let's preview it.
 					    
 						GET_MENU_ITEM_ACCEPTED main_menu_shops haircut_picked_barbers
 						
@@ -870,7 +870,7 @@ shop_barbers_inner:
 
 				IF control_flag_barbers = 0
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS  // Player accepts previewed hairdo. Let's purchase it.
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT  // Player accepts previewed hairdo. Let's purchase it.
                 		CLEAR_THIS_PRINT (SHOPNO)
 						CLEAR_THIS_PRINT (BARBNO)
 						flag_no_money_shops = 0
@@ -878,7 +878,7 @@ shop_barbers_inner:
 						control_flag_barbers = 2
 					ENDIF
 					
-				    IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Player rejects previewed hairdo.
+				    IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL  // Player rejects previewed hairdo.
 						CLEAR_THIS_PRINT (SHOPNO)
 						CLEAR_THIS_PRINT (BARBNO)
 						control_flag_barbers = 1
@@ -887,7 +887,7 @@ shop_barbers_inner:
 				
 				IF control_flag_barbers = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						
 						IF cost_menu_drawn_shops = 1
 							CLEAR_HELP
@@ -907,7 +907,7 @@ shop_barbers_inner:
 
 				IF control_flag_barbers = 2
 
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						 													
 						flag_bought_item_already_shops = 0
 						flag_no_money_shops = 0
@@ -1189,6 +1189,8 @@ barbers_cleanup_big:
 	flag_bought_item_already_shops = 0
 	flag_no_money_shops = 0
 	flag_restored_camera_barbers = 0
+
+	cut_hair_flag_barber = 0
 		
 	CLEAR_SEQUENCE_TASK barber_movein_barbers
 	CLEAR_SEQUENCE_TASK player_walk_barbers
@@ -1208,8 +1210,6 @@ barbers_cleanup_big:
 	CLEAR_MISSION_AUDIO 4
 
 //	SET_PLAYER_IS_IN_STADIUM FALSE
-
-	cut_hair_flag_barber = 0
 
 	TERMINATE_THIS_SCRIPT
 	
