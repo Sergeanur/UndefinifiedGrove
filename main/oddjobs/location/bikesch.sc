@@ -641,7 +641,7 @@ IF mission_selection = 1
 						ENDIF
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
+					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
 					OR NOT IS_BUTTON_PRESSED PAD1 SQUARE
 					OR NOT IS_CHAR_IN_CAR scplayer instructor_bike
 					OR car_timer = 0
@@ -2383,7 +2383,7 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 		SET_TEXT_SCALE 0.32 1.25 
 		DISPLAY_TEXT 70.0 360.0 BS_X_4
 	ELSE
-		SET_TEXT_SCALE 0.32 1.25 
+		SET_TEXT_SCALE 0.52 1.45
 		DISPLAY_TEXT 70.0 360.0 BS_X_4
 	ENDIF
 
@@ -2394,7 +2394,7 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 			SET_TEXT_SCALE 0.32 1.25 
 			DISPLAY_TEXT 70.0 340.0 BS_X_5
 		ELSE
-			SET_TEXT_SCALE 0.32 1.25 
+			SET_TEXT_SCALE 0.52 1.45
 			DISPLAY_TEXT 70.0 340.0 BS_X_5
 		ENDIF
 
@@ -2405,7 +2405,7 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.32 1.25 
 				DISPLAY_TEXT 437.0 340.0 BS_X_3
 			ELSE
-				SET_TEXT_SCALE 0.32 1.25 
+				SET_TEXT_SCALE 0.52 1.45
 				DISPLAY_TEXT 437.0 340.0 BS_X_3
 			ENDIF
 		ENDIF
@@ -2417,7 +2417,7 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.32 1.25 
 				DISPLAY_TEXT 437.0 340.0 BS_X_3
 			ELSE
-				SET_TEXT_SCALE 0.32 1.25 
+				SET_TEXT_SCALE 0.52 1.45
 				DISPLAY_TEXT 437.0 340.0 BS_X_3
 			ENDIF
 		ENDIF
@@ -2428,38 +2428,38 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 			SET_TEXT_SCALE 0.32 1.25 
 			DISPLAY_TEXT 437.0 340.0 BS_X_3
 		ELSE
-			SET_TEXT_SCALE 0.32 1.25 
+			SET_TEXT_SCALE 0.52 1.45
 			DISPLAY_TEXT 437.0 340.0 BS_X_3
 		ENDIF
 	ENDIF
 
 	GOSUB bs_small_onscreen_text 
-	SET_TEXT_SCALE 0.32 1.25 
+	SET_TEXT_SCALE 1.45 2.0
 	SET_TEXT_COLOUR 255 255 255 255
-	DISPLAY_TEXT 150.0 360.0 BS_X04
+	DISPLAY_TEXT 150.0 360.0 SCHX
 
 	IF NOT bs_control_flag = 1
 		GOSUB bs_small_onscreen_text 
 		SET_TEXT_COLOUR 255 255 255 255
-		SET_TEXT_SCALE 0.32 1.25 
-		DISPLAY_TEXT 150.0 340.0 BS_X05
+		SET_TEXT_SCALE 1.45 2.0 
+		DISPLAY_TEXT 150.0 340.0 SCHO
 		IF NOT bs_open_tests = 1 
 			GOSUB bs_small_onscreen_text 
 			SET_TEXT_COLOUR 255 255 255 255
-			SET_TEXT_SCALE 0.32 1.25 
-			DISPLAY_TEXT 537.4 340.0 BS_X03
+			SET_TEXT_SCALE 1.45 2.0
+			DISPLAY_TEXT 537.4 336.0 BS_X03
 		ENDIF
 		IF bs_open_tests = 1 
 			GOSUB bs_small_onscreen_text 
 			SET_TEXT_COLOUR 173 173 173 125
-			SET_TEXT_SCALE 0.32 1.25 
-			DISPLAY_TEXT 537.4 340.0 BS_X03
+			SET_TEXT_SCALE 1.45 2.0
+			DISPLAY_TEXT 537.4 336.0 BS_X03
 		ENDIF
 	ELSE
 		GOSUB bs_small_onscreen_text 
 		SET_TEXT_COLOUR 255 255 255 255
-		SET_TEXT_SCALE 0.32 1.25 
-		DISPLAY_TEXT 537.4 340.0 BS_X03
+		SET_TEXT_SCALE 1.45 2.0
+		DISPLAY_TEXT 537.4 336.0 BS_X03
 	ENDIF
 
 	SET_TEXT_SCALE 0.52 1.45 
@@ -2877,7 +2877,7 @@ bs_has_car_started://///////////////////////////////////////////////////////////
 			ENDIF
 		ENDIF
 	ELSE
-		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
+		IF IS_BUTTON_PRESSED PAD1 CROSS
 		OR IS_BUTTON_PRESSED PAD1 SQUARE
 			IF instructor_bike_speed > 0.1
 				CLEAR_PRINTS
@@ -3181,10 +3181,10 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 
 	IF NOT bs_print_top_scores_flag = 2
 		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 0.52 1.45
+		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 330.0 345.0 BS_X05
+		DISPLAY_TEXT 330.0 345.0 SCHO
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
@@ -3193,10 +3193,10 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 		DISPLAY_TEXT 170.0 345.0 BS_Z_5
 		
 		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 0.52 1.45
+		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 330.0 365.0 BS_X04
+		DISPLAY_TEXT 330.0 365.0 SCHX
 		
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
@@ -3212,10 +3212,10 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 		ENDIF
 
 		GOSUB bs_small_backend_text
-		SET_TEXT_SCALE 0.52 1.45
+		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 330.0 365.0 BS_X05
+		DISPLAY_TEXT 330.0 365.0 SCHO
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45

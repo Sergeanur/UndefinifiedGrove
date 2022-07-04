@@ -162,14 +162,14 @@ WAIT 0
 	IF pl_city_open > 0
 
 		IF pl_control_flag = 0
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 				pl_denied_flag = 0
 				pl_control_flag = 1
 			ENDIF
 		ENDIF
 
 		IF pl_control_flag = 1 
-			IF NOT IS_BUTTON_PRESSED PAD1 CROSS 
+			IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT 
 				pl_control_flag = 2
 			ENDIF
 		ENDIF		
@@ -220,7 +220,7 @@ WAIT 0
 	
 	//exiting the ticket machine without buying a ticket
 			
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		REPORT_MISSION_AUDIO_EVENT_AT_POSITION player_x player_y player_z SOUND_ROULETTE_NO_CASH
 		GOSUB drawing_ticket_machine
 		DO_FADE 500 FADE_OUT
@@ -383,7 +383,7 @@ pl_plane_flying_loop:
 						pl_print_flag_11 = 1
 					ENDIF
 					
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						pl_control_flag = 2
 					ENDIF
 				ENDIF
@@ -423,7 +423,7 @@ pl_plane_flying_loop:
 							
 				IF pl_stop_player_skipping_flag < 2  
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						
 						DO_FADE 500 FADE_OUT
 						WHILE GET_FADING_STATUS

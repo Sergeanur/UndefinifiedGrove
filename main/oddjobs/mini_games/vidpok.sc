@@ -433,13 +433,23 @@ ROW_Y[8] = 172.0000
 ROW_Y[9] = 188.0000 
 
 
-COL_X[0] = 86.0  // Name of hand
+IF NOT IS_JAPANESE_VERSION
+	COL_X[0] = 86.0  // Name of hand
 
-COL_X[1] = 239.0  // 1 coin 
-COL_X[2] = 286.0  // 2 coins
-COL_X[3] = 330.0  // 3 coins 
-COL_X[4] = 378.0  // 4 coins 
-COL_X[5] = 450.0  // 5 coins 
+	COL_X[1] = 239.0  // 1 coin 
+	COL_X[2] = 286.0  // 2 coins
+	COL_X[3] = 330.0  // 3 coins 
+	COL_X[4] = 378.0  // 4 coins 
+	COL_X[5] = 450.0  // 5 coins 
+ELSE
+	COL_X[0] = 81.0  // Name of hand
+
+	COL_X[1] = 267.0  // 1 coin 
+	COL_X[2] = 310.0  // 2 coins
+	COL_X[3] = 353.0  // 3 coins 
+	COL_X[4] = 402.0  // 4 coins 
+	COL_X[5] = 450.0  // 5 coins 
+ENDIF
 
 
 IF NOT IS_XBOX_VERSION
@@ -449,7 +459,11 @@ ELSE
 	vp_hold_button_offset += 17.5
 	vp_hold_button_offset *= -1.0
 ENDIF
-VP_HOLD_WIDTH = 49.0000 
+IF NOT IS_JAPANESE_VERSION 
+	VP_HOLD_WIDTH = 49.0000 
+ELSE
+	VP_HOLD_WIDTH = 65.0000 
+ENDIF
 VP_HOLD_HEIGHT = 18.0000 
 
 
@@ -459,67 +473,126 @@ IF NOT IS_XBOX_VERSION
 ELSE
 	BET_ONE_Y = 385.0000 
 ENDIF
-VP_BET_ONE_WIDTH = 81.0000 
+IF NOT IS_JAPANESE_VERSION 
+	VP_BET_ONE_WIDTH = 81.0000 
+ELSE
+	VP_BET_ONE_WIDTH = 95.0000 
+ENDIF
 VP_BET_ONE_HEIGHT = 18.0000 
 
 
-DEAL_X = 222.0000 
+IF NOT IS_JAPANESE_VERSION 
+	DEAL_X = 222.0000 
+ELSE
+	DEAL_X = 229.0000 
+ENDIF
 IF NOT IS_XBOX_VERSION
 	DEAL_Y = 401.0000 
 ELSE
 	DEAL_Y = 385.0000 
 ENDIF
-VP_DEAL_WIDTH = 87.0000 
+IF NOT IS_JAPANESE_VERSION 
+	VP_DEAL_WIDTH = 87.0000 
+ELSE
+	VP_DEAL_WIDTH = 92.0000 
+ENDIF
 VP_DEAL_HEIGHT = 18.0000 
 
 
 VP_BORDER_THICKNESS = 4.0000 
 
 
-VP_LINE_X[0] = 384.0000        // Vertical lines for the columns.
-VP_LINE_Y[0] = 131.0000 
-VP_LINE_WIDTH[0] = 2.0000 
-VP_LINE_HEIGHT[0] = 152.0000         
+IF NOT IS_JAPANESE_VERSION 
+	VP_LINE_X[0] = 384.0000        // Vertical lines for the columns.
+	VP_LINE_Y[0] = 131.0000 
+	VP_LINE_WIDTH[0] = 2.0000 
+	VP_LINE_HEIGHT[0] = 152.0000         
 
-VP_LINE_X[1] = 458.0000        
-VP_LINE_Y[1] = 131.0000        // Right vertical line.
-VP_LINE_WIDTH[1] = 2.0000 							
-VP_LINE_HEIGHT[1] = 154.0000 			
+	VP_LINE_X[1] = 458.0000        
+	VP_LINE_Y[1] = 131.0000        // Right vertical line.
+	VP_LINE_WIDTH[1] = 2.0000 							
+	VP_LINE_HEIGHT[1] = 154.0000 			
 
-VP_LINE_X[2] = 267.0000        // Bottom horizontal line.
-VP_LINE_Y[2] = 207.0000 							
-VP_LINE_WIDTH[2] = 382.0000 						
-VP_LINE_HEIGHT[2] = 2.0000 
+	VP_LINE_X[2] = 267.0000        // Bottom horizontal line.
+	VP_LINE_Y[2] = 207.0000 							
+	VP_LINE_WIDTH[2] = 382.0000 						
+	VP_LINE_HEIGHT[2] = 2.0000 
 
-VP_LINE_X[3] = 77.0000 		   // left vertical line.						
-VP_LINE_Y[3] = 131.0000 							
-VP_LINE_WIDTH[3] = 2.0000 
-VP_LINE_HEIGHT[3] = 152.0000 						
+	VP_LINE_X[3] = 77.0000 		   // left vertical line.						
+	VP_LINE_Y[3] = 131.0000 							
+	VP_LINE_WIDTH[3] = 2.0000 
+	VP_LINE_HEIGHT[3] = 152.0000 						
 
-VP_LINE_X[4] = 267.0000 	   // Box around the outside.					
-VP_LINE_Y[4] = 54.0000         // Top horizontal line.
-VP_LINE_WIDTH[4] = 383.0000 						
-VP_LINE_HEIGHT[4] = 2.0000 										               
+	VP_LINE_X[4] = 267.0000 	   // Box around the outside.					
+	VP_LINE_Y[4] = 54.0000         // Top horizontal line.
+	VP_LINE_WIDTH[4] = 383.0000 						
+	VP_LINE_HEIGHT[4] = 2.0000 										               
 
-VP_LINE_X[5] = 199.0
-VP_LINE_Y[5] = 131.0000 
-VP_LINE_WIDTH[5] = 2.0000 
-VP_LINE_HEIGHT[5] = 152.0000 
+	VP_LINE_X[5] = 199.0
+	VP_LINE_Y[5] = 131.0000 
+	VP_LINE_WIDTH[5] = 2.0000 
+	VP_LINE_HEIGHT[5] = 152.0000 
 
-VP_LINE_X[6] = 246.0
-VP_LINE_Y[6] = 131.0000 
-VP_LINE_WIDTH[6] = 2.0000 
-VP_LINE_HEIGHT[6] = 152.0000 
+	VP_LINE_X[6] = 246.0
+	VP_LINE_Y[6] = 131.0000 
+	VP_LINE_WIDTH[6] = 2.0000 
+	VP_LINE_HEIGHT[6] = 152.0000 
 
-VP_LINE_X[7] = 292.0
-VP_LINE_Y[7] = 131.0000 
-VP_LINE_WIDTH[7] = 2.0000 
-VP_LINE_HEIGHT[7] = 153.0000 
+	VP_LINE_X[7] = 292.0
+	VP_LINE_Y[7] = 131.0000 
+	VP_LINE_WIDTH[7] = 2.0000 
+	VP_LINE_HEIGHT[7] = 153.0000 
 
-VP_LINE_X[8] = 338.0000 
-VP_LINE_Y[8] = 131.0000 
-VP_LINE_WIDTH[8] = 2.0000 
-VP_LINE_HEIGHT[8] = 153.0000 
+	VP_LINE_X[8] = 338.0000 
+	VP_LINE_Y[8] = 131.0000 
+	VP_LINE_WIDTH[8] = 2.0000 
+	VP_LINE_HEIGHT[8] = 153.0000 
+ELSE
+	VP_LINE_X[0] = 410.0000        // Vertical lines for the columns.
+	VP_LINE_Y[0] = 131.0000 
+	VP_LINE_WIDTH[0] = 2.0000 
+	VP_LINE_HEIGHT[0] = 152.0000         
+
+	VP_LINE_X[1] = 459.0000        
+	VP_LINE_Y[1] = 131.0000        // Right vertical line.
+	VP_LINE_WIDTH[1] = 2.0000 							
+	VP_LINE_HEIGHT[1] = 154.0000 			
+
+	VP_LINE_X[2] = 268.0000        // Bottom horizontal line.
+	VP_LINE_Y[2] = 207.0000 							
+	VP_LINE_WIDTH[2] = 382.0000 						
+	VP_LINE_HEIGHT[2] = 2.0000 
+
+	VP_LINE_X[3] = 77.0000 		   // left vertical line.						
+	VP_LINE_Y[3] = 131.0000 							
+	VP_LINE_WIDTH[3] = 2.0000 
+	VP_LINE_HEIGHT[3] = 152.0000 						
+
+	VP_LINE_X[4] = 267.0000 	   // Box around the outside.					
+	VP_LINE_Y[4] = 54.0000         // Top horizontal line.
+	VP_LINE_WIDTH[4] = 383.0000 						
+	VP_LINE_HEIGHT[4] = 2.0000 										               
+
+	VP_LINE_X[5] = 235.0
+	VP_LINE_Y[5] = 131.0000 
+	VP_LINE_WIDTH[5] = 2.0000 
+	VP_LINE_HEIGHT[5] = 152.0000 
+
+	VP_LINE_X[6] = 278.0
+	VP_LINE_Y[6] = 131.0000 
+	VP_LINE_WIDTH[6] = 2.0000 
+	VP_LINE_HEIGHT[6] = 152.0000 
+
+	VP_LINE_X[7] = 322.0
+	VP_LINE_Y[7] = 131.0000 
+	VP_LINE_WIDTH[7] = 2.0000 
+	VP_LINE_HEIGHT[7] = 153.0000 
+
+	VP_LINE_X[8] = 363.0000 
+	VP_LINE_Y[8] = 131.0000 
+	VP_LINE_WIDTH[8] = 2.0000 
+	VP_LINE_HEIGHT[8] = 153.0000 
+ENDIF
 
 TEXT_SCALE_X[0] = 0.82 
 TEXT_SCALE_Y[0] = 3.02 
@@ -624,30 +697,61 @@ VP_TABLE_HEIGHT = 152.0000
 //VP_HIGHL_WIDTH = 58.5 
 //VP_HIGHL_HEIGHT = 146.0000  // This stuff is for highlighted columns.
 
-VP_HIGHL_X[0] = 222.0 
-VP_HIGHL_Y[0] = 130.0
-VP_HIGHL_WIDTH[0] = 49.0
-VP_HIGHL_HEIGHT[0] = 152.0
+IF NOT IS_JAPANESE_VERSION
 
-VP_HIGHL_X[1] = 269.0 
-VP_HIGHL_Y[1] = 130.0 
-VP_HIGHL_WIDTH[1] = 46.0
-VP_HIGHL_HEIGHT[1] = 152.0
+	VP_HIGHL_X[0] = 222.0 
+	VP_HIGHL_Y[0] = 130.0
+	VP_HIGHL_WIDTH[0] = 49.0
+	VP_HIGHL_HEIGHT[0] = 152.0
 
-VP_HIGHL_X[2] = 314.0 
-VP_HIGHL_Y[2] = 130.0 
-VP_HIGHL_WIDTH[2] = 48.0
-VP_HIGHL_HEIGHT[2] = 152.0
+	VP_HIGHL_X[1] = 269.0 
+	VP_HIGHL_Y[1] = 130.0 
+	VP_HIGHL_WIDTH[1] = 46.0
+	VP_HIGHL_HEIGHT[1] = 152.0
 
-VP_HIGHL_X[3] = 360.0
-VP_HIGHL_Y[3] = 130.0 
-VP_HIGHL_WIDTH[3] = 46.0
-VP_HIGHL_HEIGHT[3] = 152.0
+	VP_HIGHL_X[2] = 314.0 
+	VP_HIGHL_Y[2] = 130.0 
+	VP_HIGHL_WIDTH[2] = 48.0
+	VP_HIGHL_HEIGHT[2] = 152.0
 
-VP_HIGHL_X[4] = 421.0 
-VP_HIGHL_Y[4] = 130.0 
-VP_HIGHL_WIDTH[4] = 72.0
-VP_HIGHL_HEIGHT[4] = 152.0
+	VP_HIGHL_X[3] = 360.0
+	VP_HIGHL_Y[3] = 130.0 
+	VP_HIGHL_WIDTH[3] = 46.0
+	VP_HIGHL_HEIGHT[3] = 152.0
+
+	VP_HIGHL_X[4] = 421.0 
+	VP_HIGHL_Y[4] = 130.0 
+	VP_HIGHL_WIDTH[4] = 72.0
+	VP_HIGHL_HEIGHT[4] = 152.0
+
+ELSE
+
+	VP_HIGHL_X[0] = 255.0 
+	VP_HIGHL_Y[0] = 130.0
+	VP_HIGHL_WIDTH[0] = 43.0
+	VP_HIGHL_HEIGHT[0] = 152.0
+
+	VP_HIGHL_X[1] = 300.0 
+	VP_HIGHL_Y[1] = 130.0 
+	VP_HIGHL_WIDTH[1] = 43.0
+	VP_HIGHL_HEIGHT[1] = 153.0
+
+	VP_HIGHL_X[2] = 342.0 
+	VP_HIGHL_Y[2] = 130.0 
+	VP_HIGHL_WIDTH[2] = 41.0
+	VP_HIGHL_HEIGHT[2] = 152.0
+
+	VP_HIGHL_X[3] = 386.0
+	VP_HIGHL_Y[3] = 130.0 
+	VP_HIGHL_WIDTH[3] = 45.0
+	VP_HIGHL_HEIGHT[3] = 152.0
+
+	VP_HIGHL_X[4] = 434.0 
+	VP_HIGHL_Y[4] = 130.0 
+	VP_HIGHL_WIDTH[4] = 48.0
+	VP_HIGHL_HEIGHT[4] = 152.0
+
+ENDIF
 
 button_text_offset = 2.5
 
@@ -2033,11 +2137,11 @@ vidpok_edit_hud:
 	IF vp_edit_mode = 1
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 7
-				vp_edit_counter = 0
-			ENDIF
 			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
 		ENDIF 
+		IF vp_edit_counter > 7
+			vp_edit_counter = 0
+		ENDIF
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP 
 			vp_screen_y[vp_edit_counter] += -1.0
 		ENDIF
@@ -2056,10 +2160,10 @@ vidpok_edit_hud:
 	IF vp_edit_mode = 2
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 4
-				vp_edit_counter = 0
-			ENDIF
 			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
+		ENDIF
+		IF vp_edit_counter > 4
+			vp_edit_counter = 0
 		ENDIF
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP 
 			
@@ -2092,10 +2196,10 @@ vidpok_edit_hud:
 	IF vp_edit_mode = 3
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 9
-				vp_edit_counter = 0
-			ENDIF
 			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
+		ENDIF
+		IF vp_edit_counter > 9
+			vp_edit_counter = 0
 		ENDIF
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP 
 			row_y[vp_edit_counter] += -1.0
@@ -2218,10 +2322,10 @@ vidpok_edit_hud:
 	IF vp_edit_mode = 8
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 8
-				vp_edit_counter = 0
-			ENDIF
 			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
+		ENDIF
+		IF vp_edit_counter > 8
+			vp_edit_counter = 0
 		ENDIF
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
 			vp_line_y[vp_edit_counter] += -1.0	
@@ -2259,10 +2363,10 @@ vidpok_edit_hud:
 
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 5
-				vp_edit_counter = 0
-			ENDIF
 			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
+		ENDIF
+		IF vp_edit_counter > 5
+			vp_edit_counter = 0
 		ENDIF
 
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
@@ -2419,10 +2523,10 @@ vidpok_edit_hud:
 	IF vp_edit_mode = 12
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RETURN
 			vp_edit_counter++
-			IF vp_edit_counter > 4
-				vp_edit_counter = 0
-			ENDIF
-			WRITE_DEBUG_WITH_INT EDIT_COUNTER vp_edit_counter
+			WRITE_DEBUG_WITH_INT EDIT_COUNTER_FOR_HIGHLIGHT_COLUMNS vp_edit_counter
+		ENDIF
+		IF vp_edit_counter > 4
+			vp_edit_counter = 0
 		ENDIF
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
 			vp_highl_y[vp_edit_counter] += -1.0	

@@ -260,6 +260,9 @@ LOWR_m_stage_0:
 		select_pressed				= camera_mode
 		select_pressed				= 0
 
+		LVAR_INT cancel_pressed
+		cancel_pressed = 0
+
 		// set floats
 		force_multiplier = 0.01
 
@@ -1308,6 +1311,9 @@ LOWR_m_stage_4:
 					CLEAR_PRINTS
 					m_goals++
 					cross_pressed = 1
+					IF IS_JAPANESE_VERSION
+						cancel_pressed = 1
+					ENDIF
 					IF NOT IS_CHAR_DEAD meet_ped[18]
 						CLEAR_CHAR_TASKS meet_ped[18]
 					ENDIF
@@ -1346,7 +1352,7 @@ LOWR_m_stage_4:
 			
 			// ' X '  to increase bet
 			
-			IF IS_BUTTON_PRESSED PAD1 SQUARE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 				IF NOT cross_is_pressed = 1 
 				AND NOT cross_is_pressed = -1
 
@@ -1486,7 +1492,7 @@ LOWR_m_stage_4:
 			ENDIF
 
 			IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
-			    
+			AND cancel_pressed = 0
 				SET_CAMERA_BEHIND_PLAYER
 				RESTORE_CAMERA_JUMPCUT
 				SWITCH_WIDESCREEN OFF
@@ -1554,6 +1560,12 @@ LOWR_m_stage_4:
 				ENDWHILE
 
 				m_failed = 1
+			ELSE
+				IF NOT cancel_pressed = 0
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
+						cancel_pressed = 0
+					ENDIF
+				ENDIF
 			ENDIF
 		ENDIF
 

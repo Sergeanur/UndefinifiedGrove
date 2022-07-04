@@ -160,7 +160,7 @@ mission_loop_POOL2:
 	help_timer += time_diff
 	shot_timer += time_diff
 
-	GOSUB pool2_debug
+	//GOSUB pool2_debug
 	
 	pool_switch_start:
 	SWITCH m_stage
@@ -1208,11 +1208,11 @@ pl_stage_2:
 		IF camera_mode = 0
 			BUTT_ANGLE = 10.0 
 			RAISE_CUE = 0.02 
-			CUE_X_CORRECTION = 0.0  
+			CUE_X_CORRECTION = 0.0034  
 		ELSE
 			BUTT_ANGLE = 22.5000 
 			RAISE_CUE = 0.02 
-			CUE_X_CORRECTION = 0.0 
+			CUE_X_CORRECTION = 0.0034 
 		ENDIF
 
 		this_is_break = 1
@@ -1278,7 +1278,7 @@ pl_stage_3:
 		ENDIF
 
 		IF TIMERA > 500
-			IF IS_BUTTON_PRESSED current_pad CROSS
+			IF IS_BUTTON_PRESSED current_pad BUTTON_ACCEPT
 				IF NOT IS_CHAR_DEAD current_char
 					cross_is_pressed = 1
 					m_goals = 99
@@ -1299,7 +1299,7 @@ pl_stage_3:
 		m_goals = 0
 	ENDIF
 
-	IF IS_BUTTON_PRESSED current_pad TRIANGLE  // Bail on the chalking; quits the game.
+	IF IS_BUTTON_PRESSED current_pad BUTTON_CANCEL  // Bail on the chalking; quits the game.
 		
 		IF triangle_is_pressed = 0
 		AND triangle_timer > 1000
@@ -1362,7 +1362,7 @@ pl_stage_4:
 			ball_potted[0] = 0
 		ENDIF
 
-		IF IS_BUTTON_PRESSED current_pad SQUARE
+		IF IS_BUTTON_PRESSED current_pad BUTTON_BET_UP
 			IF square_is_pressed = 0
 				IF aim_help_flag = 2
 					aim_help_flag = 0
@@ -1514,7 +1514,7 @@ pl_stage_4:
 				SET_OBJECT_COORDINATES p_ball[0] x y ball_tri_z
 			ENDIF
 
-			IF IS_BUTTON_PRESSED current_pad CROSS
+			IF IS_BUTTON_PRESSED current_pad BUTTON_ACCEPT
 				IF cross_is_pressed = 0	
 					m_goals = 99
 					cross_is_pressed = 1
@@ -1535,7 +1535,7 @@ pl_stage_4:
 		GOTO pl_stage_4_end
 	ENDIF
 
-	IF IS_BUTTON_PRESSED current_pad TRIANGLE  
+	IF IS_BUTTON_PRESSED current_pad BUTTON_CANCEL  
 	    
 		IF triangle_is_pressed = 0  
 		AND triangle_timer > 1000
@@ -1754,11 +1754,11 @@ pl_stage_5:
 				IF camera_mode = 0
 					BUTT_ANGLE = 10.0 
 					RAISE_CUE = 0.02 
-					CUE_X_CORRECTION = 0.0  
+					CUE_X_CORRECTION = 0.0034  
 				ELSE
 					BUTT_ANGLE = 22.5000 
 					RAISE_CUE = 0.02 
-					CUE_X_CORRECTION = 0.0 
+					CUE_X_CORRECTION = 0.0034 
 				ENDIF
 
 
@@ -1797,7 +1797,7 @@ pl_stage_5:
 		ENDIF
 
 		IF camera_mode = 0
-			IF IS_BUTTON_PRESSED current_pad SQUARE
+			IF IS_BUTTON_PRESSED current_pad BUTTON_BET_UP
 				IF square_is_pressed = 0
 					IF aim_help_flag = 2
 						aim_help_flag = 0
@@ -1852,6 +1852,7 @@ pl_stage_5:
 		LVAR_FLOAT butt_angle  
 		LVAR_FLOAT raise_cue
 		LVAR_FLOAT cue_x_correction
+/*
 		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
 			butt_angle += 0.5
 		ENDIF
@@ -1881,11 +1882,12 @@ pl_stage_5:
 			SAVE_STRING_TO_DEBUG_FILE "cue_x_correction = "
 			SAVE_FLOAT_TO_DEBUG_FILE cue_x_correction
 		ENDIF 
+*/
 		
 
 		// goto shooting ----
 
-		IF IS_BUTTON_PRESSED current_pad CROSS
+		IF IS_BUTTON_PRESSED current_pad BUTTON_ACCEPT
 
 			IF cross_is_pressed = 0
 				IF DOES_OBJECT_EXIST aim_cue
@@ -1916,7 +1918,7 @@ pl_stage_5:
 		m_goals = 99
 	ENDIF
 	
-	IF IS_BUTTON_PRESSED current_pad TRIANGLE
+	IF IS_BUTTON_PRESSED current_pad BUTTON_CANCEL
 	    
 		IF triangle_is_pressed = 0
 		AND triangle_timer > 1000
@@ -1987,7 +1989,7 @@ pl_stage_7:
 	
 		LVAR_INT back_from_shooting
 		
-		IF IS_BUTTON_PRESSED current_pad TRIANGLE  // Go back to the aiming screen.
+		IF IS_BUTTON_PRESSED current_pad BUTTON_CANCEL  // Go back to the aiming screen.
 			
 			IF triangle_is_pressed  = 0
 				m_stage = 5
@@ -3151,12 +3153,12 @@ pl_stage_10:
 	IF m_goals = 99
 		GOSUB pool_draw_window_2
 		IF current_char_is_human = 1
-			IF IS_BUTTON_PRESSED current_pad CROSS
+			IF IS_BUTTON_PRESSED current_pad BUTTON_ACCEPT
 				m_goals++
 			ENDIF
 		ELSE
 			IF TIMERB > 2000
-			OR IS_BUTTON_PRESSED current_pad CROSS
+			OR IS_BUTTON_PRESSED current_pad BUTTON_ACCEPT
 				m_goals++
 			ENDIF
 
@@ -6753,8 +6755,13 @@ init_pool_screen_coords:
 		SCREEN_COORD_Y[2] = 396.8582
 		BREAK
 	DEFAULT
-		SCREEN_COORD_X[2] = 157.0000 
-		SCREEN_COORD_Y[2] = 396.8582
+		IF NOT IS_JAPANESE_VERSION
+			SCREEN_COORD_X[2] = 157.0000 
+			SCREEN_COORD_Y[2] = 396.8582
+		ELSE
+			SCREEN_COORD_X[2] = 168.0000 
+			SCREEN_COORD_Y[2] = 396.8582
+		ENDIF
 		BREAK
 	ENDSWITCH
 
@@ -6988,7 +6995,11 @@ pl_text:
 	SET_TEXT_RIGHT_JUSTIFY OFF
 	SET_TEXT_JUSTIFY OFF
 	SET_TEXT_CENTRE OFF
-	text_float = screen_coord_x[1] - 20.0
+	IF NOT IS_JAPANESE_VERSION
+		text_float = screen_coord_x[1] - 20.0
+	ELSE
+		text_float = screen_coord_x[1]
+	ENDIF
 	SET_TEXT_WRAPX text_float
 	SET_TEXT_PROPORTIONAL ON
 	SET_TEXT_BACKGROUND OFF
@@ -7070,7 +7081,9 @@ mission_cleanup_POOL2:
 	MAKE_PLAYER_GANG_REAPPEAR
 	DISABLE_2ND_PAD_FOR_DEBUG FALSE
 	SET_SCRIPT_COOP_GAME FALSE
-	FINISHED_WITH_XBOX_PLAYER2
+	IF IS_XBOX_VERSION
+		FINISHED_WITH_XBOX_PLAYER2
+	ENDIF
 
 	disable_debug = 0
 

@@ -1608,6 +1608,7 @@ SR_mission:
 					ENDIF
 					SR_ped_can_be_created[1] = 1
 
+					SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
 					DO_FADE 1000 FADE_IN
 					SR_mission_state = 0
 					SR_flag = 0

@@ -2345,7 +2345,7 @@ sweet6_m_stage_4:
 			
 			// ' X '  to increase bet
 			
-			IF IS_BUTTON_PRESSED PAD1 SQUARE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 			
 				IF NOT cross_is_pressed = 1 
 				AND NOT cross_is_pressed = -1
@@ -2413,7 +2413,7 @@ sweet6_m_stage_4:
 				ENDIF
 
 				// remove wager
-				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 					IF NOT square_is_pressed = 1
 
 						// sort out betting step
@@ -2473,7 +2473,7 @@ sweet6_m_stage_4:
 			// ' O '  to ok the bet
 			IF cross_pressed = 0
 				
-				IF IS_BUTTON_PRESSED PAD1 CROSS
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 					temp_float =# current_wager
 					temp_float *= 0.1
 					CLEAR_HELP
@@ -2481,7 +2481,7 @@ sweet6_m_stage_4:
 				ENDIF
 			
 			ELSE
-				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+				IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 					cross_pressed = 0
 				ENDIF
 			ENDIF
