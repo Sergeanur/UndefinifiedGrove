@@ -3312,13 +3312,15 @@ d5_drawing_tv_screen:
 	GOSUB d5_small_onscreen_text
 	GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 	SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-	DISPLAY_TEXT 105.0 375.0 DES5_FO
+	SET_TEXT_SCALE 0.32 1.25
+	DISPLAY_TEXT 70.0 360.0 DES5_FO
 
 	IF NOT d5_control_flag = 1
 		GOSUB d5_small_onscreen_text
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 		SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-		DISPLAY_TEXT 105.0 325.0 DES5_FP
+		SET_TEXT_SCALE 0.32 1.25
+		DISPLAY_TEXT 70.0 340.0 DES5_FP
 		GOSUB d5_small_onscreen_text
 		IF NOT d5_total_missions_open = 1
 			GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
@@ -3326,27 +3328,28 @@ d5_drawing_tv_screen:
 			GET_HUD_COLOUR HUD_COLOUR_GREY d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 		ENDIF
 		SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-		DISPLAY_TEXT 105.0 350.0 DES5_FN
+		SET_TEXT_SCALE 0.32 1.25
+		DISPLAY_TEXT 437.0 340.0 DES5_FN
 	ENDIF
 
 	GOSUB d5_small_onscreen_text
-	SET_TEXT_SCALE 1.45 2.0
-	GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
+	GET_HUD_COLOUR HUD_COLOUR_WHITE d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 	SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-	DISPLAY_TEXT 70.0 372.0 DES5_FL
+	SET_TEXT_SCALE 0.32 1.25
+	DISPLAY_TEXT 150.0 360.0 DES5_FL
 
 	IF NOT d5_control_flag = 1
 		GOSUB d5_small_onscreen_text
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
+		GET_HUD_COLOUR HUD_COLOUR_WHITE d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 		SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-		DISPLAY_TEXT 70.0 322.0 DES5_FM
+		SET_TEXT_SCALE 0.32 1.25
+		DISPLAY_TEXT 150.0 340.0 SCH_PRS
 
 		GOSUB d5_small_onscreen_text
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
+		GET_HUD_COLOUR HUD_COLOUR_WHITE d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 		SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-		DISPLAY_TEXT 61.4 347.0 DES5_FK
+		SET_TEXT_SCALE 0.32 1.25
+		DISPLAY_TEXT 537.4 340.0 DES5_FK
 	ENDIF
 
 	SET_SPRITES_DRAW_BEFORE_FADE TRUE

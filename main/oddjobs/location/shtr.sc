@@ -342,12 +342,12 @@ IF shtr_front_end = 0
 	
 	IF shtr_player_alive = 1
 	OR shtr_player_alive = 3
-		shtr_temp = shtr_lstickx / 10
+		shtr_temp = shtr_lstickx / 20
 		shtr_tempF =# shtr_temp
-		shtr_plyr_x += shtr_tempF
-		shtr_temp = shtr_lsticky / 10
+		shtr_plyr_x +=@ shtr_tempF
+		shtr_temp = shtr_lsticky / 20
 		shtr_tempF =# shtr_temp
-		shtr_plyr_y += shtr_tempF
+		shtr_plyr_y +=@ shtr_tempF
 	ENDIF
 
 	// Move the player's ship.
@@ -356,19 +356,19 @@ IF shtr_front_end = 0
 	OR shtr_player_alive = 3
 
 		IF IS_BUTTON_PRESSED PAD1 DPADUP
-			shtr_plyr_y -= 12.0
+			shtr_plyr_y -=@ 6.0
 		ENDIF
 
 		IF IS_BUTTON_PRESSED PAD1 DPADDOWN
-			shtr_plyr_y += 12.0
+			shtr_plyr_y +=@ 6.0
 		ENDIF
 
 		IF IS_BUTTON_PRESSED PAD1 DPADLEFT
-			shtr_plyr_x -= 12.0
+			shtr_plyr_x -=@ 6.0
 		ENDIF
 
 		IF IS_BUTTON_PRESSED PAD1 DPADRIGHT
-			shtr_plyr_x += 12.0
+			shtr_plyr_x +=@ 6.0
 		ENDIF
 	ENDIF		
 
@@ -812,17 +812,6 @@ DRAW_SPRITE 25 480.0 336.0 -320.0 -224.0 150 150 150 255
 DRAW_SPRITE 25 160.0 336.0 320.0 -224.0 150 150 150 255
 
 IF shtr_front_end = 0
-	GET_GAME_TIMER shtr_help_end 
-	shtr_help_diff = shtr_help_end - shtr_help_start
-
-	IF shtr_help_diff < 10000
-		DRAW_WINDOW 35.0 15.0 240.0 50.0 DUMMY SWIRLS_NONE
-		SET_TEXT_CENTRE OFF 
-		SET_TEXT_WRAPX 240.0 
-		SET_TEXT_FONT FONT_STANDARD 
-		SET_TEXT_SCALE 0.5 1.8 
-		DISPLAY_TEXT 40.0 15.0 SH_NAV
-	ENDIF
 ENDIF
 
 IF shtr_front_end = 4
@@ -1100,8 +1089,8 @@ shtr_projectile_movement:
 		ENDIF
 		IF shtr_up_projectile_alive[shtr_current_projectile] = 1
 			DRAW_SPRITE 11 shtr_up_projectile_x[shtr_current_projectile] shtr_up_projectile_y[shtr_current_projectile] shtr_projectile_size shtr_projectile_size 150 150 150 255
-			shtr_up_projectile_x[shtr_current_projectile] += shtr_x_add
-			shtr_up_projectile_y[shtr_current_projectile] -= shtr_y_add
+			shtr_up_projectile_x[shtr_current_projectile] +=@ shtr_x_add
+			shtr_up_projectile_y[shtr_current_projectile] -=@ shtr_y_add
 			IF shtr_up_projectile_x[shtr_current_projectile] > 639.0
 				shtr_up_projectile_y[shtr_current_projectile] = 0.0
 				shtr_up_projectile_alive[shtr_current_projectile] = 0
@@ -1109,8 +1098,8 @@ shtr_projectile_movement:
 		ENDIF
 		IF shtr_down_projectile_alive[shtr_current_projectile] = 1
 			DRAW_SPRITE 11 shtr_down_projectile_x[shtr_current_projectile] shtr_down_projectile_y[shtr_current_projectile] shtr_projectile_size shtr_projectile_size 150 150 150 255
-			shtr_down_projectile_x[shtr_current_projectile] += shtr_x_add
-			shtr_down_projectile_y[shtr_current_projectile] += shtr_y_add
+			shtr_down_projectile_x[shtr_current_projectile] +=@ shtr_x_add
+			shtr_down_projectile_y[shtr_current_projectile] +=@ shtr_y_add
 			IF shtr_down_projectile_x[shtr_current_projectile] > 639.0
 				shtr_down_projectile_y[shtr_current_projectile] = 0.0
 				shtr_down_projectile_alive[shtr_current_projectile] = 0
@@ -1131,7 +1120,7 @@ shtr_enemy_fire:
 						shtr_enemy_shot_y[shtr_current_enemy] = shtr_enemy_y[shtr_current_enemy]
 						shtr_enemy_shot_alive[shtr_current_enemy] = 1
 						shtr_shot++
-						shtr_enemy_shot_speed = shtr_enemy_speed[shtr_current_enemy] * 3.0
+						shtr_enemy_shot_speed = shtr_enemy_speed[shtr_current_enemy] * 1.5
 						REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_GOGO_ENEMY_FIRE
 					ENDIF
 				ENDIF
@@ -1149,7 +1138,7 @@ shtr_enemy_fire:
 					ENDIF
 				ENDIF
 				DRAW_SPRITE 14 shtr_enemy_shot_x[shtr_current_enemy] shtr_enemy_shot_y[shtr_current_enemy] shtr_projectile_size shtr_projectile_size 150 150 150 255
-				shtr_enemy_shot_x[shtr_current_enemy] -= shtr_enemy_shot_speed
+				shtr_enemy_shot_x[shtr_current_enemy] -=@ shtr_enemy_shot_speed
 				IF shtr_enemy_shot_x[shtr_current_enemy] < 0.0
 					shtr_enemy_shot_alive[shtr_current_enemy] = 0
 					shtr_enemy_shot_x[shtr_current_enemy] = 0.0

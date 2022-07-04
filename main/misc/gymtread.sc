@@ -238,6 +238,21 @@ ENDIF
 
 IF starttreadmill_flag = 1
 AND NOT IS_CHAR_DEAD scplayer
+	
+	IF playerexercising_flag = 1
+	AND NOT IS_CHAR_DEAD scplayer
+
+	   	SET_CHAR_COLLISION scplayer FALSE
+		SET_PLAYER_CONTROL player1 OFF
+		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer treadmillx treadmilly treadmillz
+ 		SET_CHAR_HEADING scplayer treadmillheading		  
+		SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
+	 	SET_FIXED_CAMERA_POSITION treadmillcamx treadmillcamy treadmillcamz 0.0 0.0 0.0
+		POINT_CAMERA_AT_POINT treadmilllookcamx treadmilllookcamy treadmilllookcamz JUMP_CUT
+
+		playerexercising_flag = 2
+
+	ENDIF
 
 	IF are_anims_loaded = 0
 		
@@ -255,21 +270,6 @@ AND NOT IS_CHAR_DEAD scplayer
 	   	ENDWHILE
 
 		are_anims_loaded = 1
-
-	ENDIF
-	
-	IF playerexercising_flag = 1
-	AND NOT IS_CHAR_DEAD scplayer
-
-	   	SET_CHAR_COLLISION scplayer FALSE
-		SET_PLAYER_CONTROL player1 OFF
-		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer treadmillx treadmilly treadmillz
- 		SET_CHAR_HEADING scplayer treadmillheading		  
-		SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
-	 	SET_FIXED_CAMERA_POSITION treadmillcamx treadmillcamy treadmillcamz 0.0 0.0 0.0
-		POINT_CAMERA_AT_POINT treadmilllookcamx treadmilllookcamy treadmilllookcamz JUMP_CUT
-
-		playerexercising_flag = 2
 
 	ENDIF
 
@@ -379,9 +379,12 @@ AND NOT IS_CHAR_DEAD scplayer
 			sprintstat_gym = sprintstat_gym + lowerbodymusclestat_gym
 			tread_resistance = level_treadresitance	+ sprintstat_gym
 
-			
-		   	//level bar
-			speed_tread = speed_tread - incline_leveltread					
+		   	
+		   	incline_leveltread = incline_leveltread / 2.0								
+			//level bar
+			speed_tread = speed_tread -@ incline_leveltread
+
+		   	incline_leveltread = incline_leveltread * 2.0								
 
 		
 			IF IS_BUTTON_PRESSED PAD1 CROSS

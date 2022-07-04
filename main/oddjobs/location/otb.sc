@@ -441,6 +441,7 @@ betting_otb_loop:
 	DISPLAY_TEXT otb_text_pos_x 395.7635 XSELECT
 	temp_float =# str_width
 	otb_text_pos_x += temp_float
+	otb_text_pos_x += 8.0
 
  	GOSUB setup_text_otb
 	SET_TEXT_SCALE 0.527 2.0
@@ -455,6 +456,7 @@ betting_otb_loop:
 
 	temp_float =# str_width
 	otb_text_pos_x += temp_float
+	otb_text_pos_x += 8.0
 	
  	GOSUB setup_text_otb
 	SET_TEXT_SCALE 0.527 2.0
@@ -1020,11 +1022,11 @@ horse_speed[4] = 0.0
 //SETS A STARTING FRAME OF ANIMATION FOR EACH HORSE AND THEIR STARTING POSITION
 LVAR_INT horse_anim_frame[5]
 LVAR_INT sprite_address sprite
-horse_anim_frame[0] = 4
-horse_anim_frame[1] = 10
-horse_anim_frame[2] = 13
-horse_anim_frame[3] = 12
-horse_anim_frame[4] = 5
+horse_anim_frame[0] = 2
+horse_anim_frame[1] = 5
+horse_anim_frame[2] = 6
+horse_anim_frame[3] = 1
+horse_anim_frame[4] = 4
 
 LVAR_INT anim_starting_addr[5]
 anim_starting_addr[0] = 3
@@ -1102,6 +1104,13 @@ REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_OTB_TRACK_START
 
 lvar_int play_win_lose_sound
 play_win_lose_sound = 0
+
+lvar_int horse_anim_timer[5]
+horse_anim_timer[0] = 12
+horse_anim_timer[1] = 34
+horse_anim_timer[2] = 0
+horse_anim_timer[3] = 55
+horse_anim_timer[4] = 20
 
 DRAW_RECT 320.0 224.0 640.0 448.0 0 0 0 255
 
@@ -1235,20 +1244,22 @@ race_otb_loop:
 	//DRAW HORSE SPRITES
 	k = 0
 	WHILE k < 5
-		temp_int = horse_anim_frame[k] / 2
-		sprite_address = 50 + temp_int
+		sprite_address = 50 + horse_anim_frame[k]
 		DRAW_SPRITE sprite_address horse_x[k] horse_y[k] horse_scale[k] horse_scale[k] 150 150 150 255
-		sprite_address = anim_starting_addr[k] + temp_int
+		sprite_address = anim_starting_addr[k] + horse_anim_frame[k]
 		rider_x[k] = horse_x[k] + 9.0
 		temp_float = rider_scale[k] / 2.0
 		
 		DRAW_SPRITE sprite_address rider_x[k] rider_y[k] rider_scale[k] temp_float 150 150 150 255
 		
 		IF stop_everything_moving = 0
-			++ horse_anim_frame[k]
-		ENDIF
-		IF horse_anim_frame[k] > 15
-			horse_anim_frame[k] = 0
+			if horse_anim_timer[k] < game_timer
+				++ horse_anim_frame[k]
+				IF horse_anim_frame[k] > 7
+					horse_anim_frame[k] = 0
+				ENDIF
+				horse_anim_timer[k] = game_timer + 67//HORSE ANIMATION IS 15 FPS
+			endif
 		ENDIF
 		++ k
 	ENDWHILE

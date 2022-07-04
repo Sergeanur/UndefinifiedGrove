@@ -403,7 +403,9 @@ none_frontend_loop://///////////////////////////////////////////////////////////
 	display_text 320.0 350.0 SPAC_05 //QUIT
 
 	repeat 60 a
-		dust_distance[a] += 8.0
+		temp_float = dust_speed / 2.0//PC
+		dust_distance[a] +=@ temp_float//PC
+		//dust_distance[a] +=@ dust_speed//PS2
 
 		COS dust_heading[a] x
 		SIN dust_heading[a] y
@@ -543,7 +545,9 @@ draw_rect 320.0 224.0 640.0 448.0 0 0 0 255
 GET_GAME_TIMER game_timer
 
 repeat 60 a
-	dust_distance[a] += dust_speed
+	temp_float = dust_speed / 2.0//PC
+	dust_distance[a] +=@ temp_float//PC
+	//dust_distance[a] +=@ dust_speed//PS2
 
 	COS dust_heading[a] x
 	SIN dust_heading[a] y
@@ -572,19 +576,20 @@ endrepeat
 if player_dead_flag = 0
 	if do_warp < 2
 		if IS_BUTTON_PRESSED PAD1 DPADRIGHT
-			ship_heading +=@ -2.65
+			ship_heading +=@ -1.325
 			LIMIT_ANGLE ship_heading ship_heading
 		else
 			if IS_BUTTON_PRESSED PAD1 DPADLEFT
-				ship_heading +=@ 2.65
+				ship_heading +=@ 1.325
 				LIMIT_ANGLE ship_heading ship_heading
 			else
 				GET_POSITION_OF_ANALOGUE_STICKS PAD1 left_stick_x left_stick_y temp_int temp_int
 				temp_float =# left_stick_x
 				temp_float *= -1.0
 				temp_float /= 25.0
+				temp_float /= 2.0
 
-				ship_heading += temp_float
+				ship_heading +=@ temp_float
 				LIMIT_ANGLE ship_heading ship_heading
 			endif
 		endif
@@ -609,14 +614,14 @@ if player_dead_flag = 0
 	ship_collision_y += 26.0
 
 	if do_warp = 2
-		ship_distance -=@ 2.0
+		ship_distance -=@ 1.0//PS2 = 2.0
 		dust_speed = 16.0
 		if ship_distance < 20.0
 			do_warp = 3
 		endif
 	else
 		if do_warp = 3
-			ship_distance +=@ 2.0
+			ship_distance +=@ 1.0//PS2 = 2.0
 			if ship_distance > 190.0
 				ship_distance = 190.0
 				warp_pickup_collected = 0
@@ -748,7 +753,9 @@ endif
 //DRAW PROJECTILES///
 repeat 10 a
 	if projectile_alive[a] = 1
-		projectile_distance[a] += projectile_speed[a]
+		temp_float = projectile_speed[a] / 2.0//PC
+		projectile_distance[a] +=@ temp_float //PC
+		//projectile_distance[a] +=@ projectile_speed[a] //PS2
 		
 		COS projectile_heading[a] x
 		SIN projectile_heading[a] y
@@ -840,8 +847,10 @@ repeat 10 a
 
 		any_enemy_alive = 1
 		
-		enemy_distance[a] += enemy_move[a]
-		enemy_heading[a] += enemy_rotation[a]
+		temp_float = enemy_move[a] / 2.0	 //PC
+		enemy_distance[a] +=@ temp_float	 //PC
+		temp_float = enemy_rotation[a] / 2.0 //PC
+		enemy_heading[a] +=@ temp_float      //PC
 		
 		LIMIT_ANGLE enemy_heading[a] enemy_heading[a]
 		COS enemy_heading[a] x
@@ -953,7 +962,9 @@ endif
 //DRAW ENEMY PROJECTILES///
 repeat 10 a
 	if enemy_projectile_alive[a] = 1
-		enemy_projectile_distance[a] += enemy_projectile_speed[a]
+		temp_float = enemy_projectile_speed[a] / 2.0//PC
+		enemy_projectile_distance[a] +=@ temp_float //PC
+		//enemy_projectile_distance[a] +=@ enemy_projectile_speed[a]//PS2
 
 		COS enemy_projectile_heading[a] x
 		SIN enemy_projectile_heading[a] y
@@ -1031,7 +1042,7 @@ repeat 10 a
 endrepeat
 
 if do_warp_pickup = 1
-	warp_pickup_distance += 2.0
+	warp_pickup_distance +=@ 1.0//PS2 = 2.0
 
 	LIMIT_ANGLE warp_pickup_heading warp_pickup_heading
 	COS warp_pickup_heading x

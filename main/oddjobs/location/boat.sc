@@ -4335,27 +4335,35 @@ display_overall_boat_score_text:
 		ENDIF
 
 
-		//Help text and buttons
-		SET_TEXT_SCALE 1.45 2.0
+		//Help text and buttons	   PC Version will be modified.
 		
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
+		GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
 		SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
 
-   	 	DISPLAY_TEXT 180.0 342.0 boat_74
+     	//PC section 	
+		SET_TEXT_SCALE 0.52 1.45
+		SET_TEXT_DROPSHADOW 2 0 0 0 255
+		SET_TEXT_FONT FONT_SPACEAGE
 
-		SET_TEXT_SCALE 1.45 2.0
-  		DISPLAY_TEXT 180.0 362.0 boat_73
+
+   	 	DISPLAY_TEXT 340.0 345.0 sch_prs//boat_74  //PS2 X button or PC equivalent
+
+		SET_TEXT_SCALE 0.52 1.45
+		SET_TEXT_DROPSHADOW 2 0 0 0 255
+		SET_TEXT_FONT FONT_SPACEAGE
+
+  		DISPLAY_TEXT 340.0 365.0 boat_73  // PS2 Triangle button or PC equivalent
 		
 		GOSUB boat_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45  // return scale for help text
 	   	GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
 		SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
-		DISPLAY_TEXT 215.0 345.0 boat_76  // continue
+		DISPLAY_TEXT 180.0 345.0 boat_76  // continue
 
 		GOSUB boat_small_backend_text
 	   	GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
 		SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
-		DISPLAY_TEXT 215.0 365.0 boat_53  // exit
+		DISPLAY_TEXT 180.0 365.0 boat_53  // exit
 
 
 		// Medals / Ribbons / Congratulatory messages //
@@ -4598,9 +4606,11 @@ boat_drawing_tv_screen://///////////////////////////////////////////////////////
 	GOSUB boat_getlanguage
 
 	IF boat_language = 1
-		DISPLAY_TEXT 96.0 375.0 BOAT_53 
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 BOAT_53 
 	ELSE
-		DISPLAY_TEXT 105.0 375.0 BOAT_53 
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 BOAT_53 
 	ENDIF
 
 	IF NOT boat_control_flag = 1
@@ -4611,9 +4621,11 @@ boat_drawing_tv_screen://///////////////////////////////////////////////////////
 		GOSUB boat_getlanguage
 
 		IF boat_language = 1
-			DISPLAY_TEXT 96.0 325.0 BOAT_54 
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 70.0 340.0 BOAT_54 
 		ELSE
-			DISPLAY_TEXT 105.0 325.0 BOAT_54 
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 70.0 340.0 BOAT_54 
 		ENDIF
 
 		IF NOT boat_which_missions_are_open_flag = 1
@@ -4624,9 +4636,11 @@ boat_drawing_tv_screen://///////////////////////////////////////////////////////
 			GOSUB boat_getlanguage
 
 			IF boat_language = 1
-				DISPLAY_TEXT 96.0 350.0 BOAT_52 
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BOAT_52 
 			ELSE
-				DISPLAY_TEXT 105.0 350.0 BOAT_52 
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BOAT_52 
 			ENDIF
 		ENDIF
 
@@ -4638,9 +4652,11 @@ boat_drawing_tv_screen://///////////////////////////////////////////////////////
 			GOSUB boat_getlanguage
 
 			IF boat_language = 1
-				DISPLAY_TEXT 96.0 350.0 BOAT_52 
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BOAT_52 
 			ELSE
-				DISPLAY_TEXT 105.0 350.0 BOAT_52 
+				SET_TEXT_SCALE 0.32 1.25 
+				DISPLAY_TEXT 437.0 340.0 BOAT_52 
 			ENDIF
 		ENDIF
 	ELSE
@@ -4651,51 +4667,59 @@ boat_drawing_tv_screen://///////////////////////////////////////////////////////
 		GOSUB boat_getlanguage
 
 		IF boat_language = 1
-			DISPLAY_TEXT 96.0 350.0 BOAT_52 
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 437.0 340.0 BOAT_52 
 		ELSE
-			DISPLAY_TEXT 105.0 350.0 BOAT_52 
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 437.0 340.0 BOAT_52 
 		ENDIF
 	ENDIF
 
 	GOSUB boat_small_onscreen_text
 
-	SET_TEXT_SCALE 1.45 2.0 
 	SET_TEXT_COLOUR 248 211 7 255
 
-	DISPLAY_TEXT 70.0 372.0 BOAT_73 
+	GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
+	SET_TEXT_SCALE 0.32 1.25 
+	SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
+
+	DISPLAY_TEXT 150.0 360.0 BOAT_73 
 
 	IF NOT boat_control_flag = 1
 		GOSUB boat_small_onscreen_text
 
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
+		GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
 		SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
-		SET_TEXT_SCALE 1.45 2.0
-		DISPLAY_TEXT 70.0 322.0 BOAT_74
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 150.0 340.0 SCH_PRS
 
 		IF NOT boat_which_missions_are_open_flag = 1
 			GOSUB boat_small_onscreen_text
 
-			GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
+			GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
 			SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
 			SET_TEXT_SCALE 1.45 2.0
-			DISPLAY_TEXT 61.4 347.0 BOAT_72
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 537.4 340.0 BOAT_72
 		ENDIF
 
 		IF boat_which_missions_are_open_flag = 1
 			GOSUB boat_small_onscreen_text
 
-			GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
+			GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
 			SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
 			SET_TEXT_SCALE 1.45 2.0
-			DISPLAY_TEXT 61.4 347.0 BOAT_72
+			SET_TEXT_SCALE 0.32 1.25 
+			DISPLAY_TEXT 537.4 340.0 BOAT_72
 		ENDIF
 	ELSE
 		GOSUB boat_small_onscreen_text
 
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW b1_r b1_g b1_b b1_alpha2   
+		GET_HUD_COLOUR HUD_COLOUR_WHITE b1_r b1_g b1_b b1_alpha2   
 		SET_TEXT_COLOUR b1_r b1_g b1_b b1_alpha2
 		SET_TEXT_SCALE 1.45 2.0
-		DISPLAY_TEXT 61.4 347.0 BOAT_72
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 537.4 340.0 BOAT_72
 	ENDIF
 	SET_TEXT_SCALE 0.52 1.45 
 				
@@ -5336,6 +5360,14 @@ boat_watching_demo://///////////////////////////////////////////////////////////
 		//loading in car recordings.
 		IF NOT IS_CAR_DEAD instructor_boat
 
+			IF NOT IS_CAR_DEAD instructor_boat
+				GET_CAR_COORDINATES instructor_boat clearX clearY clearZ
+				CLEAR_AREA clearX clearY clearZ 1000.0 TRUE
+			   	//WRITE_DEBUG 201204
+
+			ENDIF
+
+
 			IF boat_mission_selection = 1
 			IF NOT HAS_CAR_RECORDING_BEEN_LOADED 752
 				REQUEST_CAR_RECORDING 752 
@@ -5384,6 +5416,12 @@ boat_watching_demo://///////////////////////////////////////////////////////////
 				REQUEST_CAR_RECORDING 759
 			ELSE
 				//playing back car recordings
+				IF NOT IS_CAR_DEAD instructor_boat
+				GET_CAR_COORDINATES instructor_boat clearX clearY clearZ
+				CLEAR_AREA clearX clearY clearZ 1000.0 TRUE
+			   	//WRITE_DEBUG 201204
+
+				ENDIF
 
 				SYNC_WATER	
 				START_PLAYBACK_RECORDED_CAR instructor_boat 759

@@ -2843,6 +2843,8 @@ ENDWHILE
 
 CLEAR_CUTSCENE
 
+SET_PLAYER_CONTROL player1 OFF
+
 SET_AREA_VISIBLE 0
 
 // ************** BIG BEAR CUTSCENE *******************

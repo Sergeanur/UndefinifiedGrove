@@ -825,7 +825,9 @@ IF hei2_para_progression < 12
 											   LOAD_SCENE	-781.3640 1164.0773 29.0876												   
 											   REQUEST_COLLISION -781.3640 1164.0773 
 											   IF NOT IS_CAR_DEAD hei2_jump_plane
-											   		SKIP_IN_PLAYBACK_RECORDED_CAR hei2_jump_plane 80.0
+											   		IF IS_PLAYBACK_GOING_ON_FOR_CAR hei2_jump_plane
+											   			SKIP_IN_PLAYBACK_RECORDED_CAR hei2_jump_plane 80.0
+													ENDIF
 											   		SET_HELI_BLADES_FULL_SPEED 	hei2_jump_plane
 											   ENDIF
 											   //WAIT 500

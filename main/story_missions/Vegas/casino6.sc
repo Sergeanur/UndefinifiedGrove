@@ -1253,6 +1253,7 @@ LVAR_FLOAT time_scale_C6
 
 SKIP_CUTSCENE_START
 
+/*
 	mol_speed_C6 = 0.5 * time_scale_C6
 	mol_acc_C6 = -0.0002 * time_scale_C6
 	dis_thrown_C6 = 0.8 * time_scale_C6
@@ -1261,22 +1262,80 @@ SKIP_CUTSCENE_START
 	mol_acc_Z_C6 = -0.03 * time_scale_C6
 	mol_acc_Z_C6 *= time_scale_C6
 	dis_thrown_Z_C6 = 0.0
+*/
+
+	mol_speed_C6 = 0.25 * time_scale_C6
+	mol_acc_C6 = -0.0001 * time_scale_C6
+	dis_thrown_C6 = 0.4 * time_scale_C6
+
+	mol_speed_Z_C6 = 0.2 * time_scale_C6	
+	mol_acc_Z_C6 = -0.05 * time_scale_C6
+	mol_acc_Z_C6 *= time_scale_C6
+	dis_thrown_Z_C6 = 0.0
 
 
-	TIMERA = 0
-	WHILE TIMERA < 500
-		WAIT 0
-	ENDWHILE
+//	TIMERA = 0
+//	WHILE TIMERA < 500
+//		WAIT 0
+//	ENDWHILE
 	
 	 
+	
+	
+
+	WHILE let_go_of_molotov = FALSE
+		WAIT 0
+
+		IF NOT IS_CHAR_DEAD mafia_C6[4]
+			IF IS_CHAR_PLAYING_ANIM mafia_C6[4] UZI_reload
+				let_go_of_molotov = TRUE	
+			ENDIF
+		ELSE
+			let_go_of_molotov = TRUE	
+		ENDIF
+	ENDWHILE
 
 	PLAY_FX_SYSTEM molotov_particleFX_C6[0]
 
 	//WHILE TIMERA < 1290
 	
+	/*
 	WHILE TIMERA < 1390
 		WAIT 0
 	ENDWHILE
+	*/
+
+LVAR_INT let_go_of_molotov 
+LVAR_FLOAT throw_anim_time
+
+	WHILE let_go_of_molotov = FALSE
+		WAIT 0
+		IF NOT IS_CHAR_DEAD mafia_C6[4]
+			IF IS_CHAR_PLAYING_ANIM mafia_C6[4] WEAPON_throw
+				let_go_of_molotov = TRUE	
+			ENDIF
+		ELSE
+			let_go_of_molotov = TRUE	
+		ENDIF
+	ENDWHILE
+
+	let_go_of_molotov = FALSE
+
+	WHILE let_go_of_molotov = FALSE
+		WAIT 0
+		IF NOT IS_CHAR_DEAD mafia_C6[4]
+			IF IS_CHAR_PLAYING_ANIM mafia_C6[4] WEAPON_throw
+				GET_CHAR_ANIM_CURRENT_TIME mafia_C6[4] WEAPON_throw throw_anim_time
+				IF throw_anim_time >= 0.3
+					let_go_of_molotov = TRUE
+				ENDIF	
+			ENDIF
+		ELSE
+			let_go_of_molotov = TRUE	
+		ENDIF
+	ENDWHILE
+
+
 	
 	IF NOT IS_CHAR_DEAD mafia_C6[4]
 		GET_OBJECT_COORDINATES molotov_C6[0] mol_X_C6 mol_Y_C6 mol_Z_C6
@@ -1311,16 +1370,16 @@ LVAR_FLOAT camera_pos_dis_C6 camera_look_dis_C6
 		// molotov			
 		new_X_C6 = dis_thrown_C6 * cos_angle_C6
 		new_Y_C6 = dis_thrown_C6 * sin_angle_C6
-		mol_speed_Z_C6 += mol_acc_Z_C6
-		dis_thrown_Z_C6 += mol_speed_Z_C6
+		mol_speed_Z_C6 +=@ mol_acc_Z_C6
+		dis_thrown_Z_C6 +=@ mol_speed_Z_C6
 		x = mol_X_C6 + new_X_C6
 		y = mol_Y_C6 + new_Y_C6
 		z = mol_Z_C6 + dis_thrown_Z_C6
 		SET_OBJECT_COORDINATES molotov_C6[1] x y z
 		
-		mol_rot_X_C6 += 1.0
-		mol_rot_Y_C6 += 1.0
-		mol_rot_Z_C6 += 1.0 
+		mol_rot_X_C6 +=@ 1.0
+		mol_rot_Y_C6 +=@ 1.0
+		mol_rot_Z_C6 +=@ 1.0 
 		SET_OBJECT_ROTATION molotov_C6[1] mol_rot_X_C6 mol_rot_Y_C6 mol_rot_Z_C6 
 		
 		// camera
@@ -1408,7 +1467,7 @@ LVAR_FLOAT camera_angle_C6
 	ENDWHILE
 		
 	TIMERA = 0
-	WHILE TIMERA < 1300
+	WHILE TIMERA < 700
 
 		WAIT 0
 
@@ -1425,7 +1484,7 @@ LVAR_FLOAT camera_angle_C6
 	ENDWHILE
 
 	TIMERA = 0
-	WHILE TIMERA < 500
+	WHILE TIMERA < 1000
 		WAIT 0
 	ENDWHILE
 

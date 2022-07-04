@@ -118,6 +118,8 @@ LVAR_FLOAT last_drawn_aim_ball_x last_drawn_aim_ball_y
 
 LVAR_INT aim_help_flag
 
+LVAR_FLOAT mouse_x mouse_y
+LVAR_FLOAT mouse_move_x mouse_move_y
 
 CONST_INT POOL_COLOUR_NONE 	   	-1
 CONST_INT POOL_COLOUR_SPOTS 	0
@@ -1722,6 +1724,9 @@ pl_stage_5:
 			projection_calculated = 0
 			GOSUB pool_draw_projection
 
+			mouse_x = 0.0
+			mouse_y	= 0.0
+
 			m_goals++
 		ENDIF
 
@@ -1755,6 +1760,26 @@ pl_stage_5:
 				ENDIF
 			ENDIF
 		ENDIF
+		
+
+		// set aim --------
+		GET_PC_MOUSE_MOVEMENT mouse_move_x mouse_move_y
+		IF IS_BUTTON_PRESSED current_pad LEFTSTICKX
+		OR mouse_move_x > 0.01
+		OR mouse_move_x < -0.01
+
+			GET_OBJECT_HEADING p_ball[0] heading
+			GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
+			// adjust cue balls heading
+			temp_float =# LStickX
+			temp_float /= 128.0
+			temp_float *= 1.0
+			heading += temp_float
+			mouse_move_x *= -0.4
+			heading += mouse_move_x
+			SET_OBJECT_ROTATION p_ball[0] 0.0 0.0 0.0
+			SET_OBJECT_HEADING p_ball[0] heading
+		ENDIF
 
 
 		IF camera_mode = 0
@@ -1785,19 +1810,6 @@ pl_stage_5:
 					square_is_pressed = 0
 				ENDIF
 			ENDIF
-		ENDIF
-
-		// set aim --------
-		IF IS_BUTTON_PRESSED current_pad LEFTSTICKX
-			GET_OBJECT_HEADING p_ball[0] heading
-			GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
-			// adjust cue balls heading
-			temp_float =# LStickX
-			temp_float /= 128.0
-			temp_float *= 2.0
-			heading += temp_float
-			SET_OBJECT_ROTATION p_ball[0] 0.0 0.0 0.0
-			SET_OBJECT_HEADING p_ball[0] heading
 		ENDIF
 
 		// draw aim	-------
@@ -1944,6 +1956,9 @@ pl_stage_5:
 		temp_int++
 		ENDWHILE
 
+		mouse_x = 0.0
+		mouse_y = 0.0
+
 		m_stage += 2
 		m_goals = 0
 		CLEAR_HELP
@@ -2008,16 +2023,43 @@ pl_stage_7:
 				
 				IF is_in_shooting_position = 1
 					
-					IF IS_BUTTON_PRESSED current_pad RIGHTSTICKY
+					// Handle controller input.
+					
+					IF IS_PC_USING_JOYPAD
+					
+						IF IS_BUTTON_PRESSED current_pad RIGHTSTICKY
+							
+							GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
+							temp_float =# RStickY
+							temp_float /= 128.0
+							temp_float *= -0.2
+							requested_anim_time = 0.2
+							requested_anim_time += temp_float
+						ELSE
+							requested_anim_time = 0.2
+						ENDIF
+
+					// Handle mouse input.
+					
+					ELSE
+
+						GET_PC_MOUSE_MOVEMENT mouse_move_x mouse_move_y
 						
-						GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
-						temp_float =# RStickY
-						temp_float /= 128.0
+						mouse_y += mouse_move_y
+						
+						IF mouse_y > 128.0
+							mouse_y = 128.0
+						ENDIF
+
+						IF mouse_y < -128.0
+							mouse_y = -128.0
+						ENDIF
+						
+						temp_float = mouse_y / 128.0
 						temp_float *= -0.2
 						requested_anim_time = 0.2
 						requested_anim_time += temp_float
-					ELSE
-						requested_anim_time = 0.2
+				    
 					ENDIF
 
 				ELSE
