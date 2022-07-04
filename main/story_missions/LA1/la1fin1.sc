@@ -7450,11 +7450,13 @@ IF NOT IS_CAR_DEAD sweet_car
 					IF HAS_MISSION_AUDIO_LOADED 3
 						PLAY_MISSION_AUDIO 3 //SOUND_HELI_SLASH_PED
 					ENDIF
-					PLAY_AND_KILL_FX_SYSTEM bloodfx1_f1
-					CREATE_OBJECT chopcop_torso 2170.35 -1445.99 25.49 torso_f1
-					SET_OBJECT_DYNAMIC torso_f1 TRUE
-					CREATE_OBJECT chopcop_legr 2170.50 -1447.65 25.06 legr_f1
-					SET_OBJECT_DYNAMIC legr_f1 TRUE
+					IF NOT IS_JAPANESE_VERSION
+						PLAY_AND_KILL_FX_SYSTEM bloodfx1_f1
+						CREATE_OBJECT chopcop_torso 2170.35 -1445.99 25.49 torso_f1
+						SET_OBJECT_DYNAMIC torso_f1 TRUE
+						CREATE_OBJECT chopcop_legr 2170.50 -1447.65 25.06 legr_f1
+						SET_OBJECT_DYNAMIC legr_f1 TRUE
+					ENDIF
 					DELETE_CHAR copright_f1
 					DELETE_OBJECT fence_f1  
 					DELETE_OBJECT fence2l_f1 
@@ -7471,46 +7473,70 @@ IF NOT IS_CAR_DEAD sweet_car
 			ENDIF
 
 			IF helisetpiece_f1flag = 4
-				IF TIMERB > 4800
+				IF TIMERB > 4300
 					actiontext_f1flag = 9
-					PLAY_AND_KILL_FX_SYSTEM bloodfx2_f1
-					CREATE_OBJECT chopcop_legr 2170.99 -1448.51 25.08 legl_f1
-					SET_OBJECT_DYNAMIC legl_f1 TRUE
-					CREATE_OBJECT chopcop_armr 2170.96 -1450.36 25.2 armr_f1
-					SET_OBJECT_DYNAMIC armr_f1 TRUE
-					SET_OBJECT_ROTATION armr_f1 0.2 0.2 0.2
-					CREATE_OBJECT chopcop_armr 2171.16 -1451.11 25.12 arml_f1
-					SET_OBJECT_DYNAMIC arml_f1 TRUE
-					SET_OBJECT_ROTATION arml_f1 -0.1 0.05 0.1
-					CREATE_OBJECT chopcop_head 2171.1 -1453.09 25.4 head_f1
-					SET_OBJECT_DYNAMIC head_f1 TRUE
-					SET_OBJECT_ROTATION head_f1 0.5 0.2 -0.1
-					PLAY_AND_KILL_FX_SYSTEM bloodfx3_f1
-					IF NOT IS_CAR_DEAD extpoliceheli_f1
-						STOP_PLAYBACK_RECORDED_CAR extpoliceheli_f1
+					IF NOT IS_JAPANESE_VERSION
+						PLAY_AND_KILL_FX_SYSTEM bloodfx2_f1
+						CREATE_OBJECT chopcop_legr 2170.99 -1448.51 25.08 legl_f1
+						SET_OBJECT_DYNAMIC legl_f1 TRUE
+						CREATE_OBJECT chopcop_armr 2170.96 -1450.36 25.2 armr_f1
+						SET_OBJECT_DYNAMIC armr_f1 TRUE
+						SET_OBJECT_ROTATION armr_f1 0.2 0.2 0.2
+						CREATE_OBJECT chopcop_armr 2171.16 -1451.11 25.12 arml_f1
+						SET_OBJECT_DYNAMIC arml_f1 TRUE
+						SET_OBJECT_ROTATION arml_f1 -0.1 0.05 0.1
+						CREATE_OBJECT chopcop_head 2171.1 -1453.09 25.4 head_f1
+						SET_OBJECT_DYNAMIC head_f1 TRUE
+						SET_OBJECT_ROTATION head_f1 0.5 0.2 -0.1
+						PLAY_AND_KILL_FX_SYSTEM bloodfx3_f1
+						IF NOT IS_CAR_DEAD extpoliceheli_f1
+							STOP_PLAYBACK_RECORDED_CAR extpoliceheli_f1
+						ENDIF
 					ENDIF
 					helisetpiece_f1flag = 5
 				ENDIF
 			ENDIF
 
 			IF helisetpiece_f1flag = 5
-				IF TIMERB > 5800
-					SET_FIXED_CAMERA_POSITION 2169.8989 -1543.4972 38.7440 0.0 0.0 0.0
-					POINT_CAMERA_AT_POINT 2169.8938 -1542.5510 38.4204 JUMP_CUT
-					SWITCH_WIDESCREEN ON
-					DETACH_CHAR_FROM_CAR scplayer
-					SET_CHAR_COORDINATES scplayer 2184.87 -1500.83 23.55
-					SET_PLAYER_CONTROL PLAYER1 OFF
-					IF NOT IS_CAR_DEAD extpoliceheli_f1
-						SET_CAR_COORDINATES extpoliceheli_f1 2172.56 -1420.69 30.0
-						EXPLODE_CAR extpoliceheli_f1
+				IF NOT IS_JAPANESE_VERSION
+					IF TIMERB > 5800
+						SET_FIXED_CAMERA_POSITION 2169.8989 -1543.4972 38.7440 0.0 0.0 0.0
+						POINT_CAMERA_AT_POINT 2169.8938 -1542.5510 38.4204 JUMP_CUT
+						SWITCH_WIDESCREEN ON
+						DETACH_CHAR_FROM_CAR scplayer
+						SET_CHAR_COORDINATES scplayer 2184.87 -1500.83 23.55
+						SET_PLAYER_CONTROL PLAYER1 OFF
 						IF NOT IS_CAR_DEAD extpoliceheli_f1
+							SET_CAR_COORDINATES extpoliceheli_f1 2172.56 -1420.69 30.0
 							EXPLODE_CAR extpoliceheli_f1
+							IF NOT IS_CAR_DEAD extpoliceheli_f1
+								EXPLODE_CAR extpoliceheli_f1
+							ENDIF
+							DELETE_CHAR exthelidriver_f1
 						ENDIF
-						DELETE_CHAR exthelidriver_f1
+						TIMERB = 0
+						helisetpiece_f1flag = 6
 					ENDIF
-					TIMERB = 0
-					helisetpiece_f1flag = 6
+				ELSE
+					IF TIMERB > 4300
+						SET_FIXED_CAMERA_POSITION 2169.8989 -1543.4972 38.7440 0.0 0.0 0.0
+						POINT_CAMERA_AT_POINT 2169.8938 -1542.5510 38.4204 JUMP_CUT
+						SWITCH_WIDESCREEN ON
+						DETACH_CHAR_FROM_CAR scplayer
+						SET_CHAR_COORDINATES scplayer 2184.87 -1500.83 23.55
+						SET_PLAYER_CONTROL PLAYER1 OFF
+						IF NOT IS_CAR_DEAD extpoliceheli_f1
+							STOP_PLAYBACK_RECORDED_CAR extpoliceheli_f1
+							SET_CAR_COORDINATES extpoliceheli_f1 2172.56 -1420.69 30.0
+							EXPLODE_CAR extpoliceheli_f1
+							IF NOT IS_CAR_DEAD extpoliceheli_f1
+								EXPLODE_CAR extpoliceheli_f1
+							ENDIF
+							DELETE_CHAR exthelidriver_f1
+						ENDIF
+						TIMERB = 0
+						helisetpiece_f1flag = 6
+					ENDIF
 				ENDIF
 			ENDIF
 
@@ -8095,12 +8121,14 @@ IF helisetpiece_f1flag = 6
 			MARK_MODEL_AS_NO_LONGER_NEEDED chopcop_legr
 			MARK_MODEL_AS_NO_LONGER_NEEDED chopcop_head
 			MARK_MODEL_AS_NO_LONGER_NEEDED chopcop_torso
-			DELETE_OBJECT torso_f1
-			DELETE_OBJECT legr_f1
-			DELETE_OBJECT legl_f1
-			DELETE_OBJECT armr_f1
-			DELETE_OBJECT arml_f1
-			DELETE_OBJECT head_f1
+			IF NOT IS_JAPANESE_VERSION
+				DELETE_OBJECT torso_f1
+				DELETE_OBJECT legr_f1
+				DELETE_OBJECT legl_f1
+				DELETE_OBJECT armr_f1
+				DELETE_OBJECT arml_f1
+				DELETE_OBJECT head_f1
+			ENDIF
 			DELETE_OBJECT fence_f1  
 			DELETE_OBJECT fence2l_f1 
 			DELETE_OBJECT fence3l_f1 

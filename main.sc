@@ -4223,6 +4223,7 @@ R3missions_loop_inner:
 							
 						ENDIF
 
+						/* removed in JP version
 							// ************************************PIMPING*************************************************************
 						IF IS_CHAR_IN_MODEL scplayer BROADWAY 
 							STORE_CAR_CHAR_IS_IN_NO_SAVE scplayer R3_player_car
@@ -4296,6 +4297,7 @@ R3missions_loop_inner:
 								ENDIF
 							ENDIF					
 						ENDIF // IF IS_CHAR_IN_MODEL scplayer freight train
+						*/
 					ENDIF
 				ENDIF
 			

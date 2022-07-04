@@ -28,7 +28,7 @@ VAR_INT	g_Quarry_damageKM
 
 
 // Global Timing Array
-CONST_INT QUARRY_LEVELS	7	// Should be same as 'Highest Mission'
+CONST_INT QUARRY_LEVELS	6	// Should be same as 'Highest Mission'
 VAR_INT	g_Quarry_recordsKM[QUARRY_LEVELS]
 
 
@@ -154,12 +154,12 @@ CONST_INT	QUARRY_MISSION_NONE								0
 CONST_INT	QUARRY_MISSION_ROCKFALL							1
 CONST_INT	QUARRY_MISSION_SABOTAGE							2
 CONST_INT	QUARRY_MISSION_DESTROY							3
-CONST_INT	QUARRY_MISSION_REMOVAL							4
-CONST_INT	QUARRY_MISSION_DELIVERY							5
-CONST_INT	QUARRY_MISSION_SPILLAGE							6
-CONST_INT	QUARRY_MISSION_BURIAL							7
+CONST_INT	QUARRY_MISSION_REMOVAL							99
+CONST_INT	QUARRY_MISSION_DELIVERY							4
+CONST_INT	QUARRY_MISSION_SPILLAGE							5
+CONST_INT	QUARRY_MISSION_BURIAL							6
 // -----
-CONST_INT	QUARRY_HIGHEST_MISSION							7	// same as last mission number above (ALSO: same as QUARRY_LEVELS at top)
+CONST_INT	QUARRY_HIGHEST_MISSION							6	// same as last mission number above (ALSO: same as QUARRY_LEVELS at top)
 
 // ...general mission controls
 CONST_INT	QUARRY_MAX_ROCKS								7
@@ -3887,8 +3887,8 @@ Quarry_Initialisation:
 			nTempInt = QUARRY_MISSION_DESTROY - 1
 			g_Quarry_recordsKM[nTempInt] = QUARRY_DESTROY_MISSION_TIME_sec
 
-			nTempInt = QUARRY_MISSION_REMOVAL - 1
-			g_Quarry_recordsKM[nTempInt] = QUARRY_REMOVAL_MISSION_TIME_sec
+			//nTempInt = QUARRY_MISSION_REMOVAL - 1
+			//g_Quarry_recordsKM[nTempInt] = QUARRY_REMOVAL_MISSION_TIME_sec
 
 			nTempInt = QUARRY_MISSION_DELIVERY - 1
 			g_Quarry_recordsKM[nTempInt] = QUARRY_DELIVERY_MISSION_TIME_sec
@@ -3978,9 +3978,9 @@ Quarry_Initialise_Mission:
 			GOSUB Quarry_Initialise_Mission_Sabotage
 			BREAK
 
-		CASE QUARRY_MISSION_REMOVAL
-			GOSUB Quarry_Initialise_Mission_Removal
-			BREAK
+		//CASE QUARRY_MISSION_REMOVAL
+		//	GOSUB Quarry_Initialise_Mission_Removal
+		//	BREAK
 
 		CASE QUARRY_MISSION_DELIVERY
 			GOSUB Quarry_Initialise_Mission_Delivery
@@ -4650,14 +4650,14 @@ Quarry_Mission_Passed:
 				nTempInt = 5000
 				BREAK
 			CASE 6
-				nTempInt = 7500
+				nTempInt = 8000 //7500
 				BREAK
-			CASE 7
-				nTempInt = 10000
-				BREAK
+			//CASE 7
+			//	nTempInt = 10000
+			//	BREAK
 		ENDSWITCH
 
-		IF g_nQuarryMissionsPassed = 7
+		IF g_nQuarryMissionsPassed = 6 //7
 			PRINT_WITH_NUMBER_BIG M_PASS nTempInt 3000 1
 		ELSE
 			PRINT_WITH_NUMBER_BIG M_PASS nTempInt 5000 1
