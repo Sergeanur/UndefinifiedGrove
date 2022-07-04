@@ -19,6 +19,12 @@ ELSE
 			WAIT 0
 		ENDWHILE
 	ENDIF
+	if show_race_selection = FALSE
+		if race_selection = BADLAND_RACE1
+		or race_selection = BADLAND_RACE2
+			SET_ALL_CARS_CAN_BE_DAMAGED FALSE
+		endif
+	endif
 ENDIF
 
 GOSUB mission_cleanup_cprace
