@@ -317,6 +317,21 @@ ENDIF
 	///////////////////////////////////////////////////////////////////////////////////
 
 IF startexbike_flag = 1
+
+	IF playerexercising_flag = 1
+	AND NOT IS_CHAR_DEAD scplayer 
+
+		SET_CHAR_COLLISION scplayer FALSE
+		SET_PLAYER_CONTROL player1 OFF
+		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer ply_exbikex ply_exbikey exbikez
+		SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
+	 	SET_FIXED_CAMERA_POSITION exbikecamx exbikecamy exbikecamz 0.0 0.0 0.0
+	 	SET_CHAR_HEADING scplayer exbike_heading
+		POINT_CAMERA_AT_POINT exbikelookcamx exbikelookcamy exbikecamz JUMP_CUT
+	 	//POINT_CAMERA_AT_POINT exbikex exbikey exbikecamz JUMP_CUT
+
+		playerexercising_flag = 2
+	ENDIF
 		
 	IF are_anims_loaded = 0
 		
@@ -334,21 +349,6 @@ IF startexbike_flag = 1
 		ENDWHILE
 
 		are_anims_loaded = 1
-	ENDIF
-
-	IF playerexercising_flag = 1
-	AND NOT IS_CHAR_DEAD scplayer 
-
-		SET_CHAR_COLLISION scplayer FALSE
-		SET_PLAYER_CONTROL player1 OFF
-		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer ply_exbikex ply_exbikey exbikez
-		SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
-	 	SET_FIXED_CAMERA_POSITION exbikecamx exbikecamy exbikecamz 0.0 0.0 0.0
-	 	SET_CHAR_HEADING scplayer exbike_heading
-		POINT_CAMERA_AT_POINT exbikelookcamx exbikelookcamy exbikecamz JUMP_CUT
-	 	//POINT_CAMERA_AT_POINT exbikex exbikey exbikecamz JUMP_CUT
-
-		playerexercising_flag = 2
 	ENDIF
 
 	//player getting onto bench anim
@@ -469,7 +469,7 @@ IF startexbike_flag = 1
 
 		//////////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////////////
-		speed_bike = speed_bike - 0.7 // tiredness WAS 1.0
+		speed_bike = speed_bike -@ 0.35 // tiredness WAS 1.0
 		//////////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////////////
 

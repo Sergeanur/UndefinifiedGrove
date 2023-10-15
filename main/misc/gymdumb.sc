@@ -247,6 +247,10 @@ IF playerexercising_flag = 0
 							startdumbell_flag = 1
 							playerexercising_flag = 1
 
+							SET_CHAR_COLLISION scplayer FALSE
+
+							SET_PLAYER_CONTROL player1 OFF
+
 							gym_TIMERC = 0
 
 						ELSE
@@ -289,32 +293,6 @@ ENDIF
 //////////////////////////////////////////////////////////////////////////////////////////
 
 IF startdumbell_flag = 1
-
-	IF are_anims_loaded = 0
-		
-		REQUEST_ANIMATION FREEWEIGHTS
-
-		LOAD_MISSION_TEXT GYM
-
-		WHILE NOT HAS_ANIMATION_LOADED FREEWEIGHTS
-
-			WAIT 0
-
-		ENDWHILE
-
-	  	CLEAR_MISSION_AUDIO 4
-
-		LOAD_MISSION_AUDIO 4 SOUND_BANK_GYM
-
-	   	WHILE NOT HAS_MISSION_AUDIO_LOADED 4
-
-	   		WAIT 0
-
-	   	ENDWHILE
-
-		are_anims_loaded = 1
-
-	ENDIF
 	
 	IF playerexercising_flag = 1
 	AND NOT IS_CHAR_DEAD scplayer
@@ -344,6 +322,32 @@ IF startdumbell_flag = 1
 		playerexercising_flag = 2
 	
 		SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
+
+	ENDIF
+
+	IF are_anims_loaded = 0
+		
+		REQUEST_ANIMATION FREEWEIGHTS
+
+		LOAD_MISSION_TEXT GYM
+
+		WHILE NOT HAS_ANIMATION_LOADED FREEWEIGHTS
+
+			WAIT 0
+
+		ENDWHILE
+
+	  	CLEAR_MISSION_AUDIO 4
+
+		LOAD_MISSION_AUDIO 4 SOUND_BANK_GYM
+
+	   	WHILE NOT HAS_MISSION_AUDIO_LOADED 4
+
+	   		WAIT 0
+
+	   	ENDWHILE
+
+		are_anims_loaded = 1
 
 	ENDIF
 
@@ -602,11 +606,13 @@ IF startdumbell_flag = 1
 
 		IF animstate_flag = 1
 		OR animstate_flag = 3
-			powerdumbell = powerdumbell - weightdb
+			weightdb = weightdb / 2.0
+			powerdumbell = powerdumbell -@ weightdb
+			weightdb = weightdb * 2.0
 		ENDIF
 
 		IF animstate_flag = 4 //come down a lot quicker once reached top
-			powerdumbell = powerdumbell - 4.0
+			powerdumbell = powerdumbell -@ 2.0
 		ENDIF
 
 		//when button is not pressed reset

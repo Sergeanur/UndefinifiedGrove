@@ -2,9 +2,23 @@ MISSION_START
 
 CONST_INT DANCE_TIME_TO_TRIGGER_SPEECH	10000
 
+//--- PC VERSION: STICK POSITIONS
+CONST_INT DANCE_STKLEFT					9
+CONST_INT DANCE_STKRGHT					10
+CONST_INT DANCE_STKUR					11 
+CONST_INT DANCE_STKDL					12 
+CONST_INT DANCE_STKUP					13
+CONST_INT DANCE_STKDW					14
+CONST_INT DANCE_STKUL					15 
+CONST_INT DANCE_STKDR					16
+
 CONST_INT SPRITE_DANCE_PERFECT			57
 CONST_INT SPRITE_DANCE_GOOD				58
 CONST_INT SPRITE_DANCE_BAD				59
+
+//--- PC VERSION: SPECIAL QUIT BUTTON (still mapped on triangle)
+CONST_INT DANCE_BUTTON_PC_QUIT 			99
+CONST_INT DANCE_BUTTON_PC_CONFIRM		100
 
 {
 /*********************************************************************************************************************************************
@@ -26,6 +40,10 @@ CONST_INT SPRITE_DANCE_BAD				59
 	LVAR_INT iAnimStatus 
 	VAR_INT  iDance_SpeechRequest iDance_SpeechState iDance_SpeechCounter	 // no more space for locals I'm affraid
 
+
+	//--- PC ONLY VARS
+	VAR_INT d_lstickx d_lsticky d_rstickx d_rsticky d_player_stick_position
+	VAR_FLOAT d_temp_float d_vec_x d_vec_y
 
 	SET_BIT iDanceReport DANCE_MINIGAME_RUNNING
 	SET_MINIGAME_IN_PROGRESS TRUE 
@@ -478,14 +496,14 @@ Dance_State3:
 
 		CASE 1
 			GOSUB Dance_GetPadStatus
-			IF iCurrentButton = DANCE_BUTTON_CROSS
+			IF iCurrentButton = DANCE_BUTTON_PC_CONFIRM
 				//--- Quit out
 				iDanceScore = 0
 				iState = 2
 				iSubState = 0				
 				BREAK
 			ENDIF	  	
-			IF iCurrentButton = DANCE_BUTTON_TRIANGLE
+			IF iCurrentButton = DANCE_BUTTON_PC_QUIT
 				IF iState > 0 // We are past the INIT stage of the mini-game
 					//--- Restart dance
 					PAUSE_CURRENT_BEAT_TRACK FALSE
@@ -541,46 +559,87 @@ RETURN
 			GET PAD STATUS
 ********************************************/
 Dance_GetPadStatus:
+
+//--- PC ONLY
+GOSUB Dance_get_stick_position
 	
 SWITCH iButtonDown
 	//WRITE_DEBUG_WITH_INT iButtonDown iButtonDown
 
 	CASE DANCE_BUTTON_NONE 
-		IF IS_BUTTON_PRESSED PAD1 CIRCLE
+		
+		IF d_player_stick_position = DANCE_STKRGHT
 			iCurrentButton = DANCE_BUTTON_CIRCLE
 			iButtonDown = DANCE_BUTTON_CIRCLE			
 			BREAK
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF d_player_stick_position = DANCE_STKUP
 			iCurrentButton = DANCE_BUTTON_TRIANGLE
 			iButtonDown = DANCE_BUTTON_TRIANGLE
-			TIMERB = 0
 			BREAK
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 SQUARE
+		IF d_player_stick_position = DANCE_STKLEFT
 			iCurrentButton = DANCE_BUTTON_SQUARE
 			iButtonDown = DANCE_BUTTON_SQUARE
 			BREAK
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF d_player_stick_position = DANCE_STKDW
 			iCurrentButton = DANCE_BUTTON_CROSS
 			iButtonDown = DANCE_BUTTON_CROSS
 			BREAK
 		ENDIF
+
+		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+			iCurrentButton = DANCE_BUTTON_PC_QUIT
+			iButtonDown = DANCE_BUTTON_PC_QUIT
+			TIMERB = 0
+			BREAK
+		ENDIF
+
+		IF IS_BUTTON_PRESSED PAD1 CROSS
+			iCurrentButton = DANCE_BUTTON_PC_CONFIRM
+			iButtonDown = DANCE_BUTTON_PC_CONFIRM
+			BREAK
+		ENDIF
+
 	BREAK
 	
 	CASE DANCE_BUTTON_CIRCLE
 		iCurrentButton = DANCE_BUTTON_NONE
-		IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+		IF d_player_stick_position = 0 
 			iButtonDown = DANCE_BUTTON_NONE
 			BREAK
 		ENDIF
 	BREAK
 
 	CASE DANCE_BUTTON_TRIANGLE
+		iCurrentButton = DANCE_BUTTON_NONE
+		IF d_player_stick_position = 0
+			iButtonDown = DANCE_BUTTON_NONE
+			BREAK
+		ENDIF
+	BREAK
+
+	CASE DANCE_BUTTON_SQUARE
+		iCurrentButton = DANCE_BUTTON_NONE
+		IF d_player_stick_position = 0
+			iButtonDown = DANCE_BUTTON_NONE
+			BREAK
+		ENDIF
+	BREAK
+
+	CASE DANCE_BUTTON_CROSS
+		iCurrentButton = DANCE_BUTTON_NONE
+		IF d_player_stick_position = 0
+			iButtonDown = DANCE_BUTTON_NONE
+			BREAK
+		ENDIF
+	BREAK
+	
+	CASE DANCE_BUTTON_PC_QUIT
 		iCurrentButton = DANCE_BUTTON_NONE
 		IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
 			iButtonDown = DANCE_BUTTON_NONE
@@ -613,21 +672,14 @@ SWITCH iButtonDown
 		ENDIF
 	BREAK
 
-	CASE DANCE_BUTTON_SQUARE
-		iCurrentButton = DANCE_BUTTON_NONE
-		IF NOT IS_BUTTON_PRESSED PAD1 SQUARE
-			iButtonDown = DANCE_BUTTON_NONE
-			BREAK
-		ENDIF
-	BREAK
-
-	CASE DANCE_BUTTON_CROSS
+	CASE DANCE_BUTTON_PC_CONFIRM
 		iCurrentButton = DANCE_BUTTON_NONE
 		IF NOT IS_BUTTON_PRESSED PAD1 CROSS
 			iButtonDown = DANCE_BUTTON_NONE
 			BREAK
 		ENDIF
 	BREAK
+
 ENDSWITCH
 
 RETURN
@@ -2485,6 +2537,60 @@ Dance_CleanUp:
 	SET_MINIGAME_IN_PROGRESS FALSE
 	
 	TERMINATE_THIS_SCRIPT
+RETURN
+/*******************************************
+			GET STICK POSITION
+********************************************/
+Dance_get_stick_position:
+
+	GET_POSITION_OF_ANALOGUE_STICKS PAD1 d_lstickx d_lsticky d_rstickx d_rsticky
+
+	d_temp_float =# d_lstickx
+	d_vec_x = d_temp_float
+
+	d_temp_float =# d_lsticky
+	d_vec_y = d_temp_float
+
+	GET_DISTANCE_BETWEEN_COORDS_2D 0.0 0.0 d_vec_x d_vec_y d_temp_float
+	
+	d_player_stick_position = 0
+
+	IF d_temp_float > 64.0
+
+		GET_ANGLE_BETWEEN_2D_VECTORS d_vec_x d_vec_y 0.0 -1.0 d_temp_float
+		
+		// must be up
+		IF d_temp_float < 15.0 
+			d_player_stick_position = DANCE_STKUP // up
+		ELSE
+			IF d_temp_float < 75.0 
+				IF d_lstickx > 0
+					d_player_stick_position = DANCE_STKUR // right and up
+				ELSE
+					d_player_stick_position = DANCE_STKUL // left and up
+				ENDIF 
+			ELSE
+				IF d_temp_float < 105.0 
+					IF d_lstickx > 0
+						d_player_stick_position = DANCE_STKRGHT // right 
+					ELSE
+						d_player_stick_position = DANCE_STKLEFT // left 
+					ENDIF
+				ELSE
+					IF d_temp_float < 165.0 
+						IF d_lstickx > 0
+							d_player_stick_position = DANCE_STKDR // right down 
+						ELSE
+							d_player_stick_position = DANCE_STKDL // left down
+						ENDIF 	
+					ELSE
+						// must be down	
+						d_player_stick_position = DANCE_STKDW
+					ENDIF
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDIF
 RETURN
 /*******************************************
 				RUN DEBUG

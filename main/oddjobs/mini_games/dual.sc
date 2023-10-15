@@ -827,15 +827,10 @@ ENDIF
 			GET_POSITION_OF_ANALOGUE_STICKS PAD1 left_stick_x left_stick_y temp_int temp_int
 			temp_float =# left_stick_x
 			temp_float /= 15.0
-    		ship_heading += temp_float
+    		ship_heading +=@ temp_float
+			LIMIT_ANGLE ship_heading ship_heading
 		ENDIF
 	ENDIF
-	WHILE ship_heading < 0.1
-		ship_heading += 360.0
-	ENDWHILE
-	WHILE ship_heading > 360.0
-		ship_heading -= 360.0
-	ENDWHILE
     
 
 //CALCULATE GRAVITY WELLS////
@@ -997,9 +992,7 @@ if ship_dead_timer < game_timer
 			//THIS TURNS A HEADING IN DEGREES INTO A VECTOR
 			temp_float = ship_heading
 			temp_float += 90.0
-			IF temp_float > 360.0
-				temp_float -= 360.0
-			ENDIF
+			LIMIT_ANGLE temp_float temp_float
 			SIN temp_float x
 			COS temp_float y
 
@@ -1018,9 +1011,7 @@ if ship_dead_timer < game_timer
 			//THIS TURNS A HEADING IN DEGREES INTO A VECTOR
 			temp_float = ship_heading
 			temp_float -= 90.0
-			IF temp_float < 0.0
-				temp_float += 360.0
-			ENDIF
+			LIMIT_ANGLE temp_float temp_float
 			SIN temp_float x
 			COS temp_float y
 

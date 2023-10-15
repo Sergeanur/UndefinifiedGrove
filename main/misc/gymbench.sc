@@ -283,6 +283,24 @@ ENDIF
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 IF startbpress_flag = 1
+AND NOT IS_CHAR_DEAD scplayer
+	
+	IF playerexercising_flag = 1
+
+		SET_CHAR_COLLISION scplayer FALSE
+
+		SET_PLAYER_CONTROL player1 OFF
+
+		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer bpressx bpressy bpressz
+
+	 	SET_FIXED_CAMERA_POSITION bpresscamx bpresscamy bpresscamz 0.0 0.0 0.0
+	 	SET_CHAR_HEADING scplayer bpress_heading
+
+		POINT_CAMERA_AT_CHAR scplayer FIXED JUMP_CUT
+
+		playerexercising_flag = 2
+
+	ENDIF
 
 	IF are_anims_loaded = 0
 		
@@ -300,28 +318,6 @@ IF startbpress_flag = 1
 	   	ENDWHILE
 
 		are_anims_loaded = 1
-
-	ENDIF
-
-ENDIF
-
-IF startbpress_flag = 1
-AND NOT IS_CHAR_DEAD scplayer
-	
-	IF playerexercising_flag = 1
-
-		SET_CHAR_COLLISION scplayer FALSE
-
-		SET_PLAYER_CONTROL player1 OFF
-
-		SET_CHAR_COORDINATES_DONT_WARP_GANG scplayer bpressx bpressy bpressz
-
-	 	SET_FIXED_CAMERA_POSITION bpresscamx bpresscamy bpresscamz 0.0 0.0 0.0
-	 	SET_CHAR_HEADING scplayer bpress_heading
-
-		POINT_CAMERA_AT_CHAR scplayer FIXED JUMP_CUT
-
-		playerexercising_flag = 2
 
 	ENDIF
 
@@ -618,11 +614,13 @@ AND NOT IS_CHAR_DEAD scplayer
 
 		IF animstate_flag = 1
 		OR animstate_flag = 3
-			powerbpress = powerbpress - weightbp
+			weightdb = weightdb / 2.0
+			powerbpress = powerbpress -@ weightbp
+			weightdb = weightdb * 2.0
 		ENDIF
 
 		IF animstate_flag = 4 //come down a lot quicker once reached top
-			powerbpress = powerbpress - 4.0
+			powerbpress = powerbpress -@ 2.0
 		ENDIF
 
 		//when button is not pressed reset

@@ -480,8 +480,8 @@ mission_intro_scripted_cut:
 				ENDIF
 
 				IF NOT IS_CAR_DEAD train_CUT 
-					SET_TRAIN_SPEED train_CUT 8.5
-					SET_TRAIN_CRUISE_SPEED train_CUT 8.5
+					SET_TRAIN_SPEED train_CUT 9.0
+					SET_TRAIN_CRUISE_SPEED train_CUT 9.0
 				ENDIF
 				cut_status_CUT ++
 								 

@@ -784,17 +784,6 @@ ENDIF
 	DRAW_SPRITE 7 160.0 336.0 320.0 -224.0 150 150 150 255
 
 	IF nGameState = PLAYING_GAME
-		GET_GAME_TIMER grav_help_end 
-		grav_help_diff = grav_help_end - grav_help_start
-		
-		IF grav_help_diff < 10000
-			DRAW_WINDOW 35.0 15.0 240.0 80.0 dummy SWIRLS_NONE
-			SET_TEXT_CENTRE OFF
-			SET_TEXT_WRAPX 240.0
-			SET_TEXT_FONT FONT_STANDARD
-			SET_TEXT_SCALE 0.5 1.8
-			DISPLAY_TEXT 40.0 20.0 GR_NAV
-		ENDIF
 	ENDIF
 
     IF nGameState = INACTIVE
@@ -1208,16 +1197,16 @@ grav_update_player:
 		
 			IF grav_ground = 1
 				grav_ground = 0
-				grav_speed_y += 4.0
+				grav_speed_y +=@ 1.0
 			ENDIF
 			IF grav_speed_y < 20.0
-				grav_speed_y += 0.4
+				grav_speed_y +=@ 0.1
 			ENDIF
 		ENDIF
 		IF IS_BUTTON_PRESSED PAD1 SQUARE
 			IF grav_ground = 0
 				IF grav_speed_y > 0.0
-					grav_speed_y -= 0.2
+					grav_speed_y -=@ 0.05
 				ENDIF
 			ENDIF
 		ENDIF
@@ -1225,8 +1214,8 @@ grav_update_player:
 		// Add friction.
 
 		grav_temp_x = grav_speed_x
-		grav_temp_x /= 4.0
-		grav_speed_x -= grav_temp_x
+		grav_temp_x /= 16.0
+		grav_speed_x -=@ grav_temp_x
 
 		IF IS_BUTTON_PRESSED PAD1 DPADLEFT
 			grav_lstickx = -127
@@ -1239,21 +1228,21 @@ grav_update_player:
 		// Directional movement.
 								   
 		grav_temp_x =# grav_lstickx
-		grav_temp_x /= 128.0
-		grav_speed_x += grav_temp_x
+		grav_temp_x /= 512.0	//	128.0
+		grav_speed_x +=@ grav_temp_x
 
-		grav_plyr_x += grav_speed_x
+		grav_plyr_x +=@ grav_speed_x
 			
 		
 		// Gravity
 
 		IF grav_ground = 0
 			IF grav_speed_y > -20.0			
-				grav_speed_y -= 0.2
+				grav_speed_y -=@ 0.05
 			ENDIF
   		ENDIF
 
-		grav_plyr_y -= grav_speed_y
+		grav_plyr_y -=@ grav_speed_y
 
 	ENDIF
 			

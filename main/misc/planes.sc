@@ -728,12 +728,11 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			DISPLAY_TEXT 316.0 204.0 PLA_25  //OUT OF ORDER
 		ENDIF
 		
-		GOSUB planes_small_text	
-		SET_TEXT_SCALE 0.62 1.94
+		GOSUB planes_front_end_text	
 		SET_TEXT_COLOUR 255 255 255 255
-		DISPLAY_TEXT 277.0 370.0 PLA_23
+		DISPLAY_TEXT 210.0 368.0 PLA_23
 		
-		GOSUB planes_small_text			 
+		GOSUB planes_front_end_text			 
 		SET_TEXT_COLOUR 255 255 255 255
 		DISPLAY_TEXT 298.0 368.0 PLA_21
 		
@@ -758,7 +757,7 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 		
 		IF pl_city_open > 1
 			
-			GOSUB planes_small_text	
+			GOSUB planes_front_end_text	
 			SET_TEXT_SCALE 0.62 1.54		 
 			SET_TEXT_COLOUR 255 255 255 255
 
@@ -782,7 +781,7 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 				DISPLAY_TEXT 52.0 372.0 PLA_22 //~<~~>~
 			ENDIF
 			
-			GOSUB planes_small_text			 
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 			
 
@@ -807,113 +806,110 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			ENDIF
 			
 
-			GOSUB planes_small_text			 
-			SET_TEXT_SCALE 0.62 1.94
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 
 			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 260.0 370.0 PLA_24
+				DISPLAY_TEXT 252.0 368.0 PLA_24
 			ENDIF
 
 			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 295.0 370.0 PLA_24
+				DISPLAY_TEXT 294.0 354.0 PLA_24
 			ENDIF
 
 			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 295.0 370.0 PLA_24
+				DISPLAY_TEXT 294.0 354.0 PLA_24
 			ENDIF
 
 			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 258.0 370.0 PLA_24
+				DISPLAY_TEXT 255.0 354.0 PLA_24
 			ENDIF
 
 			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 295.0 370.0 PLA_24
+				DISPLAY_TEXT 294.0 354.0 PLA_24
 			ENDIF
 			
 
-			GOSUB planes_small_text			 
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 
 			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 281.0 368.0 PLA_20
+				DISPLAY_TEXT 337.0 368.0 PLA_20
 			ENDIF
 
 			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 312.0 368.0 PLA_20
+				DISPLAY_TEXT 294.0 373.0 PLA_20
 			ENDIF
 
 			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 312.0 368.0 PLA_20
+				DISPLAY_TEXT 294.0 373.0 PLA_20
 			ENDIF
 
 			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 277.0 368.0 PLA_20
+				DISPLAY_TEXT 255.0 373.0 PLA_20
 			ENDIF
 
 			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 312.0 368.0 PLA_20
+				DISPLAY_TEXT 294.0 373.0 PLA_20
 			ENDIF
 
-			GOSUB planes_small_text			 
-			SET_TEXT_SCALE 0.62 1.94
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 
 			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 362.0 370.0 PLA_23
+				DISPLAY_TEXT 423.0 368.0 PLA_23
 			ENDIF
 
 			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 458.0 370.0 PLA_23
+				DISPLAY_TEXT 457.0 354.0 PLA_23
 			ENDIF
 
 			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 458.0 370.0 PLA_23
+				DISPLAY_TEXT 457.0 354.0 PLA_23
 			ENDIF
 
 			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 458.0 370.0 PLA_23
+				DISPLAY_TEXT 457.0 354.0 PLA_23
 			ENDIF
 
 			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 458.0 370.0 PLA_23
+				DISPLAY_TEXT 457.0 354.0 PLA_23
 			ENDIF
 
-			GOSUB planes_small_text			 
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 
 			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 383.0 368.0 PLA_21
+				DISPLAY_TEXT 507.0 368.0 PLA_21
 			ENDIF
 
 			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 477.0 368.0 PLA_21
+				DISPLAY_TEXT 457.0 373.0 PLA_21
 			ENDIF
 
 			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 477.0 368.0 PLA_21
+				DISPLAY_TEXT 457.0 373.0 PLA_21
 			ENDIF
 
 			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 477.0 368.0 PLA_21
+				DISPLAY_TEXT 457.0 373.0 PLA_21
 			ENDIF
 
 			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 477.0 368.0 PLA_21
+				DISPLAY_TEXT 457.0 373.0 PLA_21
 			ENDIF
 
 		ELSE
 			//san fierro and los santos open
-			GOSUB planes_small_text			 
-			SET_TEXT_SCALE 0.62 1.94
+			GOSUB planes_front_end_text			 
 			SET_TEXT_COLOUR 255 255 255 255
 			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 220.0 370.0 PLA_24
+				DISPLAY_TEXT 155.0 368.0 PLA_24
 			ELSE
-				DISPLAY_TEXT 170.0 370.0 PLA_24
+				DISPLAY_TEXT 105.0 368.0 PLA_24
 			ENDIF
 
-			GOSUB planes_small_text			
+			GOSUB planes_front_end_text			
 			SET_TEXT_COLOUR 255 255 255 255
 			IF current_Language = LANGUAGE_ENGLISH
 				DISPLAY_TEXT 241.0 368.0 PLA_20
@@ -921,14 +917,13 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 				DISPLAY_TEXT 191.0 368.0 PLA_20
 			ENDIF 
 
-			GOSUB planes_small_text			
-			SET_TEXT_SCALE 0.62 1.94 
+			GOSUB planes_front_end_text			
 			SET_TEXT_COLOUR 255 255 255 255
-			DISPLAY_TEXT 328.0 370.0 PLA_23
+			DISPLAY_TEXT 328.0 368.0 PLA_23
 
-			GOSUB planes_small_text			
+			GOSUB planes_front_end_text			
 			SET_TEXT_COLOUR 255 255 255 255
-			DISPLAY_TEXT 349.0 368.0 PLA_21
+			DISPLAY_TEXT 412.0 368.0 PLA_21
 		ENDIF
 				 
 //// DRAWING DAY and PRICE ////
@@ -1082,6 +1077,20 @@ planes_small_text://////////////////////////////////////////////////////////////
 	SET_TEXT_CENTRE OFF
 	SET_TEXT_BACKGROUND OFF
 	SET_TEXT_SCALE 0.62 2.34 
+	SET_TEXT_DROPSHADOW 2 0 0 0 255
+	SET_TEXT_EDGE 2 0 0 0 255  
+	SET_TEXT_FONT FONT_SPACEAGE
+RETURN/////////////////////////////////////////////////////////////////////////////////////
+
+planes_front_end_text://///////////////////////////////////////////////////////////////////
+	SET_TEXT_DRAW_BEFORE_FADE TRUE
+	SET_TEXT_JUSTIFY ON
+	SET_TEXT_RIGHT_JUSTIFY OFF
+	SET_TEXT_WRAPX 1000.0
+	SET_TEXT_PROPORTIONAL ON
+	SET_TEXT_CENTRE OFF
+	SET_TEXT_BACKGROUND OFF
+	SET_TEXT_SCALE 0.42 2.24 
 	SET_TEXT_DROPSHADOW 2 0 0 0 255
 	SET_TEXT_EDGE 2 0 0 0 255  
 	SET_TEXT_FONT FONT_SPACEAGE

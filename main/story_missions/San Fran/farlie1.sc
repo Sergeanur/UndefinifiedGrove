@@ -4200,7 +4200,13 @@ f1_drawing_tv_screen:///////////////////////////////////////////////////////////
 	GOSUB small_onscreen_text 
 	GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 	SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	DISPLAY_TEXT 105.0 375.0 DS1_53
+	IF current_Language = LANGUAGE_FRENCH
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 DS1_53
+	ELSE
+		SET_TEXT_SCALE 0.32 1.25 
+		DISPLAY_TEXT 70.0 360.0 DS1_53
+	ENDIF
 
 	//drawing help text
 	IF NOT f1_control_flag = 1 //waiting to select which facing track
@@ -4209,50 +4215,71 @@ f1_drawing_tv_screen:///////////////////////////////////////////////////////////
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 105.0 325.0 DS1_54 	//START
+
+		IF current_Language = LANGUAGE_FRENCH
+			SET_TEXT_SCALE 0.32 1.25
+			DISPLAY_TEXT 70.0 340.0 DS1_54 	//START
+		ELSE
+			SET_TEXT_SCALE 0.32 1.25
+			DISPLAY_TEXT 70.0 340.0 DS1_54 	//START
+		ENDIF
 		
 		IF NOT f1_which_missions_are_open_flag = 1
 			GOSUB small_onscreen_text 
 			GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 			SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-			DISPLAY_TEXT 105.0 350.0 DS1_52 	//Navigate
+
+			IF current_Language = LANGUAGE_FRENCH
+				SET_TEXT_SCALE 0.32 1.25
+				DISPLAY_TEXT 437.0 340.0 DS1_52 	//Navigate
+			ELSE
+				SET_TEXT_SCALE 0.32 1.25
+				DISPLAY_TEXT 437.0 340.0 DS1_52 	//Navigate
+			ENDIF
 			
 		ELSE
 			GOSUB small_onscreen_text 			
 			GET_HUD_COLOUR HUD_COLOUR_GREY f1_r f1_g f1_b f1_alpha2	//navigate greyed out
 			SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-			DISPLAY_TEXT 105.0 350.0 DS1_52 	//Navigate
+		   	
+			IF current_Language = LANGUAGE_FRENCH
+				SET_TEXT_SCALE 0.32 1.25
+				DISPLAY_TEXT 437.0 340.0 DS1_52 	//Navigate
+			ELSE
+				SET_TEXT_SCALE 0.32 1.25
+				DISPLAY_TEXT 437.0 340.0 DS1_52 	//Navigate
+			ENDIF
 		ENDIF
 	ENDIF
 	
 	// New section to draw the joypad buttons separate from the help text
 	GOSUB small_onscreen_text 
-	SET_TEXT_SCALE 1.45 2.0
-	GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
+	SET_TEXT_SCALE 0.32 1.25  // Set scale for PC only
+	GET_HUD_COLOUR HUD_COLOUR_WHITE f1_r f1_g f1_b f1_alpha2
 	SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	DISPLAY_TEXT 70.0 372.0 DS1_63
+	DISPLAY_TEXT 150.0 360.0 DS1_63
    	
 	IF NOT f1_control_flag = 1 //waiting to select which facing track
 		GOSUB small_onscreen_text
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
+		GET_HUD_COLOUR HUD_COLOUR_WHITE f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	    SET_TEXT_SCALE 1.45 2.0
-		DISPLAY_TEXT 70.0 322.0 DS1_64
+	    SET_TEXT_SCALE 0.32 1.25  // Set scale for PC only
+		DISPLAY_TEXT 150.0 340.0 SCH_PRS
 	
 		IF NOT f1_which_missions_are_open_flag = 1
 			GOSUB small_onscreen_text
-			GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
+			GET_HUD_COLOUR HUD_COLOUR_WHITE f1_r f1_g f1_b f1_alpha2
 			SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-			SET_TEXT_SCALE 1.45 2.0
-			DISPLAY_TEXT 61.4 347.0 DS1_62
+			SET_TEXT_SCALE 0.32 1.25  // Set scale for PC only
+			DISPLAY_TEXT 537.4 340.0 DS1_62
 		ENDIF
 		
 		IF  f1_which_missions_are_open_flag = 1
 			GOSUB small_onscreen_text
-			GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
+			GET_HUD_COLOUR HUD_COLOUR_WHITE f1_r f1_g f1_b f1_alpha2
 			SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-			SET_TEXT_SCALE 1.45 2.0
-			DISPLAY_TEXT 61.4 347.0 DS1_62
+			SET_TEXT_SCALE 0.32 1.25  // Set scale for PC only
+			DISPLAY_TEXT 537.4 340.0 DS1_62
 		ENDIF
 	ENDIF
 
@@ -4724,7 +4751,7 @@ has_car_started:////////////////////////////////////////////////////////////////
 	ENDIF
 	IF IS_BUTTON_PRESSED PAD1 CROSS 
 	OR IS_BUTTON_PRESSED PAD1 SQUARE
-		IF instructor_car_speed > 0.1
+		IF instructor_car_speed > 0.5
 			CLEAR_PRINTS
 			IF mission_selection = 10
 			OR mission_selection = 12
@@ -5103,28 +5130,28 @@ display_head_pos_dam_text://////////////////////////////////////////////////////
 
 	IF NOT f1_print_top_scores_flag = 2
 		GOSUB small_backend_text 
-		SET_TEXT_SCALE 1.45 2.0
+		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 342.0 DS1_64
+		DISPLAY_TEXT 340.0 345.0 SCH_PRS
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 215.0 345.0 DS1_66
-
-		GOSUB small_backend_text 
-		SET_TEXT_SCALE 1.45 2.0
-		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
-		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 362.0 DS1_63
+		DISPLAY_TEXT 180.0 345.0 DS1_66
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 215.0 365.0 DS1_53
+		DISPLAY_TEXT 340.0 365.0 DS1_63
+
+		GOSUB small_backend_text 
+		SET_TEXT_SCALE 0.52 1.45
+		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
+		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
+		DISPLAY_TEXT 180.0 365.0 DS1_53
 	ELSE
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
@@ -5132,16 +5159,16 @@ display_head_pos_dam_text://////////////////////////////////////////////////////
 		DISPLAY_TEXT 180.0 345.0 DS1_71
 
 		GOSUB small_backend_text 
-		SET_TEXT_SCALE 1.45 2.0
+		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 362.0 DS1_64
+		DISPLAY_TEXT 340.0 365.0 SCH_PRS
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 215.0 365.0 DS1_66
+		DISPLAY_TEXT 180.0 365.0 DS1_66
 	ENDIF
 RETURN
 

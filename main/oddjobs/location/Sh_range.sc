@@ -337,15 +337,17 @@ SR_mission:
 					SR_mission_state = 1
 				ENDIF
 			ENDIF
+
+			local_flag = 0
 		BREAK
 
 		CASE 1 // range missions triggered for first time.
 
 			IF range_cuts_watched > 0
 				IF SR_flag < 7
-				AND sr_flag > 1					
+				AND sr_flag > 0					
 					SR_flag = 7
-					SR_time_check = 0
+					SR_time_check = TIMERA + 1000
 					CLEAR_PRINTS
 				ENDIF
 			ENDIF
@@ -578,17 +580,19 @@ SR_mission:
 
 					IF range_cuts_watched = 0												
 						range_cuts_watched = 1
+						DO_FADE 1000 FADE_OUT  //add time check incase get_fading_status hasn't rregisterd.
+						sr_time_check = TIMERA + 1000
 					ELSE
 						PRINT_BIG ANR_6 2000 1
 					ENDIF
-
-					DO_FADE 1000 FADE_OUT
+					
 					SR_flag = 8
 				ENDIF
 			ENDIF
 
 			IF SR_flag = 8
 				IF NOT GET_FADING_STATUS
+				AND TIMERA > sr_time_check
 
 					sr_float3 = booth_offset_1[SR_range_id]
 					sr_float4 = 0.0
@@ -787,6 +791,7 @@ SR_mission:
 					SR_target_state[0] = 0
 					SR_target_state[1] = 0
 					SR_target_state[2] = 0
+					local_flag = 0
 					SR_range_level[0] = 1
 					SR_range_level[1] = 1
 					SR_range_level[2] = 1
@@ -850,14 +855,14 @@ SR_mission:
 				OR SR_skill_won = 4
 				OR SR_skill_won = 7
 				OR SR_skill_won = 10
-					CLEAR_THIS_BIG_PRINT ANR_41
-					PRINT_BIG ANR_42 3000 1				
+//					CLEAR_THIS_BIG_PRINT ANR_41
+					PRINT_BIG ANR_42 2000 1				
 				ENDIF
 
 				IF SR_skill_won = 2
 				OR SR_skill_won = 5
 				OR SR_skill_won = 8
-					CLEAR_THIS_BIG_PRINT ANR_42
+
 					sr_time_check = TIMERA + 5500
 
 					SR_target_state[0] = 5
@@ -1040,16 +1045,17 @@ SR_mission:
 					SR_range_level[2] = 4		
 					SR_flag = 1
 					sr_time_check = TIMERA + 6000
+					local_flag = 0
 
 			ENDIF
 
 			IF SR_flag = 1
 				IF TIMERA > sr_time_check
-
+  
 					IF range_cuts_watched < 3
 						SET_FADING_COLOUR 0 0 0
 						DO_FADE 1000 FADE_OUT
-
+						
 					ENDIF
 					SR_flag = 2
 					SR_time_check = TIMERA + 1500
@@ -1068,9 +1074,6 @@ SR_mission:
 						CLEAR_THIS_BIG_PRINT ANR_19
 
 						sr_time_check = 0
-						SR_target_state[0] = 0
-						SR_target_state[1] = 0
-						SR_target_state[2] = 0
 						SR_flag = 3
 						SR_time_check = 0
 				ELSE
@@ -1082,7 +1085,7 @@ SR_mission:
 
 						CLEAR_THIS_BIG_PRINT ANR_41
 						PRINT_BIG ANR_18 4000 1						
-						PRINT ANR_9 3000 1
+						PRINT ANR_9 4000 1
 						PRINT ANR_10 3000 1
 
 						SR_float3 = -2.0835
@@ -1109,10 +1112,13 @@ SR_mission:
 					DO_FADE 1000 FADE_IN
 					SR_flag = 4
 					SR_time_check = TIMERA + 6000
+					local_flag = 0
 				ENDIF
 			ENDIF	
 
 			IF SR_flag = 4
+
+				LVAR_INT local_flag
 
 				IF range_cuts_watched = 1
 					IF DOES_OBJECT_EXIST sr_target[8]
@@ -1125,30 +1131,66 @@ SR_mission:
 				IF TIMERA > SR_time_check
 				OR range_cuts_watched > 1
 
-					IF range_cuts_watched = 1
-						range_cuts_watched = 2
-					ELSE
-						PRINT_BIG ANR_18 2000 1
-					ENDIF
-					IF range_cuts_watched < 3
-						RESTORE_CAMERA_JUMPCUT
-						SWITCH_WIDESCREEN OFF
-						DETACH_CHAR_FROM_CAR scplayer
-						ATTACH_CHAR_TO_OBJECT scplayer sr_obj 0.0 0.0 1.0 FACING_FORWARD 90.0 WEAPONTYPE_PISTOL
-					ENDIF
-					SR_target_state[0] = 0
-					SR_target_state[1] = 0
-					SR_target_state[2] = 0
+					IF NOT GET_FADING_STATUS
+						IF range_cuts_watched = 1
+							IF local_flag = 0
+								DO_FADE 1000 FADE_OUT													
+								local_flag = 1
+							ENDIF
+						ELSE
+							IF local_flag = 0
+								IF sr_skill_won = 1
+									PRINT_BIG ANR_18 3000 1
+								ENDIF
+						
+								IF sr_skill_won = 4
+									PRINT_BIG ANR_48 3000 1 
+								ENDIF
+			
+								IF sr_skill_won = 7
+									PRINT_BIG ANR_24 3000 1 
+								ENDIF
 
-					SR_targets_created[0] = 0
-					SR_targets_created[1] = 0
-					SR_targets_created[2] = 0	
-
-					PRINT_BIG ( RACE2 ) 1000 4 //"3"
+								IF sr_skill_won = 10
+									PRINT_BIG ANR_51 3000 1 
+								ENDIF	
+								
+								sr_time_check = TIMERA + 1000	
+								local_flag = 1
+							ENDIF
+												
+						ENDIF
+					ENDIF
 		
-					SR_flag = 5
-					SR_time_check = TIMERA + 1000
-					SET_PLAYER_CONTROL player1 ON
+
+					IF NOT GET_FADING_STATUS
+						IF TIMERA > sr_time_check
+							IF range_cuts_watched < 2
+								IF local_flag = 1
+									local_flag = 2
+									DO_FADE 700 FADE_IN
+									range_cuts_watched = 2
+									RESTORE_CAMERA_JUMPCUT
+									SWITCH_WIDESCREEN OFF
+									DETACH_CHAR_FROM_CAR scplayer
+									ATTACH_CHAR_TO_OBJECT scplayer sr_obj 0.0 0.0 1.0 FACING_FORWARD 90.0 WEAPONTYPE_PISTOL
+								ENDIF
+							ENDIF
+							SR_target_state[0] = 0
+							SR_target_state[1] = 0
+							SR_target_state[2] = 0
+
+							SR_targets_created[0] = 0
+							SR_targets_created[1] = 0
+							SR_targets_created[2] = 0	
+
+					       PRINT_BIG ( RACE2 ) 1000 4 //"3"
+				
+							SR_flag = 5
+							SR_time_check = TIMERA + 1000
+							SET_PLAYER_CONTROL player1 ON
+						ENDIF
+					ENDIF
 				ENDIF
 			ENDIF
 
@@ -1231,15 +1273,9 @@ SR_mission:
 					SR_range_level[1] = 4
 					SR_range_level[2] = 4
 
-					SR_target_state[0] = 0
-					SR_target_state[1] = 0
-					SR_target_state[2] = 0	
-
 					SR_targets_created[0] = 0
 					SR_targets_created[1] = 0
 					SR_targets_created[2] = 0	
-
-					PRINT_BIG RACE2 1000 4
 
 					SR_flag = 4
 					SR_time_check = TIMERA + 1000
@@ -1340,8 +1376,8 @@ SR_mission:
 				IF TIMERA > SR_time_check
 
 					IF range_cuts_watched < 3
-						DO_FADE 1000 FADE_OUT		
-					ENDIF				
+						DO_FADE 1000 FADE_OUT						
+					ENDIF
 					SR_time_check = TIMERA + 1500
 					SR_flag = 4
 
@@ -1448,7 +1484,7 @@ SR_mission:
 				SR_target_state[0] = 5
 				SR_target_state[1] = 5
 				SR_target_state[2] = 5
-				sr_time_check = TIMERA + 4000
+				sr_time_check = TIMERA + 7000
 				sr_flag = 11		
 			ENDIF
 
@@ -1457,7 +1493,6 @@ SR_mission:
 				AND SR_target_state[1] = 99
 				AND SR_target_state[2] = 99
 				AND TIMERA > sr_time_check
-					CLEAR_PRINTS
 					IF sr_skill_won = 5
 						PRINT_BIG ANR_49 2000 1 
 					ENDIF
@@ -1525,7 +1560,7 @@ SR_mission:
 				IF NOT GET_FADING_STATUS
 					sr_time_check = TIMERA + 500
 					SHOW_UPDATE_STATS TRUE
-
+					
 					SR_flag = 3					
 				ENDIF
 			ENDIF

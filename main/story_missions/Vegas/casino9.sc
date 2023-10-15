@@ -4,7 +4,10 @@ MISSION_START
 // ##
 // ##	Casino9.sc 
 // ##
-// ##	Freefall
+// ##	Freefall PC Version,
+// ##
+// ##   added fix for bug 503 - frame limiter problems
+// ##   added fix for bug 238 - control problem
 // ##
 // ## 	Simon Lashley
 // ##
@@ -297,7 +300,7 @@ mission_casino9_MAIN_steal_plane:
 					CASE 3
 						IF NOT IS_CAR_DEAD shamal_C9 
 														
-							shamal_Y_C9 -= 1.0
+							shamal_Y_C9 -=@ 0.75
 							SET_CAR_COORDINATES_NO_OFFSET shamal_C9 shamal_X_C9 shamal_Y_C9 shamal_Z_C9
 							
 							corona_Y_C9 = shamal_Y_C9 + 20.0 
@@ -437,10 +440,10 @@ mission_casino9_CUT_hijack_shamal:
 		
 		SHAKE_CAM 20
 
-		dodo_Y_C9 += 1.0
+		dodo_Y_C9 +=@ 1.0
 		SET_CAR_COORDINATES dodo_C9 dodo_X_C9 dodo_Y_C9 dodo_Z_C9
 
-		shamal_Y_C9 += 1.0
+		shamal_Y_C9 +=@ 1.0
 		SET_CAR_COORDINATES shamal_C9 shamal_X_C9 shamal_Y_C9 shamal_Z_C9
 
 		SWITCH cutscene_status_C9
@@ -527,7 +530,7 @@ mission_casino9_CUT_hijack_shamal:
 			CASE 3
 				IF TIMERB < 5000
 					IF cam_pos_Y_C9 < -1.4 
-						cam_pos_Y_C9 += 0.1
+						cam_pos_Y_C9 +=@ 0.1
 						ATTACH_CAMERA_TO_VEHICLE dodo_C9 cam_pos_X_C9 cam_pos_Y_C9 cam_pos_Z_C9 cam_look_X_C9 cam_look_Y_C9 cam_look_Z_C9 2.0 JUMP_CUT
 					ENDIF
 					GOSUB mission_casino9_SUB_animate_door
@@ -537,8 +540,8 @@ mission_casino9_CUT_hijack_shamal:
 
 			CASE 4
 				IF cam_pos_X_C9 > -7.0
-					cam_pos_X_C9 -= 0.1
-					cam_pos_Z_C9 -= 0.045
+					cam_pos_X_C9 -=@ 0.1
+					cam_pos_Z_C9 -=@ 0.045
 					ATTACH_CAMERA_TO_VEHICLE dodo_C9 cam_pos_X_C9 cam_pos_Y_C9 cam_pos_Z_C9 cam_look_X_C9 cam_look_Y_C9 cam_look_Z_C9 2.0 JUMP_CUT
 				ENDIF
 
@@ -638,11 +641,11 @@ mission_casino9_CUT_hijack_shamal:
 				//IF IS_CHAR_PLAYING_ANIM scplayer Plane_hijack
 				
 					IF NOT IS_CAR_DEAD dodo_C9	
-						dodo_roll_C9 -= 3.0
+						dodo_roll_C9 -=@ 3.0
 						
-						dodo_X_C9 -= 0.3
-						dodo_Y_C9 += 0.3
-						dodo_Z_C9 -= 0.3
+						dodo_X_C9 -=@ 0.3
+						dodo_Y_C9 +=@ 0.3
+						dodo_Z_C9 -=@ 0.3
 						
 						SET_CAR_COORDINATES dodo_C9 dodo_X_C9 dodo_Y_C9 dodo_Z_C9
 						SET_CAR_ROLL dodo_C9 dodo_roll_C9   
@@ -710,6 +713,13 @@ mission_casino9_SUB_animate_door:
 	
 		IF TIMERA < frame_time_C9[door_counter_C9]
 			current_door_ratio_C9 += step_size_C9
+			IF current_door_ratio_C9 < 0.0
+				current_door_ratio_C9 = 0.0
+			ELSE
+				IF current_door_ratio_C9 > 1.0
+					current_door_ratio_C9 = 1.0
+				ENDIF
+			ENDIF 	
 			 
 			IF step_size_C9 >= 0.0
 				IF current_door_ratio_C9 > door_ratio_C9[door_counter_C9]
@@ -759,11 +769,11 @@ mission_casino9_SUB_slide_camera_along:
 				camera_finished_C9 = 1
 				RETURN
 			ELSE  
-				cam_pos_X_C9 += -0.02
-				cam_pos_Y_C9 += 0.02
-				cam_pos_Z_C9 += -0.01
-				cam_look_Y_C9 += 0.23
-				cam_look_Z_C9 += -0.02
+				cam_pos_X_C9 +=@ -0.02
+				cam_pos_Y_C9 +=@ 0.02
+				cam_pos_Z_C9 +=@ -0.01
+				cam_look_Y_C9 +=@ 0.23
+				cam_look_Z_C9 +=@ -0.02
 			ENDIF
 			ATTACH_CAMERA_TO_VEHICLE shamal_C9 cam_pos_X_C9 cam_pos_Y_C9 cam_pos_Z_C9 cam_look_X_C9 cam_look_Y_C9 cam_look_Z_C9 0.0 JUMP_CUT
 		ENDIF
@@ -1012,7 +1022,11 @@ mission_casino9_MAIN_inside_shamal_setup:
 		
 	DO_FADE 500 FADE_IN
 	
-	PRINT_HELP_FOREVER CAS9_H2
+	IF IS_PC_USING_JOYPAD
+		PRINT_HELP_FOREVER CAS9_H2
+	ELSE
+		PRINT_HELP_FOREVER CAS9_H4
+	ENDIF
 
 	WHILE GET_FADING_STATUS
 		WAIT 0
@@ -1538,49 +1552,89 @@ mission_casino9_SUB_player_controls:
 		moving_stick_C9 = 0
 	ENDIF
 
-	
-	IF NOT IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
-	AND NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
 
-		// NONE
-		SLIDE_OBJECT lean_box_C9 1.7 lean_Y_C9 lean_Z_C9 0.18 0.0 0.0 FALSE
-		IF NOT lean_X_C9 = 1.7
-		AND moving_stick_C9 = 0 
-			SET_HEADING_FOR_ATTACHED_PLAYER player1 90.0 9.0
+
+	// JOYPAD VERSION?
+
+	IF IS_PC_USING_JOYPAD
+	
+	 	IF NOT IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
+		AND NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+
+			// NONE
+			SLIDE_OBJECT lean_box_C9 1.7 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
+			IF NOT lean_X_C9 = 1.7
+			AND moving_stick_C9 = 0 
+				SET_HEADING_FOR_ATTACHED_PLAYER player1 90.0 9.0
+			ENDIF
+
+		ELSE
+
+			// IF BOTH BUTTONS ARE PRESSED JUST GO BACK TO THE CENTER
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
+			AND IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+
+				SLIDE_OBJECT lean_box_C9 1.7 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
+				IF NOT lean_X_C9 = 1.7
+				AND moving_stick_C9 = 0
+					SET_HEADING_FOR_ATTACHED_PLAYER player1 90.0 9.0
+				ENDIF		 				
+
+		 	ELSE
+				// LEAN LEFT
+				IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
+					SLIDE_OBJECT lean_box_C9 2.9 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
+					IF lean_X_C9 < 2.9
+					AND moving_stick_C9 = 0
+						SET_HEADING_FOR_ATTACHED_PLAYER player1 30.0 9.0
+					ENDIF
+		 		ELSE
+					// LEAN RIGHT
+					IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+						SLIDE_OBJECT lean_box_C9 0.5 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
+						IF lean_X_C9 > 0.5
+						AND moving_stick_C9 = 0
+							SET_HEADING_FOR_ATTACHED_PLAYER player1 150.0 9.0
+						ENDIF
+		 			ENDIF
+				ENDIF
+			ENDIF
+			  
 		ENDIF
 
 	ELSE
 
-		// IF BOTH BUTTONS ARE PRESSED JUST GO BACK TO THE CENTER
-		IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
-		AND IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+		// KEYBOARD AND MOUSE
 
-			SLIDE_OBJECT lean_box_C9 1.7 lean_Y_C9 lean_Z_C9 0.18 0.0 0.0 FALSE
+	 	IF NOT IS_BUTTON_PRESSED PAD1 LEFTSTICKX
+			SLIDE_OBJECT lean_box_C9 1.7 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
 			IF NOT lean_X_C9 = 1.7
-			AND moving_stick_C9 = 0
+			AND moving_stick_C9 = 0 
 				SET_HEADING_FOR_ATTACHED_PLAYER player1 90.0 9.0
-			ENDIF		 				
-
+			ENDIF
+			
 		ELSE
-			// LEAN LEFT
-			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
-				SLIDE_OBJECT lean_box_C9 2.9 lean_Y_C9 lean_Z_C9 0.18 0.0 0.0 FALSE
+		
+			GET_POSITION_OF_ANALOGUE_STICKS PAD1 LStickX LStickY RStickX RStickY
+
+			IF LStickX < 0
+				// LEFT
+				SLIDE_OBJECT lean_box_C9 2.9 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
 				IF lean_X_C9 < 2.9
 				AND moving_stick_C9 = 0
 					SET_HEADING_FOR_ATTACHED_PLAYER player1 30.0 9.0
-				ENDIF
+				ENDIF			
 			ELSE
-				// LEAN RIGHT
-				IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
-					SLIDE_OBJECT lean_box_C9 0.5 lean_Y_C9 lean_Z_C9 0.18 0.0 0.0 FALSE
-					IF lean_X_C9 > 0.5
-					AND moving_stick_C9 = 0
-						SET_HEADING_FOR_ATTACHED_PLAYER player1 150.0 9.0
-					ENDIF
+				// RIGHT
+				SLIDE_OBJECT lean_box_C9 0.5 lean_Y_C9 lean_Z_C9 0.09 0.0 0.0 FALSE
+				IF lean_X_C9 > 0.5
+				AND moving_stick_C9 = 0
+					SET_HEADING_FOR_ATTACHED_PLAYER player1 150.0 9.0
 				ENDIF
-			ENDIF
+			ENDIF 
+
 		ENDIF
-			
+		
 	ENDIF
 	 	
 RETURN

@@ -2421,7 +2421,7 @@ WHILE NOT IS_CHAR_DEAD scplayer
 
 		ENDIF		
 
-		IF TIMERA > 3000
+		IF TIMERA > 4500
 		AND s7_gate_closing = 1
 
 			IF NOT IS_CAR_DEAD s7_bike_1

@@ -10,6 +10,7 @@ MISSION_START
 // *** the back of the truck.  Time limit and as the player steals each bike his wanted  ***
 // *** level gets higher/faces more resistance from goons.                               ***
 // ***																					 ***
+// *** PC Script																		 ***
 // *****************************************************************************************
 
 SCRIPT_NAME HEIST4
@@ -1542,6 +1543,11 @@ IF NOT IS_CAR_DEAD bike_truck
 	ENDIF										   
 ELSE
 	PRINT_NOW HEI4_05 5000 1//PACKER DESTROYED!
+	IF NOT IS_CHAR_DEAD truck_thumb
+	
+		DELETE_CHAR truck_thumb
+
+	ENDIF
 
 	GOTO mission_hst4_failed
 ENDIF

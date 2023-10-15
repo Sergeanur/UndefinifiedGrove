@@ -2318,7 +2318,7 @@ bs_draw_tv_screen://////////////////////////////////////////////////////////////
 		GOSUB bs_small_onscreen_text 
 		SET_TEXT_COLOUR 255 255 255 255
 		SET_TEXT_SCALE 0.32 1.25 
-		DISPLAY_TEXT 150.0 340.0 BS_X05
+		DISPLAY_TEXT 150.0 340.0 SCH_PRS
 		IF NOT bs_open_tests = 1 
 			GOSUB bs_small_onscreen_text 
 			SET_TEXT_COLOUR 255 255 255 255
@@ -3042,7 +3042,7 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 330.0 345.0 BS_X05
+		DISPLAY_TEXT 330.0 345.0 SCH_PRS
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45
@@ -3073,7 +3073,7 @@ bs_display_head_pos_dam_text:///////////////////////////////////////////////////
 		SET_TEXT_SCALE 0.52 1.45
 		GET_HUD_COLOUR HUD_COLOUR_WHITE bs_r bs_g bs_b bs_a
 		SET_TEXT_COLOUR bs_r bs_g bs_b bs_a
-		DISPLAY_TEXT 330.0 365.0 BS_X05
+		DISPLAY_TEXT 330.0 365.0 SCH_PRS
 
 		GOSUB bs_small_backend_text
 		SET_TEXT_SCALE 0.52 1.45

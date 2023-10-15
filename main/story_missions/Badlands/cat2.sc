@@ -2659,7 +2659,7 @@ IF catalina_flag = 4
 				IF task_status = FINISHED_TASK
 					IF HAS_OBJECT_BEEN_DAMAGED pc_door[1]
 					OR shoot_count > 2
-						TASK_FOLLOW_PATH_NODES_TO_COORD catalina 2315.551 3.731 25.4766 PEDMOVE_RUN -2//OUTSIDE THE BACK OF THE BANK
+						TASK_FOLLOW_PATH_NODES_TO_COORD catalina 2315.5095 3.1256 25.4844 PEDMOVE_RUN -2//OUTSIDE THE BACK OF THE BANK
 						cat_shooting_door_flag = 3
 						++ catalina_flag
 					ELSE

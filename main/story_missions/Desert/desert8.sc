@@ -3179,14 +3179,15 @@ IF inside_d8flag = 2
 		ENDIF
 		IF helptext_d8flag = 6
 			IF TIMERB > 6000
-				PRINT_HELP DST8_32 //To hover in the jetpack hold down ~h~R2 and L2 simultaneously~w~.
+				// PRINT_HELP DST8_32 //To hover in the jetpack hold down ~h~R2 and L2 simultaneously~w~.
+				PRINT_HELP DST8_33 //You can fire a single handed weapon as normal while in the jetpack.
 				TIMERB = 0
 				helptext_d8flag = 7
 			ENDIF
 		ENDIF
 		IF helptext_d8flag = 7
 			IF TIMERB > 6000
-				PRINT_HELP DST8_33 //You can fire a single handed weapon as normal while in the jetpack.
+//				PRINT_HELP DST8_33 //You can fire a single handed weapon as normal while in the jetpack.
 				TIMERB = 0
 				helptext_d8flag = 8
 			ENDIF

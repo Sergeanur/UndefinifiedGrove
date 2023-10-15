@@ -3062,7 +3062,9 @@ Quarry_Spillage_Clear_Tracks:
 
 	// Start the train?
 	IF flagTrainStarted = FALSE
-		IF timerTrainStart < m_mission_timer
+// PC has a timing descrepancy, so use the on-screen timer to trigger the train
+//		IF timerTrainStart < m_mission_timer
+		IF g_Quarry_timerKM <= 15000
 			SET_TRAIN_SPEED carTrain QUARRY_SPILLAGE_TRAIN_SPEED
 			SET_TRAIN_CRUISE_SPEED carTrain QUARRY_SPILLAGE_TRAIN_SPEED
 			ADD_BLIP_FOR_CAR carTrain blipTrain
