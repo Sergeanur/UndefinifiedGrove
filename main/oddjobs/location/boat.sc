@@ -4951,9 +4951,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				BREAK
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_FLOAT 193.0 75.0 boat_58 dboat_which_score_displayed 2
-			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 221.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			ENDSWITCH
 		
@@ -4985,7 +4985,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.52 1.45
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_62 dboat_accelerate_qualify 1
+				DISPLAY_TEXT_WITH_FLOAT 197.0 75.0 boat_62 dboat_accelerate_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -5044,7 +5044,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 276.0 75.0 boat_58 dboat_which_score_displayed 2
+				DISPLAY_TEXT_WITH_FLOAT 226.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			ENDSWITCH
 		
@@ -5078,7 +5078,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.52 1.45
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_62 dboat_simplecircuit_qualify 1
+				DISPLAY_TEXT_WITH_FLOAT 197.0 75.0 boat_62 dboat_simplecircuit_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -5137,7 +5137,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
+				DISPLAY_TEXT_WITH_FLOAT 221.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			ENDSWITCH
 
@@ -5172,7 +5172,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.52 1.45
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_63 dboat_slalom_qualify 1
+				DISPLAY_TEXT_WITH_FLOAT 197.0 75.0 boat_63 dboat_slalom_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -5230,7 +5230,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				DISPLAY_TEXT_WITH_NUMBER 160.0 75.0 boat_60 boat_skijump_best_score
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_NUMBER 260.0 75.0 boat_60 boat_skijump_best_score
+				DISPLAY_TEXT_WITH_NUMBER 210.0 75.0 boat_60 boat_skijump_best_score
 				BREAK
 			ENDSWITCH
 
@@ -5259,7 +5259,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				DISPLAY_TEXT_WITH_NUMBER 103.0 75.0 boat_61 boat_skijump_qualify
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_NUMBER 227.0 75.0 boat_61 boat_skijump_qualify
+				DISPLAY_TEXT_WITH_NUMBER 177.0 75.0 boat_61 boat_skijump_qualify
 				BREAK
 			ENDSWITCH
 		ENDIF
@@ -5322,7 +5322,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
+				DISPLAY_TEXT_WITH_FLOAT 221.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
 			ENDSWITCH
 		ELSE
@@ -5355,7 +5355,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.52 1.45
 				BREAK
 			CASE 5
-				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_63 dboat_hover_qualify 1
+				DISPLAY_TEXT_WITH_FLOAT 197.0 75.0 boat_63 dboat_hover_qualify 1
 				BREAK
 			ENDSWITCH
 		ENDIF
@@ -5423,7 +5423,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			DISPLAY_TEXT 216.0 375.0 BOAT_64
 			BREAK
 		CASE 5
-			DISPLAY_TEXT 299.0 375.0 BOAT_64
+			DISPLAY_TEXT 292.0 375.0 BOAT_64
 			BREAK
 		ENDSWITCH
 	ENDIF
@@ -5452,7 +5452,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			DISPLAY_TEXT 280.0 375.0 BOAT_57
 			BREAK
 		CASE 5
-			DISPLAY_TEXT 297.0 375.0 BOAT_57
+			DISPLAY_TEXT 287.0 375.0 BOAT_57
 			BREAK
 		ENDSWITCH
 	ENDIF
@@ -5481,7 +5481,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			DISPLAY_TEXT 286.0 375.0 BOAT_56
 			BREAK
 		CASE 5
-			DISPLAY_TEXT 296.0 375.0 BOAT_56
+			DISPLAY_TEXT 286.0 375.0 BOAT_56
 			BREAK
 		ENDSWITCH
 	ENDIF
@@ -5510,7 +5510,7 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			DISPLAY_TEXT 300.0 375.0 BOAT_55
 			BREAK
 		CASE 5
-			DISPLAY_TEXT 295.0 375.0 BOAT_55
+			DISPLAY_TEXT 285.0 375.0 BOAT_55
 			BREAK
 		ENDSWITCH
 	ENDIF

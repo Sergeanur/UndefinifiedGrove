@@ -18,6 +18,7 @@ GOSUB mission_cleanup_sweet4
 MISSION_END
 // ------------------------------------------------------------------------------------------------
 // Variables
+	LVAR_INT temp_driver
 // ---- Flags
 	VAR_INT sw4_stage sw4_hood_acc sw4_ammo sw4_hood_dead[18] sw4_spray_marker
 	VAR_INT  sw4_blipped sw4_cut sw4_attack[4] sw4_hood_create[4]
@@ -2753,7 +2754,6 @@ AND sw4_stage < 8
 				IF sw4_sequence_flag = 0
 					OPEN_SEQUENCE_TASK sw4_drive_away
 						TASK_SHUFFLE_TO_NEXT_CAR_SEAT -1 sw4_player_car
-						TASK_CAR_DRIVE_WANDER -1 sw4_player_car 50.0 DRIVINGMODE_AVOIDCARS
 					CLOSE_SEQUENCE_TASK sw4_drive_away
 					sw4_sequence_flag = 1
 				ENDIF
@@ -3017,9 +3017,12 @@ IF sw4_stage = 666
 		AND NOT IS_CAR_DEAD sw4_player_car
 			IF sw4_audio_playing = 0
 			AND sw4_counter = 0
-				TASK_CAR_DRIVE_WANDER sw4_smoke sw4_player_car 50.0 DRIVINGMODE_AVOIDCARS
-				sw4_counter = 32
-				sw4_stage = 667
+				GET_DRIVER_OF_CAR sw4_player_car temp_driver
+				IF temp_driver = sw4_smoke
+					TASK_CAR_DRIVE_WANDER sw4_smoke sw4_player_car 50.0 DRIVINGMODE_AVOIDCARS
+					sw4_counter = 32
+					sw4_stage = 667
+				ENDIF
 			ENDIF
 		ENDIF
 	ENDIF

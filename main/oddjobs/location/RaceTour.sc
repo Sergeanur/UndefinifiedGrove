@@ -325,7 +325,11 @@ lvar_int checkpoint_type
 checkpoint_type = checkpoint_tube 
 
 USE_TEXT_COMMANDS TRUE
-SET_MESSAGE_FORMATTING TRUE 355 370
+IF IS_JAPANESE_VERSION
+	SET_MESSAGE_FORMATTING TRUE 345 370
+ELSE
+	SET_MESSAGE_FORMATTING TRUE 355 370
+ENDIF
 SET_PLAYER_CONTROL player1 OFF
 SET_EVERYONE_IGNORE_PLAYER player1 TRUE
 SET_ALL_CARS_CAN_BE_DAMAGED FALSE
@@ -595,19 +599,21 @@ case MENU_SCREEN
 	DISPLAY_HUD FALSE
 	DISPLAY_RADAR FALSE
 	GET_CURRENT_LANGUAGE current_Language
-	IF IS_XBOX_VERSION
-		IF current_Language = LANGUAGE_ENGLISH
-			SET_HELP_MESSAGE_BOX_SIZE 250
-		ELSE
-			SET_HELP_MESSAGE_BOX_SIZE 300
-		ENDIF
-	ELSE
-		IF current_Language = LANGUAGE_ENGLISH
-			SET_HELP_MESSAGE_BOX_SIZE 200
-		ELSE
-			SET_HELP_MESSAGE_BOX_SIZE 250
-		ENDIF
+	LVAR_INT message_box_size
+	message_box_size = 200
+	IF NOT current_Language = LANGUAGE_ENGLISH
+		message_box_size += 50
 	ENDIF
+
+	IF IS_XBOX_VERSION
+		message_box_size += 50
+	ENDIF
+
+	IF IS_JAPANESE_VERSION
+		message_box_size += 25
+	ENDIF
+
+	SET_HELP_MESSAGE_BOX_SIZE message_box_size
 	PRINT_HELP_FOREVER RACES33
 
 	LVAR_INT pad1_leftstick_x pad1_leftstick_y pad1_rightstick_x pad1_rightstick_y
@@ -650,7 +656,7 @@ case MENU_SCREEN
 	ENDIF
 	
 	LVAR_INT pad1_triangle_pressed
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		IF pad1_triangle_pressed = 0
 			REMOVE_TEXTURE_DICTIONARY
 			DISPLAY_HUD true
@@ -665,7 +671,7 @@ case MENU_SCREEN
 	ENDIF
 
 	LVAR_INT pad1_cross_pressed
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 		IF pad1_cross_pressed = 0
 			IF race_selection > -1
 				DO_FADE 500 FADE_OUT
@@ -1303,12 +1309,20 @@ case RACE_START_GO
 
 		x_hud_pos[2] = 570.6411 
 		y_hud_pos[2] = 323.5937 
-		x_hud_scale[2] = 0.9127 
+		IF IS_JAPANESE_VERSION
+			x_hud_scale[2] = 0.8 
+		ELSE
+			x_hud_scale[2] = 0.9127 
+		ENDIF
 		y_hud_scale[2] = 4.8106 
 
 		x_hud_pos[3] = 585.9410 
 		y_hud_pos[3] = 345.6341 
-		x_hud_scale[3] = 0.4197 
+		IF IS_JAPANESE_VERSION
+			x_hud_scale[3] = 0.37 
+		ELSE
+			x_hud_scale[3] = 0.4197 
+		ENDIF
 		y_hud_scale[3] = 1.8511 
 
 		x_hud_pos[4] = 582.7242 

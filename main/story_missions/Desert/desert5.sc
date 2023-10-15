@@ -3333,14 +3333,14 @@ d5_drawing_tv_screen:
 	SET_TEXT_SCALE 1.45 2.0
 	GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 	SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-	DISPLAY_TEXT 70.0 372.0 DES5_FL
+	DISPLAY_TEXT 70.0 372.0 SCHX
 
 	IF NOT d5_control_flag = 1
 		GOSUB d5_small_onscreen_text
 		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
 		SET_TEXT_COLOUR d5_text_rval d5_text_gval d5_text_bval d5_text_alpha
-		DISPLAY_TEXT 70.0 322.0 DES5_FM
+		DISPLAY_TEXT 70.0 322.0 SCHO
 
 		GOSUB d5_small_onscreen_text
 		SET_TEXT_SCALE 1.45 2.0

@@ -705,40 +705,81 @@ IF startdumbell_flag = 1
          	    reps_dumbell = reps_dumbell + 1
 			ENDIF
 
-			SWITCH weight_dumbell
+			IF current_Language = 0
 
-				CASE 0
-					dumb_weight = 20
-				BREAK
-				CASE 1
-					dumb_weight = 30
-				BREAK
-				CASE 2
-					dumb_weight = 40
-				BREAK
-				CASE 3
-					dumb_weight = 50
-				BREAK
-				CASE 4
-					dumb_weight = 60
-				BREAK
-				CASE 5
-					dumb_weight = 70
-				BREAK
-				CASE 6
-					dumb_weight = 80
-				BREAK
-				CASE 7
-					dumb_weight = 90
-				BREAK
-				CASE 8
-					dumb_weight = 100
-				BREAK
-				CASE 9
-					dumb_weight = 110
-				BREAK
+				SWITCH weight_dumbell
 
-			ENDSWITCH
+					CASE 0
+						dumb_weight = 20
+					BREAK
+					CASE 1
+						dumb_weight = 30
+					BREAK
+					CASE 2
+						dumb_weight = 40
+					BREAK
+					CASE 3
+						dumb_weight = 50
+					BREAK
+					CASE 4
+						dumb_weight = 60
+					BREAK
+					CASE 5
+						dumb_weight = 70
+					BREAK
+					CASE 6
+						dumb_weight = 80
+					BREAK
+					CASE 7
+						dumb_weight = 90
+					BREAK
+					CASE 8
+						dumb_weight = 100
+					BREAK
+					CASE 9
+						dumb_weight = 110
+					BREAK
+
+				ENDSWITCH
+
+			ELSE
+
+				SWITCH weight_dumbell
+
+					CASE 0
+						dumb_weight = 10
+					BREAK
+					CASE 1
+						dumb_weight = 14
+					BREAK
+					CASE 2
+						dumb_weight = 18
+					BREAK
+					CASE 3
+						dumb_weight = 22
+					BREAK
+					CASE 4
+						dumb_weight = 26
+					BREAK
+					CASE 5
+						dumb_weight = 30
+					BREAK
+					CASE 6
+						dumb_weight = 34
+					BREAK
+					CASE 7
+						dumb_weight = 38
+					BREAK
+					CASE 8
+						dumb_weight = 42
+					BREAK
+					CASE 9
+						dumb_weight = 44
+					BREAK
+
+				ENDSWITCH
+
+			ENDIF
 
 			GET_INT_STAT HEAVIEST_WEIGHT_DUMBELLS temp_dumb_weight
 

@@ -4511,14 +4511,14 @@ f1_drawing_tv_screen:///////////////////////////////////////////////////////////
 	SET_TEXT_SCALE 1.45 2.0
 	GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 	SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	DISPLAY_TEXT 70.0 372.0 DS1_63
+	DISPLAY_TEXT 70.0 372.0 SCHX
    	
 	IF NOT f1_control_flag = 1 //waiting to select which facing track
 		GOSUB small_onscreen_text
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
 	    SET_TEXT_SCALE 1.45 2.0
-		DISPLAY_TEXT 70.0 322.0 DS1_64
+		DISPLAY_TEXT 70.0 322.0 SCHO
 	
 		IF NOT f1_which_missions_are_open_flag = 1
 			GOSUB small_onscreen_text
@@ -4593,22 +4593,30 @@ f1_drawing_medal:///////////////////////////////////////////////////////////////
 	SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
 
 	IF f1_which_medal_displayed > 1 
-		DISPLAY_TEXT_WITH_NUMBER 217.0 75.0 DS1_58 f1_which_score_displayed // Record Score ~1~%
+		IF IS_JAPANESE_VERSION
+			DISPLAY_TEXT_WITH_NUMBER 273.0 75.0 DS1_58 f1_which_score_displayed // Record Score ~1~%
+		ELSE
+			DISPLAY_TEXT_WITH_NUMBER 217.0 75.0 DS1_58 f1_which_score_displayed // Record Score ~1~%
+		ENDIF
 	ELSE
-		IF current_Language = LANGUAGE_ENGLISH
-	    	DISPLAY_TEXT 175.0 75.0 DS1_67  //Get over 70% to pass
-		ENDIF
-		IF current_Language = LANGUAGE_FRENCH
-	    	DISPLAY_TEXT 83.0 75.0 DS1_67  //Get over 70% to pass
-		ENDIF
-		IF current_Language = LANGUAGE_GERMAN
-	    	DISPLAY_TEXT 89.0 75.0 DS1_67  //Get over 70% to pass
-		ENDIF
-		IF current_Language = LANGUAGE_ITALIAN
-	    	DISPLAY_TEXT 147.0 75.0 DS1_67  //Get over 70% to pass
-		ENDIF
-		IF current_Language = LANGUAGE_SPANISH
-	    	DISPLAY_TEXT 65.0 75.0 DS1_67  //Get over 70% to pass
+		IF IS_JAPANESE_VERSION
+			DISPLAY_TEXT 250.0 75.0 DS1_67  //Get over 70% to pass
+		ELSE
+			IF current_Language = LANGUAGE_ENGLISH
+				DISPLAY_TEXT 175.0 75.0 DS1_67  //Get over 70% to pass
+			ENDIF
+			IF current_Language = LANGUAGE_FRENCH
+				DISPLAY_TEXT 83.0 75.0 DS1_67  //Get over 70% to pass
+			ENDIF
+			IF current_Language = LANGUAGE_GERMAN
+				DISPLAY_TEXT 89.0 75.0 DS1_67  //Get over 70% to pass
+			ENDIF
+			IF current_Language = LANGUAGE_ITALIAN
+				DISPLAY_TEXT 147.0 75.0 DS1_67  //Get over 70% to pass
+			ENDIF
+			IF current_Language = LANGUAGE_SPANISH
+				DISPLAY_TEXT 65.0 75.0 DS1_67  //Get over 70% to pass
+			ENDIF
 		ENDIF
 	ENDIF
 
@@ -4631,33 +4639,49 @@ f1_drawing_medal:///////////////////////////////////////////////////////////////
 		IF current_Language = LANGUAGE_ENGLISH
 			DRAW_SPRITE	6 320.0 307.0 110.0 95.0 160 160 160 255
 		ELSE
-			DRAW_SPRITE	10 320.0 307.0 110.0 95.0 160 160 160 255
+			DRAW_SPRITE	10 320.0 327.0 110.0 95.0 160 160 160 255
 		ENDIF
 		GOSUB small_onscreen_text 
 		GET_HUD_COLOUR HUD_COLOUR_LIGHTBLUE f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	    DISPLAY_TEXT 266.0 375.0 DS1_68
+		IF IS_JAPANESE_VERSION
+			DISPLAY_TEXT 292.0 375.0 DS1_68
+		ELSE
+			DISPLAY_TEXT 266.0 375.0 DS1_68
+		ENDIF
 	ENDIF
 	IF f1_which_medal_displayed = 2 
 		DRAW_SPRITE	1 320.0 307.0 110.0 95.0 160 160 160 255
 		GOSUB small_onscreen_text 
 		GET_HUD_COLOUR HUD_COLOUR_LIGHTBLUE f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	    DISPLAY_TEXT 280.0 375.0 DS1_57
+		IF IS_JAPANESE_VERSION
+	    	DISPLAY_TEXT 287.0 375.0 DS1_57
+		ELSE
+	    	DISPLAY_TEXT 280.0 375.0 DS1_57
+		ENDIF
 	ENDIF
 	IF f1_which_medal_displayed = 3 
 		DRAW_SPRITE	2 320.0 307.0 110.0 95.0 160 160 160 255
 		GOSUB small_onscreen_text 
 		GET_HUD_COLOUR HUD_COLOUR_LIGHTBLUE f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	    DISPLAY_TEXT 283.0 375.0 DS1_56
+		IF IS_JAPANESE_VERSION
+	    	DISPLAY_TEXT 286.0 375.0 DS1_56
+		ELSE
+	    	DISPLAY_TEXT 283.0 375.0 DS1_56
+		ENDIF
 	ENDIF
 	IF f1_which_medal_displayed = 4 
 		DRAW_SPRITE	3 320.0 307.0 110.0 95.0 160 160 160 255
 		GOSUB small_onscreen_text 
 		GET_HUD_COLOUR HUD_COLOUR_LIGHTBLUE f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-	    DISPLAY_TEXT 294.0 375.0 DS1_55
+		IF IS_JAPANESE_VERSION
+	    	DISPLAY_TEXT 285.0 375.0 DS1_55
+		ELSE
+	    	DISPLAY_TEXT 294.0 375.0 DS1_55
+		ENDIF
 	ENDIF
 
 RETURN/////////////////////////////////////////////////////////////////////////////////////
@@ -5102,36 +5126,40 @@ freeze_car_pos://///////////////////////////////////////////////////////////////
 RETURN/////////////////////////////////////////////////////////////////////////////////////
 
 position_score_calcs://////////////////////////////////////////////////////////////////////
-	GET_CAR_COORDINATES instructor_car player_x player_y player_z  
-	GET_DISTANCE_BETWEEN_COORDS_2D player_x player_y perfect_positionx perfect_positiony players_distance_from_perfectpos  
-	IF players_distance_from_perfectpos > 0.5
-		IF players_distance_from_perfectpos < 10.0 
-				players_distance_from_perfectpos -= 0.5	 
-				players_distance_from_perfectpos *= 10.42 //10.42 = 99(which is highest score possible) / 9.5 ( which is 10 - 0.5)
-			variablea =# players_distance_from_perfectpos 
-			position_score = 100 - variablea
+	IF NOT IS_CAR_DEAD instructor_car
+		GET_CAR_COORDINATES instructor_car player_x player_y player_z  
+		GET_DISTANCE_BETWEEN_COORDS_2D player_x player_y perfect_positionx perfect_positiony players_distance_from_perfectpos  
+		IF players_distance_from_perfectpos > 0.5
+			IF players_distance_from_perfectpos < 10.0 
+					players_distance_from_perfectpos -= 0.5	 
+					players_distance_from_perfectpos *= 10.42 //10.42 = 99(which is highest score possible) / 9.5 ( which is 10 - 0.5)
+				variablea =# players_distance_from_perfectpos 
+				position_score = 100 - variablea
+			ELSE
+				position_score = 0
+			ENDIF
 		ELSE
-			position_score = 0
-		ENDIF
-	ELSE
-		position_score = 100
-	ENDIF 
-	overall_score += position_score 
+			position_score = 100
+		ENDIF 
+		overall_score += position_score 
+	ENDIF
 RETURN/////////////////////////////////////////////////////////////////////////////////////
 
 damage_score_calcs:////////////////////////////////////////////////////////////////////////
-	GET_CAR_HEALTH instructor_car instructor_car_health  
-	player_car_damage = 1000 - instructor_car_health
-	//debug - changed damage from 10 to 2 to make the missions harder
-	//player_car_damage /= 10
-	IF mission_selection = 16
-		player_car_damage /= 10
-	ELSE
-		player_car_damage /= 2
+	IF NOT IS_CAR_DEAD instructor_car
+		GET_CAR_HEALTH instructor_car instructor_car_health  
+		player_car_damage = 1000 - instructor_car_health
+		//debug - changed damage from 10 to 2 to make the missions harder
+		//player_car_damage /= 10
+		IF mission_selection = 16
+			player_car_damage /= 10
+		ELSE
+			player_car_damage /= 2
+		ENDIF
+		IF player_car_damage > 100
+			player_car_damage = 100
+		ENDIF	 
 	ENDIF
-	IF player_car_damage > 100
-		player_car_damage = 100
-	ENDIF	 
 RETURN/////////////////////////////////////////////////////////////////////////////////////
 
 damage_cones_calcs:////////////////////////////////////////////////////////////////////////
@@ -5432,7 +5460,7 @@ display_head_pos_dam_text://////////////////////////////////////////////////////
 		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 342.0 DS1_64
+		DISPLAY_TEXT 180.0 342.0 SCHO
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
@@ -5444,7 +5472,7 @@ display_head_pos_dam_text://////////////////////////////////////////////////////
 		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 362.0 DS1_63
+		DISPLAY_TEXT 180.0 362.0 SCHX
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45
@@ -5461,7 +5489,7 @@ display_head_pos_dam_text://////////////////////////////////////////////////////
 		SET_TEXT_SCALE 1.45 2.0
 		GET_HUD_COLOUR HUD_COLOUR_YELLOW f1_r f1_g f1_b f1_alpha2
 		SET_TEXT_COLOUR f1_r f1_g f1_b f1_alpha2
-		DISPLAY_TEXT 180.0 362.0 DS1_64
+		DISPLAY_TEXT 180.0 362.0 SCHO
 
 		GOSUB small_backend_text 
 		SET_TEXT_SCALE 0.52 1.45

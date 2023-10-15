@@ -711,41 +711,77 @@ AND NOT IS_CHAR_DEAD scplayer
 	
 		IF animstate_flag = 3
 		AND NOT IS_CHAR_DEAD scplayer
+			IF current_Language = 0
+				SWITCH weight_bpress
 
-			SWITCH weight_bpress
+					CASE 1
+						bench_weight = 40
+					BREAK
+					CASE 2
+						bench_weight = 60
+					BREAK
+					CASE 3
+						bench_weight = 80
+					BREAK
+					CASE 4
+						bench_weight = 100
+					BREAK
+					CASE 5
+						bench_weight = 120
+					BREAK
+					CASE 6
+						bench_weight = 160
+					BREAK
+					CASE 7
+						bench_weight = 200
+					BREAK
+					CASE 8
+						bench_weight = 240
+					BREAK
+					CASE 9
+						bench_weight = 280
+					BREAK
+					CASE 10
+					bench_weight = 320
+					BREAK
 
-				CASE 1
-					bench_weight = 40
-				BREAK
-				CASE 2
-					bench_weight = 60
-				BREAK
-				CASE 3
-					bench_weight = 80
-				BREAK
-				CASE 4
-					bench_weight = 100
-				BREAK
-				CASE 5
-					bench_weight = 120
-				BREAK
-				CASE 6
+				ENDSWITCH
+			ELSE
+				SWITCH weight_bpress
+
+					CASE 1
+						bench_weight = 20
+					BREAK
+					CASE 2
+						bench_weight = 30
+					BREAK
+					CASE 3
+						bench_weight = 40
+					BREAK
+					CASE 4
+						bench_weight = 50
+					BREAK
+					CASE 5
+						bench_weight = 60
+					BREAK
+					CASE 6
+						bench_weight = 80
+					BREAK
+					CASE 7
+						bench_weight = 100
+					BREAK
+					CASE 8
+						bench_weight = 120
+					BREAK
+					CASE 9
+						bench_weight = 140
+					BREAK
+					CASE 10
 					bench_weight = 160
-				BREAK
-				CASE 7
-					bench_weight = 200
-				BREAK
-				CASE 8
-					bench_weight = 240
-				BREAK
-				CASE 9
-					bench_weight = 280
-				BREAK
-				CASE 10
-				bench_weight = 320
-				BREAK
+					BREAK
 
-			ENDSWITCH
+				ENDSWITCH
+			ENDIF
 
 			GET_INT_STAT HEAVIEST_WEIGHT_BENCH_PRESS temp_bench_weight
 
