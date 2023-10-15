@@ -769,12 +769,14 @@ STEAL4_m_stage_2:
 		IF cross_is_pressed = 0
 			
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				GOSUB steal4_quit_current_conversation_now
 				m_goals = 6
 				cross_is_pressed = 1
 			ENDIF
 		ELSE
 			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				cross_is_pressed = 0
 			ENDIF
 		ENDIF
@@ -846,6 +848,7 @@ STEAL4_m_stage_3:
 		IF cross_is_pressed = 0
 			
 			IF IS_BUTTON_PRESSED PAD1 CROSS 
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				magno_camera_type = 1
 				reset_crane_camera = 1
 				cross_is_pressed = 1
@@ -853,6 +856,7 @@ STEAL4_m_stage_3:
 			ENDIF
 		ELSE
 			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				cross_is_pressed = 0
 			ENDIF
 		ENDIF
@@ -1152,6 +1156,7 @@ STEAL4_m_stage_3:
 			
 			IF TIMERA > 5000  
 			OR IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 
 				reset_crane_camera = 1
 				disable_crane = 0
@@ -1527,6 +1532,7 @@ STEAL4_m_stage_4:
 			WHILE temp_int = 0
 				
 				IF IS_BUTTON_PRESSED PAD1 CROSS
+				OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				OR TIMERA  > 5000
 					DO_FADE 0 FADE_IN
 					m_goals++
@@ -1605,6 +1611,7 @@ STEAL4_m_stage_4:
 			
 			IF NOT IS_MESSAGE_BEING_DISPLAYED
 			OR IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				DO_FADE 0 FADE_IN
 
 				IF NOT IS_CAR_DEAD steal_car
@@ -1948,6 +1955,7 @@ STEAL4_m_stage_5:
 			
 			IF NOT IS_MESSAGE_BEING_DISPLAYED
 			OR IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				DO_FADE 0 FADE_IN
 
 				IF NOT IS_CAR_DEAD steal_car
@@ -2004,6 +2012,7 @@ STEAL4_m_stage_6:
 	IF m_goals > 0
 		
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			m_goals = 99
 		ENDIF
 	ENDIF

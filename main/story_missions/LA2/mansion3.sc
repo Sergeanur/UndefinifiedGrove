@@ -710,8 +710,10 @@ WHILE NOT IS_CHAR_DEAD scplayer
 				WHILE TIMERB < 4000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
-					AND has_seen_this_cutscene = 1
-						GOTO m3_skip_the_cut_2
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
+						IF has_seen_this_cutscene = 1
+							GOTO m3_skip_the_cut_2
+						ENDIF
 					ENDIF
 				ENDWHILE 
 
@@ -724,8 +726,10 @@ WHILE NOT IS_CHAR_DEAD scplayer
 				WHILE TIMERB < 5000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
-					AND has_seen_this_cutscene = 1
-						GOTO m3_skip_the_cut_2
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
+						IF has_seen_this_cutscene = 1
+							GOTO m3_skip_the_cut_2
+						ENDIF
 					ENDIF
 				ENDWHILE 
 
@@ -1276,6 +1280,7 @@ m3_end_cutscene:
 	WHILE TIMERB < 4000
 		WAIT 0
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			GOTO m3_skip_the_cut_10
 		ENDIF
 	ENDWHILE
@@ -1304,6 +1309,7 @@ m3_end_cutscene:
 	WHILE TIMERB < 3000
 		WAIT 0
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			GOTO m3_skip_the_cut_10
 		ENDIF
 	ENDWHILE
@@ -1332,6 +1338,7 @@ m3_end_cutscene:
 	WHILE TIMERB < 3000
 		WAIT 0
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			GOTO m3_skip_the_cut_10
 		ENDIF
 	ENDWHILE
@@ -1352,6 +1359,7 @@ m3_end_cutscene:
 	WHILE TIMERB < 3000
 		WAIT 0
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			GOTO m3_skip_the_cut_10
 		ENDIF
 	ENDWHILE
@@ -1380,6 +1388,7 @@ m3_end_cutscene:
 	WHILE TIMERB < 2000
 		WAIT 0
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_BUTTON_PRESSED PAD1 CIRCLE
 			GOTO m3_skip_the_cut_10
 		ENDIF
 	ENDWHILE

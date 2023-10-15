@@ -832,6 +832,7 @@ DECON_m_stage_1:
 		// skip
 		IF m_goals > 0
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				m_goals = 99
 			ENDIF	
 		ENDIF
@@ -1278,6 +1279,7 @@ CLEAR_HELP
 		// skip 
 		IF m_goals > 0
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				m_goals = 99
 			ENDIF
 		ENDIF

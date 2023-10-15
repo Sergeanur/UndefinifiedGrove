@@ -695,7 +695,7 @@ SYN2_m_stage_2:
 		
 	IF m_goals > 1
 	AND m_goals < 7
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			m_goals = 7
 		ENDIF
 	ENDIF
@@ -1207,7 +1207,7 @@ SYN2_m_stage_3:
 	// skip
 	IF m_goals > 4
 	AND TIMERB > 3000
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			m_goals = 99
 		ENDIF
 	ENDIF
@@ -1905,7 +1905,7 @@ SYN2_m_stage_4:
 	// wait for cutscene to finish
 	IF m_goals = 12
 		IF dialogue_flag > 7
-		OR IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			m_goals = 99
 		ENDIF
 	ENDIF
@@ -2396,7 +2396,7 @@ SYN2_m_stage_5:
 	// wait for cutscene to finish
 	IF m_goals = 11
 		IF dialogue_flag > 6
-		OR IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			m_goals = 99
 		ENDIF
 	ENDIF
@@ -2654,7 +2654,7 @@ SYN2_m_stage_6:
 	LVAR_INT reset_timerb
 
 	IF m_goals > 2
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			IF reset_timerb = 0
 				TIMERB = 0	
 				reset_timerb = 1
@@ -3863,7 +3863,7 @@ SYN2_m_stage_8:
 	// wait for cutscene to finish
 	IF m_goals = 5
 		IF dialogue_flag > 6
-		OR IS_BUTTON_PRESSED PAD1 CROSS
+		OR IS_SKIP_CUTSCENE_BUTTON_PRESSED
 			m_goals = 99
 		ENDIF
 	ENDIF

@@ -546,6 +546,7 @@ TIMERB = 0
 WHILE TIMERB < 2000
 	WAIT 0
 	IF IS_BUTTON_PRESSED PAD1 CROSS
+	OR IS_BUTTON_PRESSED PAD1 CIRCLE
 		GOTO d2_skip_the_cut
 	ENDIF
 ENDWHILE
@@ -562,6 +563,7 @@ TIMERB = 0
 WHILE TIMERB < 2000
 	WAIT 0
 	IF IS_BUTTON_PRESSED PAD1 CROSS
+	OR IS_BUTTON_PRESSED PAD1 CIRCLE
 		GOTO d2_skip_the_cut
 	ENDIF
 ENDWHILE
@@ -958,6 +960,7 @@ AND NOT IS_CHAR_DEAD thedoc
 				WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
 						d2_when_he_jumps = 1
 						GOTO d2_skip_the_cut_1
 					ENDIF
@@ -973,6 +976,7 @@ AND NOT IS_CHAR_DEAD thedoc
 				WHILE TIMERB < 2000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
 						d2_when_he_jumps = 1
 						GOTO d2_skip_the_cut_1
 					ENDIF
@@ -987,6 +991,7 @@ AND NOT IS_CHAR_DEAD thedoc
 				WHILE TIMERB < 2000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
 						d2_when_he_jumps = 1
 						GOTO d2_skip_the_cut_1
 					ENDIF
@@ -1001,6 +1006,7 @@ AND NOT IS_CHAR_DEAD thedoc
 				WHILE TIMERB < 1000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
 						d2_when_he_jumps = 1
 						GOTO d2_skip_the_cut_1
 					ENDIF
@@ -1012,6 +1018,7 @@ AND NOT IS_CHAR_DEAD thedoc
 				WHILE TIMERB < 3000
 					WAIT 0
 					IF IS_BUTTON_PRESSED PAD1 CROSS
+					OR IS_BUTTON_PRESSED PAD1 CIRCLE
 						d2_when_he_jumps = 1
 						GOTO d2_skip_the_cut_1
 					ENDIF
@@ -1283,7 +1290,7 @@ AND NOT IS_CHAR_DEAD thedoc
 							IF TIMERB > 1000
 
 								GOSUB doc2_set_camera
-	  
+
 								SET_FIXED_CAMERA_POSITION 2172.0024 1441.7015 10.2111 0.0 0.0 0.0 // Madd Dogg hits the ground
 
 								POINT_CAMERA_AT_POINT 2171.0759 1442.0026 10.4368 JUMP_CUT
@@ -1895,6 +1902,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE TIMERB <  2000
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -1955,6 +1963,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -1975,6 +1984,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -1983,6 +1993,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE TIMERB < 1000
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2003,6 +2014,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2023,6 +2035,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2031,6 +2044,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE TIMERB < 1000
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2051,6 +2065,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2071,6 +2086,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2079,6 +2095,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE TIMERB < 1000
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2113,6 +2130,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE NOT HAS_MISSION_AUDIO_FINISHED 1	
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE
@@ -2121,6 +2139,7 @@ AND NOT IS_CHAR_DEAD thedoc
 								WHILE TIMERB < 1000
 									WAIT 0
 									IF IS_BUTTON_PRESSED PAD1 CROSS
+									OR IS_BUTTON_PRESSED PAD1 CIRCLE
 										GOTO d2_skip_the_cut_2
 									ENDIF
 								ENDWHILE

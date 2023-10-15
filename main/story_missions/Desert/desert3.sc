@@ -661,6 +661,7 @@ d3_m_stage_1:
 		IF m_goals = 3
 				
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				cross_pressed = 1
 			ELSE
 				cross_pressed = 0
@@ -695,6 +696,7 @@ d3_m_stage_1:
 		// skip
 		IF m_goals > 3
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				IF cross_pressed = 0
 					m_goals = 99
 					cross_pressed = 1
@@ -956,6 +958,7 @@ d3_m_stage_3:
 		IF m_goals = 0
 
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				cross_pressed = 1
 			ENDIF
 
@@ -1009,6 +1012,7 @@ d3_m_stage_3:
 		// skip
 		IF m_goals > 0
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				IF cross_pressed = 0
 					m_goals = 99
 					cross_pressed = 1
@@ -1314,6 +1318,7 @@ d3_m_stage_3:
 //		IF m_goals > 4
 //		AND TIMERA > 3000
 //			IF IS_BUTTON_PRESSED PAD1 CROSS
+//			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 //				m_goals = 99
 //			ENDIF
 //		ENDIF
@@ -1963,6 +1968,7 @@ d3_m_stage_5:
 		IF m_goals > 0
 		AND TIMERA > 3000
 			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				m_goals = 99
 			ENDIF
 		ENDIF

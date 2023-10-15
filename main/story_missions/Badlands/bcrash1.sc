@@ -683,10 +683,12 @@ IF bc1_stage = 0
 	IF NOT IS_CHAR_DEAD scplayer
 		IF bc1_cut > 1
 			IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 CIRCLE
 				bc1_pressed = 0
 			ENDIF
 			IF bc1_pressed = 0
 				IF IS_BUTTON_PRESSED PAD1 CROSS
+				OR IS_BUTTON_PRESSED PAD1 CIRCLE
 					CLEAR_PRINTS
 					bc1_timer_start -= 1000
 					bc1_cut = 6
