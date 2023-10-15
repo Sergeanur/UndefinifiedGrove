@@ -225,6 +225,7 @@ RETURN
 			STATE 1: INTRO 
 ********************************************/
 GF_Sex_State1:  
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -306,7 +307,10 @@ GF_Sex_State1:
 			ENDIF 
 		ENDIF
 	BREAK
-	ENDSWITCH		
+	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN
 /********************************************
 			STATE 2: 
@@ -368,6 +372,7 @@ RETURN
 			STATE 3: SPANKING
 ********************************************/
 GF_Sex_State3: 
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -533,12 +538,16 @@ GF_Sex_State3:
 			iSubStateStatus = 1	 // Loop back
 		ENDIF
 	BREAK
-	ENDSWITCH	
+	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN
 /********************************************
 		STATE 4: SPANKING END BAD
 ********************************************/
 GF_Sex_State4: 
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -600,12 +609,16 @@ GF_Sex_State4:
 		ENDIF
 	BREAK
 
-	ENDSWITCH		
+	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN
 /********************************************
 		STATE 5: SPANKING END GOOD
 ********************************************/
 GF_Sex_State5: 
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -675,11 +688,15 @@ GF_Sex_State5:
 	BREAK
 
 	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN  
 /********************************************
 			STATE 6: PROPER SEX 
 ********************************************/
 GF_Sex_State6: 
+/*
 	SWITCH iSubStateStatus
 
 	CASE 0
@@ -707,7 +724,7 @@ GF_Sex_State6:
 			
 			GOSUB GF_Sex_CameraViewChange
 						
-			PRINT_HELP_FOREVER GF_0020  
+			PRINT_HELP_FOREVER GF_0020
 			  			 
 			DO_FADE	500 FADE_IN
 			
@@ -818,12 +835,16 @@ GF_Sex_State6:
 			iSubStateStatus = 0
 		ENDIF		
 	BREAK
-	ENDSWITCH	
+	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN
 /********************************************
 		STATE 7: ALTERNATIVE INTRO
 ********************************************/
 GF_Sex_State7:  
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -904,12 +925,16 @@ GF_Sex_State7:
 			ENDIF 
 		ENDIF
 	BREAK
-	ENDSWITCH		
+	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN
 /********************************************
 		STATE 8: SEX END BAD
 ********************************************/
 GF_Sex_State8: 
+/*
 	SWITCH iSubStateStatus	 				
 
 	CASE 0
@@ -955,6 +980,9 @@ GF_Sex_State8:
 		ENDIF		
 	BREAK
 	ENDSWITCH
+*/
+	iSexState = 2
+	iSubStateStatus = 0				
 RETURN  
 /********************************************
 			STATE 9: 
@@ -1008,8 +1036,6 @@ GF_Sex_State9:
 			SET_FIXED_CAMERA_POSITION fX[0] fY[0] fZ[0] 0.0 0.0 0.0
 			POINT_CAMERA_AT_POINT fX[1] fY[1] fZ[1] JUMP_CUT
 
-			CAMERA_SET_SHAKE_SIMULATION_SIMPLE 5 5000.0 10.0
-
 			GET_TIME_OF_DAY iTemp iTemp2
 			iTemp2 += 30
 			IF iTemp2 > 60
@@ -1035,7 +1061,6 @@ GF_Sex_State9:
 		IF TIMERB > 3000
 			iGFSayContext = CONTEXT_GLOBAL_GFRIEND_MOAN_MUFFLED
 			TIMERB = 0
-			CAMERA_SET_SHAKE_SIMULATION_SIMPLE 5 3000.0 15.0
 			++iSubStateStatus
 		ENDIF
 	BREAK
@@ -1048,7 +1073,6 @@ GF_Sex_State9:
 			ELSE
 				iCJSayContext = CONTEXT_GLOBAL_HAVING_SEX_MUFFLED			 
 			ENDIF
-			CAMERA_SET_SHAKE_SIMULATION_SIMPLE 5 3000.0 20.0
 			TIMERB = 0
 			++iSubStateStatus
 		ENDIF
@@ -1057,7 +1081,6 @@ GF_Sex_State9:
 	CASE 5
 		IF TIMERB > 3000			
 			iGFSayContext = CONTEXT_GLOBAL_GFRIEND_CLIMAX_HIGH_MUFFLED
-			CAMERA_SET_SHAKE_SIMULATION_SIMPLE 5 4000.0 30.0
 			TIMERB = 0
 			++iSubStateStatus
 		ENDIF
@@ -1066,7 +1089,6 @@ GF_Sex_State9:
 	CASE 6
 		IF TIMERB > 4000			
 			iGFSayContext = CONTEXT_GLOBAL_GFRIEND_SEX_GOOD_MUFFLED
-			CAMERA_SET_SHAKE_SIMULATION_SIMPLE 5 3000.0 5.0
 			TIMERB = 0
 			++iSubStateStatus
 		ENDIF
@@ -1095,55 +1117,54 @@ GF_Sex_SteamGFModel:
 	SWITCH iGFIdx_par
 		
 		CASE COOCHIE
-			LOAD_SPECIAL_CHARACTER 1 GANGRL2
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED GANGRL3
+				REQUEST_MODEL GANGRL3  
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 GANGRL2
 			ENDWHILE			
+			CREATE_CHAR PEDTYPE_CIVFEMALE GANGRL3 0.0 0.0 0.0 iGF_ped	
 		BREAK
 
 		CASE MICHELLE
-			LOAD_SPECIAL_CHARACTER 1 MECGRL2
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED MECGRL3 
+				REQUEST_MODEL MECGRL3 
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 MECGRL2
 			ENDWHILE			
+			CREATE_CHAR PEDTYPE_CIVFEMALE MECGRL3 0.0 0.0 0.0 iGF_ped	
 		BREAK
 		
 		CASE KYLIE
-			LOAD_SPECIAL_CHARACTER 1 GUNGRL2
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED GUNGRL3
+				REQUEST_MODEL GUNGRL3 
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 GUNGRL2
-			ENDWHILE				
+			ENDWHILE			
+			CREATE_CHAR PEDTYPE_CIVFEMALE GUNGRL3 0.0 0.0 0.0 iGF_ped			
 		BREAK
 
 		CASE BARBARA
-			LOAD_SPECIAL_CHARACTER 1 COPGRL2
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED COPGRL3
+				REQUEST_MODEL COPGRL3 
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 COPGRL2
-			ENDWHILE						
+			ENDWHILE	
+			CREATE_CHAR PEDTYPE_CIVFEMALE COPGRL3 0.0 0.0 0.0 iGF_ped						
 		BREAK
 
 		CASE SUZIE
-			LOAD_SPECIAL_CHARACTER 1 NURGRL2 
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED NURGRL3
+				REQUEST_MODEL NURGRL3 
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 NURGRL2 
 			ENDWHILE		
+			CREATE_CHAR PEDTYPE_CIVFEMALE NURGRL3 0.0 0.0 0.0 iGF_ped	
 		BREAK
 
 		CASE MILLIE
-			LOAD_SPECIAL_CHARACTER 1 CROGRL2
-			WHILE NOT HAS_SPECIAL_CHARACTER_LOADED 1
+			 WHILE NOT HAS_MODEL_LOADED CROGRL3
+				REQUEST_MODEL CROGRL3 
 				WAIT 0
-				LOAD_SPECIAL_CHARACTER 1 CROGRL2
 			ENDWHILE
+			CREATE_CHAR PEDTYPE_CIVFEMALE CROGRL3 0.0 0.0 0.0 iGF_ped
 		BREAK
 
 	ENDSWITCH
-	CREATE_CHAR PEDTYPE_CIVFEMALE SPECIAL01 0.0 0.0 0.0 iGF_ped		
 
 	SET_CHAR_PROOFS iGF_ped TRUE TRUE TRUE TRUE TRUE
 	SET_CHAR_COLLISION iGF_ped FALSE  				  
@@ -1157,22 +1178,22 @@ GF_Sex_SteamAnims:
 		
 	REQUEST_ANIMATION BLOWJOBZ
 	REQUEST_ANIMATION KISSING
-	REQUEST_ANIMATION SEX	  
-	REQUEST_ANIMATION SNM
+//	REQUEST_ANIMATION SEX	  
+//	REQUEST_ANIMATION SNM
 	
 GF_Sex_StreamLoop:
 	WAIT 0
 
 	IF HAS_ANIMATION_LOADED BLOWJOBZ
-	AND HAS_ANIMATION_LOADED SEX
 	AND HAS_ANIMATION_LOADED KISSING
-	AND HAS_ANIMATION_LOADED SNM
+//	AND HAS_ANIMATION_LOADED SEX
+//	AND HAS_ANIMATION_LOADED SNM
 		RETURN
 	ELSE
 		REQUEST_ANIMATION BLOWJOBZ
 		REQUEST_ANIMATION KISSING
- 		REQUEST_ANIMATION SEX	  
- 		REQUEST_ANIMATION SNM
+ //		REQUEST_ANIMATION SEX	  
+ //		REQUEST_ANIMATION SNM
 		GOTO GF_Sex_StreamLoop
 	ENDIF
 /*******************************************
@@ -1443,6 +1464,7 @@ RETURN
 		SEX POSITION CHANGE
 ********************************************/
 GF_Sex_PositionChange:
+/*
 	IF iSexState = 6 // Only During Proper Sex
 
 		++shaggin_position 	
@@ -1470,11 +1492,13 @@ GF_Sex_PositionChange:
 		iSubStateStatus = 1			
 
 	ENDIF
+*/
 RETURN	
 /*******************************************
 COMPUTE ANIM SPEED FOR THIS EXCITEMENT LEVEL
 ********************************************/
 GF_Sex_ComputeAnimSpeedForExcitement:
+/*
 iTemp = excitement / 10
 
 IF iTemp < 3
@@ -1531,11 +1555,13 @@ ENDIF
 		BREAK
 
 	ENDSWITCH
+*/
 RETURN
 /*******************************************
 		LOOP SEX ANIM AT GIVEN SPEED
 ********************************************/
 GF_Sex_LoopSexAtGivenSpeed:
+/*
 	SWITCH shaggin_position
 	
 		CASE 0
@@ -1600,11 +1626,13 @@ GF_Sex_LoopSexAtGivenSpeed:
 	IF GF_anim_time = 0.5		
 		GOSUB GF_Sex_GetStickSynchToSexAnim
 	ENDIF
+*/
 RETURN						 
 /*******************************************
 	GET STICK SYNCH COMPARED TO SEX ANIM
 ********************************************/
 GF_Sex_GetStickSynchToSexAnim:
+/*	
 	GET_POSITION_OF_ANALOGUE_STICKS PAD1 GF_left_stick_x GF_left_stick_y GF_right_stick_x GF_right_stick_y
 
 	fTemp[1] =# GF_left_stick_y // Cast into a float for divisions
@@ -1638,11 +1666,13 @@ GF_Sex_GetStickSynchToSexAnim:
 			GOSUB GF_Sex_DecrementExcitement
 		ENDIF		 
 	ENDIF					  
+*/
 RETURN
 /*******************************************
 			INCREMENT EXCITEMENT
 ********************************************/
 GF_Sex_IncrementExcitement:
+/*
 	//--- Return an Increment
 	IF excitement < 100
 		IF IS_BIT_SET iSexMachineFlags 6 // Increase Excitement X 2
@@ -1657,11 +1687,13 @@ GF_Sex_IncrementExcitement:
 	ELSE
 		excitement = 100
 	ENDIF
+*/
 RETURN
 /*******************************************
 			DECREMENT  EXCITEMENT
 ********************************************/
 GF_Sex_DecrementExcitement:
+/*
 //--- NOTE: TIMERB must have been correctly initialised in the current SexState
 
 	IF TIMERB > 5000 // If player has been playing for more than 5 seconds
@@ -1678,11 +1710,13 @@ GF_Sex_DecrementExcitement:
 		ENDIF
 
 	ENDIF
+*/
 RETURN
 /*******************************************
 			INCREMENT POWER BAR
 ********************************************/
 GF_Sex_IncrementPowerBar:
+/*
 	IF fAngle > 90.0
 		fAngle = 0.0
 	ENDIF
@@ -1697,11 +1731,13 @@ GF_Sex_IncrementPowerBar:
 		power = iTemp
 	ENDIF 
  	fAngle += 1.0
+*/
 RETURN
 /*******************************************
 			DECREMENT POWER BAR
 ********************************************/
 GF_Sex_DecrementPowerBar:
+/*
 	fAngle = 0.0
 	IF power >= GF_POWERBAR_CHARGE_HIT_MARGIN
 		power -= GF_POWERBAR_DECREMENT_SMALL
@@ -1712,21 +1748,25 @@ GF_Sex_DecrementPowerBar:
 			power -= GF_POWERBAR_DECREMENT
 		ENDIF
 	ENDIF
+*/
 RETURN
 /*******************************************
 		REGISTER POWER BAR SCORE UP
 ********************************************/
 GF_Sex_RegisterPowerBarScore:
+/*
 	IF power >= GF_POWERBAR_CHARGE_HIT_MARGIN
 		SET_BIT iSexMachineFlags 10 // SPANKING CHARGE PERFECT!		
 	ELSE
 		CLEAR_BIT iSexMachineFlags 10 
 	ENDIF 
+*/
 RETURN
 /*******************************************
   COMPUTE ANIM SPEED FOR THIS POWER LEVEL
 ********************************************/
 GF_Sex_ComputeAnimSpeedForPower:
+/*
 	fTemp[0] = 0.025
 	
 	IF IS_BIT_SET iSexMachineFlags 10 // SPANKING CHARGE PERFECT!
@@ -1734,12 +1774,13 @@ GF_Sex_ComputeAnimSpeedForPower:
 	ENDIF 
 
 	GF_anim_time = 0.01
+*/
 RETURN
 /*******************************************
 			SPANK AT GIVEN SPEED
 ********************************************/
 GF_Sex_SpankAtGivenSpeed:
-																   
+/*																   
 	IF IS_CHAR_PLAYING_ANIM scplayer SpankingP
 		SET_CHAR_ANIM_PLAYING_FLAG scplayer SpankingP FALSE
 		SET_CHAR_ANIM_CURRENT_TIME scplayer SpankingP GF_anim_time					
@@ -1761,12 +1802,13 @@ GF_Sex_SpankAtGivenSpeed:
 		SET_BIT iSexMachineFlags 5 // Mark END of Sex Anim
 		RETURN
 	ENDIF
+*/
 RETURN	
 /*******************************************
 	  COMPUTE POWER SCORE
 ********************************************/
 GF_Sex_ComputeExcitementFromPower:
-
+/*
 	IF IS_BIT_SET iSexMachineFlags 10 // SPANKING CHARGE PERFECT!
 		iGFSayContext = CONTEXT_GLOBAL_GFRIEND_CLIMAX_HIGH
 		IF excitement <= 100
@@ -1785,11 +1827,13 @@ GF_Sex_ComputeExcitementFromPower:
 	CLEAR_BIT iSexMachineFlags 10
 	CLEAR_BIT iSexMachineFlags 11 
 	CLEAR_BIT iSexMachineFlags 12
+*/
 RETURN	
 /*******************************************
 			UPDATE POWER BAR
 ********************************************/
 GF_Sex_UpdatePowerBar:
+/*	
 	IF power < 100
 	AND power > 0
 	AND IS_BIT_SET iSexMachineFlags 14  // POWER_BAR_TOP_REACHED
@@ -1817,6 +1861,7 @@ GF_Sex_UpdatePowerBar:
 		GOSUB GF_Sex_IncrementPowerBar
 		RETURN
 	ENDIF
+*/
 RETURN				 
 /********************************************
 			SPEECH MANAGER
@@ -2011,13 +2056,12 @@ RETURN
 ********************************************/
 GF_Sex_Cleanup:
 	
-	REMOVE_ANIMATION SNM
-	REMOVE_ANIMATION SEX
+//	REMOVE_ANIMATION SNM
+//	REMOVE_ANIMATION SEX
 	REMOVE_ANIMATION BLOWJOBZ
 	REMOVE_ANIMATION KISSING
 	
 	//--- Remove the model
-	UNLOAD_SPECIAL_CHARACTER 1
 	DELETE_CHAR iGF_ped
 		
 	IF NOT IS_CAR_DEAD iCar
