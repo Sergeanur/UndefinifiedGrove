@@ -3199,6 +3199,7 @@ RETURN
 mission_cleanup_zero1:
 
 	IF NOT HAS_DEATHARREST_BEEN_EXECUTED
+		GIVE_WEAPON_TO_CHAR scplayer weapontype_zero1 ammo_zero1
 	ENDIF 
 
 
