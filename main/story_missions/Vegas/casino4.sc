@@ -2607,6 +2607,10 @@ IF cas4_mission_progression_flag = 0
 											
 											IF HAS_ANIMATION_LOADED PAULNMAC
 										    AND IS_CAR_STOPPED cas4_player_car
+												RESTORE_CAMERA_JUMPCUT 
+												SET_CAMERA_BEHIND_PLAYER 
+												SET_PLAYER_CONTROL player1 OFF
+												SWITCH_WIDESCREEN ON 
 												GET_OFFSET_FROM_CAR_IN_WORLD_COORDS cas4_player_car 4.0 2.0 0.0 cas4_carx cas4_cary cas4_carz			   								   	
 											   	OPEN_SEQUENCE_TASK cas4_seq									   
 											   	TASK_LEAVE_ANY_CAR -1
@@ -2736,7 +2740,9 @@ IF cas4_mission_progression_flag = 0
 													IF cas4_macca_playing_fx = 1
 														IF cas4_animation_time >= 0.42
 															STOP_FX_SYSTEM cas4_piss
-															KILL_FX_SYSTEM cas4_piss														
+															KILL_FX_SYSTEM cas4_piss	
+															SET_PLAYER_CONTROL player1 ON
+															SWITCH_WIDESCREEN OFF													
 															CLEAR_MISSION_AUDIO 3
 															cas4_macca_playing_fx = 0
 														ENDIF								

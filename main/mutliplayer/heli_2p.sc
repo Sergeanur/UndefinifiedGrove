@@ -418,13 +418,13 @@ mission_2p_heli_passed:
 		
 	ENDIF
 
-	IF NOT heli_2p_level = 8
+	IF NOT heli_2p_level = 9
 
 		heli_2p_level ++
 
 	ENDIF
 
-	IF heli_2p_level = 8
+	IF heli_2p_level = 9
 
 		PRINT_WITH_NUMBER_BIG ( M_PASSD ) 0 5000 1 //"Mission Passed!"
 
