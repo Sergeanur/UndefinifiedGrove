@@ -435,12 +435,12 @@ wof_loop_main:
 	// player has decided to quit
 	IF m_stage = 1
 		IF tri_is_pressed = 0
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 				m_quit = 1
 				tri_is_pressed = 1
 			ENDIF
 		ELSE
-			IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 				tri_is_pressed = 0
 			ENDIF
 		ENDIF
@@ -723,7 +723,7 @@ wof_m_stage_1:
 
 		// add wager
 
-		IF IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 			IF NOT cross_is_pressed = 1 
 			AND NOT cross_is_pressed = -1
 
@@ -805,7 +805,7 @@ wof_m_stage_1:
 
 			// Remove wager.
 
-			IF IS_BUTTON_PRESSED PAD1 CIRCLE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 				IF NOT square_is_pressed = 1
 
 					// sort out betting step
@@ -945,7 +945,7 @@ wof_m_stage_1:
 
 		// Player has decided to proceed.
 		
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 		
 		//OR TIMERB > 60000
 			IF cross_is_pressed = 0
@@ -1253,7 +1253,7 @@ RETURN
 
 wof_m_stage_6:
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 	//OR TIMERA > 4000
 		cross_is_pressed = -1
 		CLEAR_PRINTS

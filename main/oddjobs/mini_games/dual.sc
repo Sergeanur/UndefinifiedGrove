@@ -238,14 +238,24 @@ break
 endswitch
 
 x_pos[10] = 33.8609 
-y_pos[10] = 18.1114 
+x_scale[9] = 160.1144
 x_scale[10] = 230.0
-y_scale[10] = 60.3475 
 
 x_pos[11] = 38.1753 
-y_pos[11] = 20.4681 
 x_scale[11] = 0.5014 
 y_scale[11] = 1.8889 
+
+IF IS_XBOX_VERSION
+	y_pos[10] = 33.1114 
+	y_scale[9] = 109.8235 
+	y_scale[10] = 75.3475 
+	y_pos[11] = 35.4681 
+ELSE
+	y_pos[10] = 18.1114 
+	y_scale[9] = 94.8235 
+	y_scale[10] = 60.3475 
+	y_pos[11] = 20.4681 
+ENDIF
 
 lvar_int menu_selection
 menu_selection = 0
@@ -589,7 +599,7 @@ dual_frontend_loop://///////////////////////////////////////////////////////////
 		DRAW_SPRITE TV_BORDER 480.0 336.0 -320.0 -224.0 150 150 150 255 
 		DRAW_SPRITE TV_BORDER 160.0 336.0 320.0 -224.0 150 150 150 255
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 			IF pad1_cross_pressed = 0
 				++ pad1_cross_pressed
 				REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DUAL_MENU_SELECT
@@ -684,7 +694,7 @@ step_y[1] = -128.0
 step_y[2] =  128.0
 step_y[3] =  384.0
 
-LVAR_FLOAT gravity_position_x[10] gravity_position_y[10] gravity_mass[10]
+LVAR_FLOAT gravity_position_x[16] gravity_position_y[16] gravity_mass[16]
 gravity_position_x[0] =	200.0
 gravity_position_y[0] =	200.0
 gravity_mass[0]	= -200000000000.0
@@ -725,8 +735,32 @@ gravity_position_x[9] =	0.1
 gravity_position_y[9] =	-500.0
 gravity_mass[9]	= 200000000000.0
 
+gravity_position_x[10] = -500.0
+gravity_position_y[10] = -500.0
+gravity_mass[10] = -200000000000.0
+
+gravity_position_x[11] = 500.0
+gravity_position_y[11] = 500.0
+gravity_mass[11] = 200000000000.0
+
+gravity_position_x[12] = 500.0
+gravity_position_y[12] = -500.0
+gravity_mass[12] = -200000000000.0
+
+gravity_position_x[13] = -500.0
+gravity_position_y[13] = -500.0
+gravity_mass[13] = 200000000000.0
+
+gravity_position_x[14] = 0.1
+gravity_position_y[14] = 500.0
+gravity_mass[14] = -200000000000.0
+
+gravity_position_x[15] = 0.1
+gravity_position_y[15] = -500.0
+gravity_mass[15] = 200000000000.0
+
 LVAR_INT total_gravity_wells
-total_gravity_wells = 10
+total_gravity_wells = 16
 
 LVAR_FLOAT ship_scale
 ship_scale = 32.0
@@ -744,6 +778,14 @@ a = 0
 WHILE a < 20
 	power_pill_x[a] = 1000.0
 	power_pill_y[a] = 1000.0
+	++ a
+ENDWHILE
+
+LVAR_FLOAT random_floats_x[16] random_floats_y[16]
+a = 0
+WHILE a < total_gravity_wells
+	GENERATE_RANDOM_FLOAT_IN_RANGE 0.0 1.0 random_floats_x[a]
+	GENERATE_RANDOM_FLOAT_IN_RANGE 0.0 1.0 random_floats_y[a]
 	++ a
 ENDWHILE
 
@@ -842,13 +884,15 @@ ENDIF
 a = 0
 WHILE a < total_gravity_wells
 	//FORCE_TO_APPLY = (6.67259 10-11 * (SHIP_MASS * GRAVITY_MASS)) / (DISTANCE\2)
+	gravity_position_x[a] += random_floats_x[a]
+	gravity_position_y[a] += random_floats_y[a]
 	GET_DISTANCE_BETWEEN_COORDS_2D ship_position_x ship_position_y gravity_position_x[a] gravity_position_y[a] distance
 	lvar_int kill_gravity_well
 	kill_gravity_well = 0
 	if distance > 700.0
 		kill_gravity_well = 1
 	endif
-	if distance < 100.0
+	if distance < 65.0
 		if DO_2D_RECTANGLES_COLLIDE ship_position_x ship_position_y 32.0 32.0 gravity_position_x[a] gravity_position_y[a] 32.0 32.0
 			if gravity_mass[a] > 0.0
 				REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DUAL_TOUCH_DARK
@@ -924,6 +968,8 @@ WHILE a < total_gravity_wells
 				y *= -1.0
 			ENDIF
 		endif
+		GENERATE_RANDOM_FLOAT_IN_RANGE -5.0 5.0 random_floats_x[a]
+		GENERATE_RANDOM_FLOAT_IN_RANGE -5.0 5.0  random_floats_y[a]
 		gravity_position_x[a] =	ship_position_x + x
 		gravity_position_y[a] =	ship_position_y + y
 		GET_DISTANCE_BETWEEN_COORDS_2D ship_position_x ship_position_y gravity_position_x[a] gravity_position_y[a] distance
@@ -1363,11 +1409,11 @@ if help_prompt_timer > game_timer
 	gosub setup_text_dual
 	if current_language = LANGUAGE_GERMAN
 	or current_language = LANGUAGE_FRENCH
-		draw_window x_pos[10] y_pos[10] 175.1144 94.8235 DUMMY SWIRLS_NONE
+		draw_window x_pos[10] y_pos[10] 175.1144 y_scale[9] DUMMY SWIRLS_NONE
 		set_text_wrapx 175.1144
 	else
-		draw_window x_pos[10] y_pos[10] 160.1144 94.8235 DUMMY SWIRLS_NONE
-		set_text_wrapx 160.1144
+		draw_window x_pos[10] y_pos[10] x_scale[9] y_scale[9] DUMMY SWIRLS_NONE
+		set_text_wrapx x_scale[9]
 	endif
 	set_text_centre OFF
 	//set_text_justify on
@@ -1375,9 +1421,9 @@ if help_prompt_timer > game_timer
 	//set_text_colour 200 200 200 255
 	if current_language = LANGUAGE_GERMAN
 	or current_language = LANGUAGE_FRENCH
-		set_text_scale 0.4 1.8889
+		set_text_scale 0.4 y_scale[11]
 	else
-		set_text_scale 0.5014 1.8889
+		set_text_scale x_scale[11] y_scale[11]
 	endif
 	display_text x_pos[11] y_pos[11] SPAC_11
 endif
@@ -1519,7 +1565,7 @@ if new_high_score > -1
 		pad1_dpaddown_pressed = game_timer - 250
 	ENDIF
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 		IF pad1_cross_pressed = 0
 			++input_letter
 			++pad1_cross_pressed
@@ -1747,13 +1793,11 @@ DRAW_SPRITE TV_BORDER 160.0 336.0 320.0 -224.0 150 150 150 255
 
 if new_high_score = -1
 	
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-	or IS_BUTTON_PRESSED PAD1 CIRCLE
-	or IS_BUTTON_PRESSED PAD1 SQUARE
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		GOTO dual_frontend_loop
 	endif
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 	    IF pad1_cross_pressed = 0
 			++pad1_cross_pressed
 			GOTO dual_frontend_loop

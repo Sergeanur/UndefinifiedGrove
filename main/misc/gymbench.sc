@@ -350,26 +350,49 @@ AND NOT IS_CHAR_DEAD scplayer
 
 			gym_TIMERC ++
 
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Quit the benchpress entirely.
-			AND gym_TIMERC > 20
-				CLEAR_HELP
-				DELETE_MENU main_menu_bench
-				GOTO bench_quit_back
-			ENDIF 
+			IF IS_JAPANESE_VERSION
+				IF IS_BUTTON_PRESSED PAD1 CROSS  // Quit the benchpress entirely.
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bench
+					GOTO bench_quit_back
+				ENDIF 
 
-			IF IS_BUTTON_PRESSED PAD1 CROSS  // Start lifting weights.
-				
-				CLEAR_HELP
-				
-				GET_MENU_ITEM_SELECTED main_menu_bench weight_bpress
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE  // Start lifting weights.
+					
+					CLEAR_HELP
+					
+					GET_MENU_ITEM_SELECTED main_menu_bench weight_bpress
 
-				weight_bpress++
+					weight_bpress++
 
-				DELETE_MENU main_menu_bench
+					DELETE_MENU main_menu_bench
 
 
-				GOTO bench_out_of_loop
-		   	ENDIF 
+					GOTO bench_out_of_loop
+				ENDIF 
+			ELSE
+				IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Quit the benchpress entirely.
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bench
+					GOTO bench_quit_back
+				ENDIF 
+
+				IF IS_BUTTON_PRESSED PAD1 CROSS  // Start lifting weights.
+					
+					CLEAR_HELP
+					
+					GET_MENU_ITEM_SELECTED main_menu_bench weight_bpress
+
+					weight_bpress++
+
+					DELETE_MENU main_menu_bench
+
+
+					GOTO bench_out_of_loop
+				ENDIF 
+			ENDIF
 
 		ENDWHILE
 

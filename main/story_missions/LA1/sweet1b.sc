@@ -328,6 +328,7 @@ RESTORE_CAMERA_JUMPCUT
 blob_flag = 1
 TIMERA = 0
 SWITCH_ENTRY_EXIT lacrak FALSE
+SWITCH_ENTRY_EXIT bar2 FALSE
 
 sweet1b_index = 0
 sweet1b_audio_is_playing = 0
@@ -560,7 +561,7 @@ PRINT_NOW ( SW1B_B ) 10000 1 // Go beat up the crack dealers.
 // Dealer on the street****************************************************************************************************
 
 WHILE NOT IS_CHAR_DEAD crackhead1
-OR NOT LOCATE_CHAR_ANY_MEANS_3D scplayer 2284.9465 -1645.3959 14.1413 50.0 50.0 8.0 FALSE
+//OR NOT LOCATE_CHAR_ANY_MEANS_3D scplayer 2284.9465 -1645.3959 14.1413 50.0 50.0 8.0 FALSE
 	WAIT 0
    
    	IF IS_CHAR_DEAD	ryder
@@ -2169,6 +2170,7 @@ mission_cleanup_sweet1b:
 	REMOVE_ANIMATION BLOWJOBZ
 	REMOVE_ANIMATION BASEBALL
 	REMOVE_ANIMATION DEALER
+	SWITCH_ENTRY_EXIT bar2 TRUE
 	REMOVE_PICKUP pickup_baseballbat
 	REMOVE_BLIP	crackhead1_blip
 	REMOVE_BLIP	crack_boss_blip

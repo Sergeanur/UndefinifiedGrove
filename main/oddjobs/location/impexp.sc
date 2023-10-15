@@ -654,13 +654,13 @@ WAIT 0
 							ENDIF
 							SET_PLAYER_ENTER_CAR_BUTTON player1 FALSE
 							IF tri_is_pressed = 0
-								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+								IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 									tri_is_pressed = 1
 									impexp_mode = 1
 									GOTO impexp_main
 								ENDIF
 							ELSE
-								IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE	
+								IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL	
 									tri_is_pressed = 0
 								ENDIF
 							ENDIF
@@ -717,20 +717,20 @@ WAIT 0
 
 					IF cross_is_pressed = 0
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							GET_MENU_ITEM_SELECTED impexp_menu impexp_selected_day
 							m_goals++
 							cross_is_pressed = 1
 							CLEAR_THIS_PRINT IE28
 						ENDIF	
 					ELSE
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							cross_is_pressed = 0
 						ENDIF
 					ENDIF 
 
 					IF tri_is_pressed = 0
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							GOSUB impexp_delete_menus
 							IF IS_PLAYER_PLAYING player1
 								SET_PLAYER_CONTROL player1 ON
@@ -742,7 +742,7 @@ WAIT 0
 							tri_is_pressed = 1
 						ENDIF
 					ELSE
-						IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE	
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL	
 							tri_is_pressed = 0
 						ENDIF
 					ENDIF
@@ -827,7 +827,7 @@ WAIT 0
 
 					IF cross_is_pressed = 0
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							//CLEAR_HELP  This is not allowed here; breaks existing saves :(
 							GET_MENU_ITEM_SELECTED impexp_panel impexp_selected_car
@@ -835,12 +835,12 @@ WAIT 0
 							cross_is_pressed = 1
 						ENDIF	
 					ELSE
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							cross_is_pressed = 0
 						ENDIF
 					ENDIF
 					IF tri_is_pressed = 0
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							GOSUB impexp_delete_menus
 							m_goals = 0
 							tri_is_pressed = 1
@@ -848,7 +848,7 @@ WAIT 0
 							GOTO import_mode_start
 						ENDIF
 					ELSE
-						IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							tri_is_pressed = 0
 						ENDIF
 					ENDIF
@@ -973,11 +973,11 @@ WAIT 0
 					ELSE
 						IF cross_is_pressed = 0
 							
-							IF IS_BUTTON_PRESSED PAD1 CROSS
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 								m_goals++
 							ENDIF 
 						ELSE 
-							IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+							IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 								cross_is_pressed = 0
 							ENDIF
 						ENDIF
@@ -1022,12 +1022,12 @@ WAIT 0
 						IF IS_PLAYER_PLAYING player1
 							IF LOCATE_CHAR_ON_FOOT_3D scplayer x y z 2.0 1.0 2.0 FALSE
 								IF tri_is_pressed = 0
-									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 										tri_is_pressed = 1
 										PRINT_NOW IE08 5000 1 // Your new vehicle is on the container ship.
 									ENDIF
 								ELSE
-									IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+									IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 										tri_is_pressed = 0
 									ENDIF
 								ENDIF 

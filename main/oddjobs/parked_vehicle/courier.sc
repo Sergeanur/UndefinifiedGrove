@@ -1516,19 +1516,37 @@ IF bcou_progress = 9
 			IF NOT IS_CAR_DEAD bcou_bike
 				IF bcou_blipswap = 0
 
-					IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
-						IF IS_BUTTON_PRESSED PAD1 CIRCLE
-							proximity_flag = 0
-							GOSUB drugs_throw_right
-							GOSUB drugs_delivered_ok
+					IF IS_XBOX_VERSION
+						IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								proximity_flag = 0
+								GOSUB drugs_throw_right
+								GOSUB drugs_delivered_ok
+							ENDIF
 						ENDIF
-					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
-						IF IS_BUTTON_PRESSED PAD1 CIRCLE
-							proximity_flag = 0
-							GOSUB drugs_throw_left
-							GOSUB drugs_delivered_ok
+						IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								proximity_flag = 0
+								GOSUB drugs_throw_left
+								GOSUB drugs_delivered_ok
+							ENDIF
+						ENDIF
+					ELSE
+						IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER2
+							IF IS_BUTTON_PRESSED PAD1 CIRCLE
+								proximity_flag = 0
+								GOSUB drugs_throw_right
+								GOSUB drugs_delivered_ok
+							ENDIF
+						ENDIF
+
+						IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER2
+							IF IS_BUTTON_PRESSED PAD1 CIRCLE
+								proximity_flag = 0
+								GOSUB drugs_throw_left
+								GOSUB drugs_delivered_ok
+							ENDIF
 						ENDIF
 					ENDIF
 
@@ -2501,9 +2519,15 @@ GOTO bcou_main_mission_loop
 	 
 	drugs_delivered_ok:
 	
-		WHILE IS_BUTTON_PRESSED PAD1 CIRCLE 
-			WAIT 0
-		ENDWHILE
+		IF IS_XBOX_VERSION
+			WHILE IS_BUTTON_PRESSED PAD1 CROSS 
+				WAIT 0
+			ENDWHILE
+		ELSE
+			WHILE IS_BUTTON_PRESSED PAD1 CIRCLE 
+				WAIT 0
+			ENDWHILE
+		ENDIF
 	RETURN 
 
 

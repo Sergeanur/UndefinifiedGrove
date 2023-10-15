@@ -139,6 +139,7 @@ edit_y1 = -0.4900
 edit_x2 = 0.9570 
 edit_y2 = 0.4900 
 
+LVAR_INT player2_pressed_start
 LVAR_FLOAT pool_stop_velocity
 LVAR_FLOAT pool_stop_rotation_velocity
 pool_stop_velocity				= 0.05
@@ -876,7 +877,7 @@ pl_stage_1:
 	// set initial wager drawing variables
 	IF m_goals = 2
 		IF NOT IS_MESSAGE_BEING_DISPLAYED
-		OR IS_BUTTON_PRESSED PAD1 CROSS 
+		OR IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT 
 				
 			CLEAR_PRINTS
 							
@@ -915,7 +916,7 @@ pl_stage_1:
 
 		// ' X '  to increase bet
 		
-		IF IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 			IF NOT cross_is_pressed = 1 
 			AND NOT cross_is_pressed = -1
 
@@ -983,7 +984,7 @@ pl_stage_1:
 			ENDIF
 
 			// remove wager
-			IF IS_BUTTON_PRESSED PAD1 CIRCLE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 				IF NOT square_is_pressed = 1
 
 					// sort out betting step
@@ -1037,7 +1038,7 @@ pl_stage_1:
 		
 		// ' O '  to ok the bet
 		
-		IF IS_BUTTON_PRESSED PAD1 CROSS
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 			IF NOT IS_CHAR_DEAD	opp 
 				SET_CHAR_MONEY opp pl_initial_stake
 			ENDIF
@@ -1049,7 +1050,19 @@ pl_stage_1:
 		ELSE
 
 			// check if 2 player mode was activated
-			IF IS_BUTTON_PRESSED PAD2 START
+			player2_pressed_start = 0
+
+			IF IS_XBOX_VERSION
+				IF IS_XBOX_PLAYER2_PRESSING_START
+					player2_pressed_start = 1
+				ENDIF
+			ELSE
+				IF IS_BUTTON_PRESSED PAD2 START
+					player2_pressed_start = 1
+				ENDIF
+			ENDIF
+
+			IF player2_pressed_start = 1
 				DISABLE_2ND_PAD_FOR_DEBUG TRUE
 				SET_SCRIPT_COOP_GAME TRUE
 				disable_debug = 1 
@@ -1062,7 +1075,7 @@ pl_stage_1:
 		ENDIF
 
 
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		    
 			IF triangle_is_pressed = 0
 				// set chars to their home position
@@ -1756,6 +1769,19 @@ pl_stage_5:
 			ENDIF
 		ENDIF
 
+		// set aim --------
+		IF IS_BUTTON_PRESSED current_pad LEFTSTICKX
+			GET_OBJECT_HEADING p_ball[0] heading 
+			GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
+			// adjust cue balls heading
+			temp_float =# LStickX
+			temp_float /= 128.0 
+			temp_float *= 1.0 
+			heading += temp_float
+			SET_OBJECT_ROTATION p_ball[0] 0.0 0.0 0.0 
+			SET_OBJECT_HEADING p_ball[0] heading 
+		ENDIF
+
 
 		IF camera_mode = 0
 			GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table 0.00 -0.001 2.5 x y z
@@ -1785,19 +1811,6 @@ pl_stage_5:
 					square_is_pressed = 0
 				ENDIF
 			ENDIF
-		ENDIF
-
-		// set aim --------
-		IF IS_BUTTON_PRESSED current_pad LEFTSTICKX
-			GET_OBJECT_HEADING p_ball[0] heading
-			GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
-			// adjust cue balls heading
-			temp_float =# LStickX
-			temp_float /= 128.0
-			temp_float *= 2.0
-			heading += temp_float
-			SET_OBJECT_ROTATION p_ball[0] 0.0 0.0 0.0
-			SET_OBJECT_HEADING p_ball[0] heading
 		ENDIF
 
 		// draw aim	-------
@@ -7057,6 +7070,7 @@ mission_cleanup_POOL2:
 	MAKE_PLAYER_GANG_REAPPEAR
 	DISABLE_2ND_PAD_FOR_DEBUG FALSE
 	SET_SCRIPT_COOP_GAME FALSE
+	FINISHED_WITH_XBOX_PLAYER2
 
 	disable_debug = 0
 

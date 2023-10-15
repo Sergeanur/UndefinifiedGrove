@@ -23,8 +23,15 @@ mission_stunt_start:
 
 flag_player_on_mission = 1
 
-if done_bmx_stunt_progress = 0
-	REGISTER_MISSION_GIVEN
+if stunt_course = 0
+	if done_bmx_stunt_progress = 0
+		REGISTER_MISSION_GIVEN
+	endif
+endif
+if stunt_course = 1
+	if done_nrg500_stunt_progress = 0
+		REGISTER_MISSION_GIVEN
+	endif
 endif
 SCRIPT_NAME stunt
 
@@ -32,9 +39,9 @@ WAIT 0
 
 LOAD_MISSION_TEXT stunt
 
-while not is_player_playing player1
-	wait 0
-endwhile
+//while not is_player_playing player1
+//	wait 0
+//endwhile
 
 lvar_int stunt_vehicle
 store_car_char_is_in scplayer stunt_vehicle
@@ -95,18 +102,7 @@ get_game_timer game_timer
 if stunt_timer_displayed = 0
 	if is_button_pressed pad1 cross
 		if pad1_cross_pressed = 1
-			SET_PLAYER_CONTROL player1 ON
-			HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer FALSE
-			SET_EVERYONE_IGNORE_PLAYER player1 FALSE
-			SWITCH_WIDESCREEN OFF
-			SET_ALL_CARS_CAN_BE_DAMAGED TRUE
-			SET_CAMERA_BEHIND_PLAYER
-			RESTORE_CAMERA_JUMPCUT
-			stunt_timer = 11000
-			DISPLAY_ONSCREEN_TIMER_WITH_STRING stunt_timer TIMER_DOWN STUNT_2 //Time Left
-			stunt_track_start = game_timer
-			stunt_timer_displayed = 1
-			pad1_cross_pressed = 0
+			stunt_timer_displayed += 1
 		endif
 	else
 		pad1_cross_pressed = 1
@@ -115,19 +111,22 @@ endif
 
 if stunt_timer_displayed = 0
 	if stunt_timer < game_timer
-		SET_PLAYER_CONTROL player1 ON
-		HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer FALSE
-		SET_EVERYONE_IGNORE_PLAYER player1 FALSE
-		SWITCH_WIDESCREEN OFF
-		SET_ALL_CARS_CAN_BE_DAMAGED TRUE
-		SET_CAMERA_BEHIND_PLAYER
-		RESTORE_CAMERA_JUMPCUT
-		stunt_timer = 11000
-		DISPLAY_ONSCREEN_TIMER_WITH_STRING stunt_timer TIMER_DOWN STUNT_2 //Time Left
-		lvar_int stunt_track_start
-		stunt_track_start = game_timer
-		stunt_timer_displayed = 1
+		stunt_timer_displayed += 1
 	endif
+endif
+if stunt_timer_displayed = 1
+	SET_PLAYER_CONTROL player1 ON
+	HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer FALSE
+	SET_EVERYONE_IGNORE_PLAYER player1 FALSE
+	SWITCH_WIDESCREEN OFF
+	SET_ALL_CARS_CAN_BE_DAMAGED TRUE
+	SET_CAMERA_BEHIND_PLAYER
+	RESTORE_CAMERA_JUMPCUT
+	stunt_timer = 11000
+	DISPLAY_ONSCREEN_TIMER_WITH_STRING stunt_timer TIMER_DOWN STUNT_2 //Time Left
+	lvar_int stunt_track_start
+	stunt_track_start = game_timer
+	stunt_timer_displayed += 1
 endif
 		
 IF NOT IS_CAR_DEAD stunt_vehicle
@@ -485,6 +484,8 @@ stunt_y[17] = 56.9287
 stunt_z[17] = -10.6740 
 
 total_coronas = 18
+total_coronas = 18
+total_coronas = 18
 
 cam_s_x =		-1681.4637
 cam_s_y =		27.2091
@@ -497,6 +498,8 @@ break
 
 
 endswitch
+return
+return
 return
 
 }		

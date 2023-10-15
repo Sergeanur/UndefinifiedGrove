@@ -1179,7 +1179,7 @@ WHILE NOT counter_backup_dead_heist5 = 2
 					flag_mingun_help_heist5 = 1
 				ENDIF
 
-				IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						
 					IF flag_player_using_gun_heist5 = 0
 						CLEAR_THIS_PRINT HM5_20
@@ -1202,7 +1202,7 @@ WHILE NOT counter_backup_dead_heist5 = 2
 		ENDIF
 		
 		IF flag_player_at_minigun = 2
-			IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 				flag_player_at_minigun = 3
 			ENDIF
 		ENDIF	
@@ -1214,7 +1214,7 @@ WHILE NOT counter_backup_dead_heist5 = 2
 				flag_leave_gun_heist5 = 1
 			ENDIF
 
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 				flag_player_at_minigun = 4
 			ENDIF
 
@@ -1222,7 +1222,7 @@ WHILE NOT counter_backup_dead_heist5 = 2
 
 		IF flag_player_at_minigun = 4 
 	
-			IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+			IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			
 				IF flag_player_using_gun_heist5 = 1
 				

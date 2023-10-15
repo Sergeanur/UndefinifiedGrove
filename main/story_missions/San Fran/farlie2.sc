@@ -714,58 +714,116 @@ GOTO driv2_loop
 
 						IF IS_CHAR_ON_ANY_BIKE scplayer 
 						OR IS_CHAR_ON_FOOT scplayer
-							IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
-							AND NOT d2_leftshoulder1_pressed_last_frame = 1
+							IF IS_XBOX_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CIRCLE
+								AND NOT d2_leftshoulder1_pressed_last_frame = 1
 
-								GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 -3.0 0.0 d2_player_offset_x1 d2_player_offset_y1 d2_dummy_z
-								GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 3.0 0.0 d2_player_offset_x2 d2_player_offset_y2 d2_dummy_z
-								// different anims depending on which side of the player the package is on
-								// and whether the player's on a bike or on foot
-								// If the player's on foot, play different anims depending on the relative height of the package								
-								IF IS_OBJECT_IN_ANGLED_AREA_2D d2_packages[d2_index] d2_player_offset_x1 d2_player_offset_y1 d2_player_offset_x2 d2_player_offset_y2 3.0 FALSE
-									IF IS_CHAR_ON_ANY_BIKE scplayer
-										TASK_PLAY_ANIM scplayer BIKEs_Snatch_L BIKES 4.0 FALSE FALSE FALSE FALSE 220
-									ELSE
-										GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
-										GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
-										d2_package_z[d2_index] += 0.25
-										IF d2_package_z[d2_index] <= d2_player_z
-											TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
+									GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 -3.0 0.0 d2_player_offset_x1 d2_player_offset_y1 d2_dummy_z
+									GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 3.0 0.0 d2_player_offset_x2 d2_player_offset_y2 d2_dummy_z
+									// different anims depending on which side of the player the package is on
+									// and whether the player's on a bike or on foot
+									// If the player's on foot, play different anims depending on the relative height of the package								
+									IF IS_OBJECT_IN_ANGLED_AREA_2D d2_packages[d2_index] d2_player_offset_x1 d2_player_offset_y1 d2_player_offset_x2 d2_player_offset_y2 3.0 FALSE
+										IF IS_CHAR_ON_ANY_BIKE scplayer
+											TASK_PLAY_ANIM scplayer BIKEs_Snatch_L BIKES 4.0 FALSE FALSE FALSE FALSE 220
 										ELSE
-											TASK_PLAY_ANIM scplayer GRAB_L MISC 4.0 FALSE FALSE FALSE FALSE 180
+											GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
+											GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+											d2_package_z[d2_index] += 0.25
+											IF d2_package_z[d2_index] <= d2_player_z
+												TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ELSE
+												TASK_PLAY_ANIM scplayer GRAB_L MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ENDIF
+										ENDIF
+									ELSE
+										IF IS_CHAR_ON_ANY_BIKE scplayer
+											TASK_PLAY_ANIM scplayer BIKEs_Snatch_R BIKES 4.0 FALSE FALSE FALSE FALSE 220
+										ELSE
+											GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
+											GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+											d2_package_z[d2_index] += 0.25
+											IF d2_package_z[d2_index] <= d2_player_z
+												TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ELSE
+												TASK_PLAY_ANIM scplayer GRAB_R MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ENDIF
 										ENDIF
 									ENDIF
+
+									GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+									DELETE_OBJECT d2_packages[d2_index]
+									REMOVE_BLIP d2_package_blips[d2_index]
+									ADD_ONE_OFF_SOUND d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index] SOUND_RACE_START_GO
+									PRINT_NOW ( DRV3_4 ) 5000 0
+									d2_package_collected[d2_index] = 1
+									d2_num_packages_collected++
+
 								ELSE
-									IF IS_CHAR_ON_ANY_BIKE scplayer
-										TASK_PLAY_ANIM scplayer BIKEs_Snatch_R BIKES 4.0 FALSE FALSE FALSE FALSE 220
+									IF NOT IS_MESSAGE_BEING_DISPLAYED
+										PRINT_NOW DRV3_3 1 0 
+										d2_in_range_last_printed = 1
 									ELSE
-										GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
-										GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
-										d2_package_z[d2_index] += 0.25
-										IF d2_package_z[d2_index] <= d2_player_z
-											TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
-										ELSE
-											TASK_PLAY_ANIM scplayer GRAB_R MISC 4.0 FALSE FALSE FALSE FALSE 180
+										IF d2_in_range_last_printed = 1
+											PRINT_NOW DRV3_3 1 0  
+											d2_in_range_last_printed = 1
 										ENDIF
 									ENDIF
 								ENDIF
-
-								GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
-								DELETE_OBJECT d2_packages[d2_index]
-								REMOVE_BLIP d2_package_blips[d2_index]
-								ADD_ONE_OFF_SOUND d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index] SOUND_RACE_START_GO
-								PRINT_NOW ( DRV3_4 ) 5000 0
-								d2_package_collected[d2_index] = 1
-								d2_num_packages_collected++
-
 							ELSE
-								IF NOT IS_MESSAGE_BEING_DISPLAYED
-									PRINT_NOW DRV3_3 1 0 
-									d2_in_range_last_printed = 1
+								IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+								AND NOT d2_leftshoulder1_pressed_last_frame = 1
+
+									GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 -3.0 0.0 d2_player_offset_x1 d2_player_offset_y1 d2_dummy_z
+									GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 3.0 0.0 d2_player_offset_x2 d2_player_offset_y2 d2_dummy_z
+									// different anims depending on which side of the player the package is on
+									// and whether the player's on a bike or on foot
+									// If the player's on foot, play different anims depending on the relative height of the package								
+									IF IS_OBJECT_IN_ANGLED_AREA_2D d2_packages[d2_index] d2_player_offset_x1 d2_player_offset_y1 d2_player_offset_x2 d2_player_offset_y2 3.0 FALSE
+										IF IS_CHAR_ON_ANY_BIKE scplayer
+											TASK_PLAY_ANIM scplayer BIKEs_Snatch_L BIKES 4.0 FALSE FALSE FALSE FALSE 220
+										ELSE
+											GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
+											GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+											d2_package_z[d2_index] += 0.25
+											IF d2_package_z[d2_index] <= d2_player_z
+												TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ELSE
+												TASK_PLAY_ANIM scplayer GRAB_L MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ENDIF
+										ENDIF
+									ELSE
+										IF IS_CHAR_ON_ANY_BIKE scplayer
+											TASK_PLAY_ANIM scplayer BIKEs_Snatch_R BIKES 4.0 FALSE FALSE FALSE FALSE 220
+										ELSE
+											GET_CHAR_COORDINATES scplayer d2_player_x d2_player_y d2_player_z
+											GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+											d2_package_z[d2_index] += 0.25
+											IF d2_package_z[d2_index] <= d2_player_z
+												TASK_PLAY_ANIM scplayer pickup_box MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ELSE
+												TASK_PLAY_ANIM scplayer GRAB_R MISC 4.0 FALSE FALSE FALSE FALSE 180
+											ENDIF
+										ENDIF
+									ENDIF
+
+									GET_OBJECT_COORDINATES d2_packages[d2_index] d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index]
+									DELETE_OBJECT d2_packages[d2_index]
+									REMOVE_BLIP d2_package_blips[d2_index]
+									ADD_ONE_OFF_SOUND d2_package_x[d2_index] d2_package_y[d2_index] d2_package_z[d2_index] SOUND_RACE_START_GO
+									PRINT_NOW ( DRV3_4 ) 5000 0
+									d2_package_collected[d2_index] = 1
+									d2_num_packages_collected++
+
 								ELSE
-									IF d2_in_range_last_printed = 1
-										PRINT_NOW DRV3_3 1 0  
+									IF NOT IS_MESSAGE_BEING_DISPLAYED
+										PRINT_NOW DRV3_3 1 0 
 										d2_in_range_last_printed = 1
+									ELSE
+										IF d2_in_range_last_printed = 1
+											PRINT_NOW DRV3_3 1 0  
+											d2_in_range_last_printed = 1
+										ENDIF
 									ENDIF
 								ENDIF
 							ENDIF
@@ -821,10 +879,18 @@ GOTO driv2_loop
 			d2_index++
 		ENDWHILE
 
-		IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
-			d2_leftshoulder1_pressed_last_frame = 1
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 CIRCLE
+				d2_leftshoulder1_pressed_last_frame = 1
+			ELSE
+				d2_leftshoulder1_pressed_last_frame = 0
+			ENDIF
 		ELSE
-			d2_leftshoulder1_pressed_last_frame = 0
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+				d2_leftshoulder1_pressed_last_frame = 1
+			ELSE
+				d2_leftshoulder1_pressed_last_frame = 0
+			ENDIF
 		ENDIF
 
 	RETURN

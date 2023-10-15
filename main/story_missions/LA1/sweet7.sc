@@ -798,9 +798,6 @@ ENDIF
 TASK_TURN_CHAR_TO_FACE_CHAR scplayer sweet
 
 timera = 0
-WHILE timera < 2000
-WAIT 0
-ENDWHILE
 
 MARK_MODEL_AS_NO_LONGER_NEEDED sadler
 
@@ -2573,7 +2570,8 @@ IF sw7_missionprogress = 1
 
 		  	IF sw7_cockedandloaded = 0
 			  	IF LOCATE_CHAR_ANY_MEANS_3D sweet 818.4114 -1076.6030 23.0623 4.0 4.0 4.0 FALSE
-					IF LOCATE_CHAR_ANY_MEANS_CHAR_2D scplayer sweet 2.0 2.0 FALSE  // was 10.0
+					FREEZE_CHAR_POSITION sweet TRUE
+					IF LOCATE_CHAR_ANY_MEANS_CHAR_2D scplayer sweet 3.0 3.0 FALSE  // was 10.0
 					   CLEAR_CHAR_TASKS sweet
 					   //TASK_TURN_CHAR_TO_FACE_CHAR sweet scplayer
 
@@ -2587,6 +2585,7 @@ IF sw7_missionprogress = 1
 
 
 					   	sw7_cockedandloaded = 1
+						FREEZE_CHAR_POSITION sweet FALSE
 						//write_debug check
 					   
 					ENDIF
@@ -2674,186 +2673,195 @@ IF sw7_missionprogress < 5
 
 
 
+			IF sw7_endanims = 0
+				IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector1	scplayer
+					sw7_endanims = 1
+					IF NOT IS_CHAR_DEAD sw7_protector1
+					CLEAR_CHAR_TASKS sw7_protector1
+					TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					ENDIF
 
-			IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector1	scplayer
-				sw7_endanims = 1
-				IF NOT IS_CHAR_DEAD sw7_protector1
-				CLEAR_CHAR_TASKS sw7_protector1
-				TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					IF NOT IS_CHAR_DEAD sw7_protector2
+						CLEAR_CHAR_TASKS sw7_protector2
+						TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_protector3
+						CLEAR_CHAR_TASKS sw7_protector3
+						TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
+					ENDIF
+
+					
+					IF NOT IS_CHAR_DEAD sw7_greetinface
+						CLEAR_CHAR_TASKS sw7_greetinface
+						TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_preach
+						CLEAR_CHAR_TASKS sw7_preach
+						TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
+					ENDIF
+
+
+					//WAIT 3000
+					GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
+					sw7_convo_counter = 41
+					sw7_missionprogress = 999
 				ENDIF
-
-				IF NOT IS_CHAR_DEAD sw7_protector2
-					CLEAR_CHAR_TASKS sw7_protector2
-					TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
-				ENDIF
-				IF NOT IS_CHAR_DEAD sw7_protector3
-					CLEAR_CHAR_TASKS sw7_protector3
-					TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
-				ENDIF
-
-				
-				IF NOT IS_CHAR_DEAD sw7_greetinface
-					CLEAR_CHAR_TASKS sw7_greetinface
-					TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
-	 			ENDIF
-	 			IF NOT IS_CHAR_DEAD sw7_preach
-					CLEAR_CHAR_TASKS sw7_preach
-	 				TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
-	 			ENDIF
-
-
-				//WAIT 3000
-				GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
-				sw7_convo_counter = 41
-				sw7_missionprogress = 999
 			ENDIF
 		ENDIF	 
 
-		IF DOES_CHAR_EXIST sw7_protector2
+		IF sw7_endanims = 0
+			IF DOES_CHAR_EXIST sw7_protector2
 
-			IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector2	scplayer
-				
-				sw7_endanims = 1
-				IF NOT IS_CHAR_DEAD sw7_protector2
-				CLEAR_CHAR_TASKS sw7_protector2
+				IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector2	scplayer
+					
+					sw7_endanims = 1
+					IF NOT IS_CHAR_DEAD sw7_protector2
+					CLEAR_CHAR_TASKS sw7_protector2
 
-				TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					ENDIF
+
+					IF NOT IS_CHAR_DEAD sw7_protector1
+						CLEAR_CHAR_TASKS sw7_protector1
+						TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_protector3
+						CLEAR_CHAR_TASKS sw7_protector3
+						TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
+					ENDIF
+
+
+					IF NOT IS_CHAR_DEAD sw7_greetinface
+						CLEAR_CHAR_TASKS sw7_greetinface
+						TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_preach
+						CLEAR_CHAR_TASKS sw7_preach
+						TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
+					ENDIF
+					
+					GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
+					sw7_convo_counter = 41
+					sw7_missionprogress = 999
+
 				ENDIF
-
-				IF NOT IS_CHAR_DEAD sw7_protector1
-					CLEAR_CHAR_TASKS sw7_protector1
-					TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
-				ENDIF
-				IF NOT IS_CHAR_DEAD sw7_protector3
-					CLEAR_CHAR_TASKS sw7_protector3
-					TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
-				ENDIF
-
-
-				IF NOT IS_CHAR_DEAD sw7_greetinface
-					CLEAR_CHAR_TASKS sw7_greetinface
-					TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
-	 			ENDIF
-	 			IF NOT IS_CHAR_DEAD sw7_preach
-					CLEAR_CHAR_TASKS sw7_preach
-	 				TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
-	 			ENDIF
-				
-				GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
-				sw7_convo_counter = 41
-				sw7_missionprogress = 999
-
 			ENDIF
 		ENDIF
 		
-		IF DOES_CHAR_EXIST sw7_protector3 
-			IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector3	scplayer
-				sw7_endanims = 1
-				IF NOT IS_CHAR_DEAD sw7_protector3
-				CLEAR_CHAR_TASKS sw7_protector3
-
-				TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
-				ENDIF
-
-				IF NOT IS_CHAR_DEAD sw7_protector1
-					CLEAR_CHAR_TASKS sw7_protector1
-					TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
-				ENDIF
-				IF NOT IS_CHAR_DEAD sw7_protector2
-					CLEAR_CHAR_TASKS sw7_protector2
-					TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
-				ENDIF
-
-
-
-
-				IF NOT IS_CHAR_DEAD sw7_greetinface
-					CLEAR_CHAR_TASKS sw7_greetinface
-					TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
-	 			ENDIF
-	 			IF NOT IS_CHAR_DEAD sw7_preach
-					CLEAR_CHAR_TASKS sw7_preach
-	 				TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
-	 			ENDIF
-
-				GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
-				sw7_convo_counter = 41
-				sw7_missionprogress = 999
-
-			ENDIF
-		ENDIF		
-
-		IF DOES_CHAR_EXIST sw7_preach 
-			IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_preach scplayer
-
-				sw7_endanims = 1
-
-				IF NOT IS_CHAR_DEAD sw7_protector1
-					CLEAR_CHAR_TASKS sw7_protector1
-					TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
-				ENDIF
-				IF NOT IS_CHAR_DEAD sw7_protector2
-					CLEAR_CHAR_TASKS sw7_protector2
-					TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
-				ENDIF
-
-				IF NOT IS_CHAR_DEAD sw7_protector3
+		IF sw7_endanims = 0
+			IF DOES_CHAR_EXIST sw7_protector3 
+				IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_protector3	scplayer
+					sw7_endanims = 1
+					IF NOT IS_CHAR_DEAD sw7_protector3
 					CLEAR_CHAR_TASKS sw7_protector3
+
 					TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
+					ENDIF
+
+					IF NOT IS_CHAR_DEAD sw7_protector1
+						CLEAR_CHAR_TASKS sw7_protector1
+						TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_protector2
+						CLEAR_CHAR_TASKS sw7_protector2
+						TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					ENDIF
+
+
+
+
+					IF NOT IS_CHAR_DEAD sw7_greetinface
+						CLEAR_CHAR_TASKS sw7_greetinface
+						TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_preach
+						CLEAR_CHAR_TASKS sw7_preach
+						TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
+					ENDIF
+
+					GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
+					sw7_convo_counter = 41
+					sw7_missionprogress = 999
+
 				ENDIF
+			ENDIF		
+		ENDIF
+
+		IF sw7_endanims = 0
+			IF DOES_CHAR_EXIST sw7_preach 
+				IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_preach scplayer
+
+					sw7_endanims = 1
+
+					IF NOT IS_CHAR_DEAD sw7_protector1
+						CLEAR_CHAR_TASKS sw7_protector1
+						TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_protector2
+						CLEAR_CHAR_TASKS sw7_protector2
+						TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					ENDIF
+
+					IF NOT IS_CHAR_DEAD sw7_protector3
+						CLEAR_CHAR_TASKS sw7_protector3
+						TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
+					ENDIF
 
 
-				IF NOT IS_CHAR_DEAD sw7_greetinface
-					CLEAR_CHAR_TASKS sw7_greetinface
-					TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
-	 			ENDIF
-	 			IF NOT IS_CHAR_DEAD sw7_preach
-					CLEAR_CHAR_TASKS sw7_preach
-	 				TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
-	 			ENDIF
+					IF NOT IS_CHAR_DEAD sw7_greetinface
+						CLEAR_CHAR_TASKS sw7_greetinface
+						TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_preach
+						CLEAR_CHAR_TASKS sw7_preach
+						TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
+					ENDIF
 
-                GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
-				sw7_convo_counter = 41
-				sw7_missionprogress = 999
+					GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
+					sw7_convo_counter = 41
+					sw7_missionprogress = 999
 
-			ENDIF
-		ENDIF	
-
-
-
-		IF DOES_CHAR_EXIST sw7_greetinface 
-			IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_greetinface scplayer
-
-				sw7_endanims = 1
-
-				IF NOT IS_CHAR_DEAD sw7_protector1
-					CLEAR_CHAR_TASKS sw7_protector1
-					TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
 				ENDIF
-				IF NOT IS_CHAR_DEAD sw7_protector2
-					CLEAR_CHAR_TASKS sw7_protector2
-					TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+			ENDIF	
+		ENDIF
+
+
+
+		IF sw7_endanims = 0
+			IF DOES_CHAR_EXIST sw7_greetinface 
+				IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR sw7_greetinface scplayer
+
+					sw7_endanims = 1
+
+					IF NOT IS_CHAR_DEAD sw7_protector1
+						CLEAR_CHAR_TASKS sw7_protector1
+						TASK_KILL_CHAR_ON_FOOT sw7_protector1 scplayer
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_protector2
+						CLEAR_CHAR_TASKS sw7_protector2
+						TASK_KILL_CHAR_ON_FOOT sw7_protector2 scplayer
+					ENDIF
+
+					IF NOT IS_CHAR_DEAD sw7_protector3
+						CLEAR_CHAR_TASKS sw7_protector3
+						TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
+					ENDIF
+
+
+					IF NOT IS_CHAR_DEAD sw7_greetinface
+						CLEAR_CHAR_TASKS sw7_greetinface
+						TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
+					ENDIF
+					IF NOT IS_CHAR_DEAD sw7_preach
+						CLEAR_CHAR_TASKS sw7_preach
+						TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
+					ENDIF
+
+					GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
+					sw7_convo_counter = 41
+					sw7_missionprogress = 999
+
 				ENDIF
-
-				IF NOT IS_CHAR_DEAD sw7_protector3
-					CLEAR_CHAR_TASKS sw7_protector3
-					TASK_KILL_CHAR_ON_FOOT sw7_protector3 scplayer
-				ENDIF
-
-
-				IF NOT IS_CHAR_DEAD sw7_greetinface
-					CLEAR_CHAR_TASKS sw7_greetinface
-					TASK_SMART_FLEE_CHAR sw7_greetinface scplayer 100.0 -1
-	 			ENDIF
-	 			IF NOT IS_CHAR_DEAD sw7_preach
-					CLEAR_CHAR_TASKS sw7_preach
-	 				TASK_SMART_FLEE_CHAR sw7_preach scplayer 100.0 -1
-	 			ENDIF
-
-                GENERATE_RANDOM_INT_IN_RANGE 0 3 sw7_random
-				sw7_convo_counter = 41
-				sw7_missionprogress = 999
-
 			ENDIF
 		ENDIF
 ENDIF

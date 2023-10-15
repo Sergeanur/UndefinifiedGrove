@@ -54,6 +54,8 @@ text_alpha_SS = 0
 text_status_SS = 0
 $text_label_SS = LOAD_01
 
+SWITCH_WIDESCREEN ON
+
 // fade in
 WHILE text_alpha_SS < 200
 	WAIT 0
@@ -73,6 +75,8 @@ ENDWHILE
 // fades the screen in 
 
 SET_AREA_VISIBLE 14
+
+SWITCH_WIDESCREEN OFF
 
 LOAD_CUTSCENE PROLOG1
  

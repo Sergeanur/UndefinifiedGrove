@@ -456,17 +456,33 @@ WAIT 0
 
 		
 			//triggering mission
-			IF IS_BUTTON_PRESSED PAD1 CROSS
-				IF mission_selection = 4 
-				OR mission_selection = 7 
-				OR mission_selection = 9 
-				OR mission_selection = 13 
-					f1_control_flag = 1	
-				ELSE
-					IF playback_flag < 4
-						playback_flag = 3
+			IF IS_JAPANESE_VERSION
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF mission_selection = 4 
+					OR mission_selection = 7 
+					OR mission_selection = 9 
+					OR mission_selection = 13 
+						f1_control_flag = 1	
+					ELSE
+						IF playback_flag < 4
+							playback_flag = 3
+						ENDIF
+						GOTO start_mission
 					ENDIF
-					GOTO start_mission
+				ENDIF
+			ELSE
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF mission_selection = 4 
+					OR mission_selection = 7 
+					OR mission_selection = 9 
+					OR mission_selection = 13 
+						f1_control_flag = 1	
+					ELSE
+						IF playback_flag < 4
+							playback_flag = 3
+						ENDIF
+						GOTO start_mission
+					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
@@ -541,68 +557,134 @@ WAIT 0
 		ENDIF
 		
 		//quitting the driving school
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-			GOSUB f1_drawing_tv_screen
-			DO_FADE 500 FADE_OUT
-			WHILE GET_FADING_STATUS
+		IF IS_JAPANESE_VERSION
+			IF IS_BUTTON_PRESSED PAD1 CROSS
 				GOSUB f1_drawing_tv_screen
-				WAIT 0
+				DO_FADE 500 FADE_OUT
+				WHILE GET_FADING_STATUS
+					GOSUB f1_drawing_tv_screen
+					WAIT 0
+					GOSUB f1_drawing_tv_screen
+				ENDWHILE
 				GOSUB f1_drawing_tv_screen
-			ENDWHILE
-			GOSUB f1_drawing_tv_screen
 
-			CLEAR_MISSION_AUDIO 3
+				CLEAR_MISSION_AUDIO 3
 
-			CLEAR_PRINTS
-			CLEAR_EXTRA_COLOURS TRUE
+				CLEAR_PRINTS
+				CLEAR_EXTRA_COLOURS TRUE
 
-			SET_CHAR_AREA_VISIBLE scplayer 3
-			SET_AREA_VISIBLE 3
-			REQUEST_COLLISION -2031.1 -118.2
-			LOAD_SCENE -2031.1 -118.2 1034.2
-			
-			SET_CHAR_COORDINATES scplayer -2029.7 -115.5 1034.2
-			SET_CHAR_HEADING scplayer 0.0
+				SET_CHAR_AREA_VISIBLE scplayer 3
+				SET_AREA_VISIBLE 3
+				REQUEST_COLLISION -2031.1 -118.2
+				LOAD_SCENE -2031.1 -118.2 1034.2
+				
+				SET_CHAR_COORDINATES scplayer -2029.7 -115.5 1034.2
+				SET_CHAR_HEADING scplayer 0.0
 
-			IF NOT IS_CAR_DEAD instructor_car
-				IF IS_PLAYBACK_GOING_ON_FOR_CAR instructor_car
-					STOP_PLAYBACK_RECORDED_CAR instructor_car 
+				IF NOT IS_CAR_DEAD instructor_car
+					IF IS_PLAYBACK_GOING_ON_FOR_CAR instructor_car
+						STOP_PLAYBACK_RECORDED_CAR instructor_car 
+					ENDIF
 				ENDIF
+				DELETE_CAR instructor_car
+				CLEAR_AREA -2051.0 -174.0 34.0 300.0 TRUE
+				CLEAR_ONSCREEN_TIMER car_timer
+				FREEZE_ONSCREEN_TIMER FALSE
+				DELETE_CHAR f1_test_crash_dummy 
+				DELETE_CHAR f1_test_crash_dummy2 
+				DELETE_CAR dummy_car1
+				DELETE_CAR dummy_car2
+				DELETE_OBJECT ramp1
+				DELETE_OBJECT ramp2
+				DELETE_OBJECT f1_stinger
+				REMOVE_CAR_RECORDING 1
+				REMOVE_CAR_RECORDING 2
+				REMOVE_CAR_RECORDING 3
+				REMOVE_CAR_RECORDING 4
+				REMOVE_CAR_RECORDING 5
+				REMOVE_CAR_RECORDING 7
+				REMOVE_CAR_RECORDING 9
+				REMOVE_CAR_RECORDING 10
+				REMOVE_CAR_RECORDING 11
+				REMOVE_CAR_RECORDING 13
+				REMOVE_CAR_RECORDING 14
+				REMOVE_CAR_RECORDING 15
+				REMOVE_CAR_RECORDING 16
+				GOSUB deleting_cones
+
+				SET_CAMERA_BEHIND_PLAYER
+				RESTORE_CAMERA_JUMPCUT
+
+				DO_FADE 500 FADE_IN
+				WHILE GET_FADING_STATUS
+					WAIT 0
+				ENDWHILE
+				GOTO mission_failed_dskool
 			ENDIF
-			DELETE_CAR instructor_car
-			CLEAR_AREA -2051.0 -174.0 34.0 300.0 TRUE
-			CLEAR_ONSCREEN_TIMER car_timer
-			FREEZE_ONSCREEN_TIMER FALSE
-			DELETE_CHAR f1_test_crash_dummy 
-			DELETE_CHAR f1_test_crash_dummy2 
-			DELETE_CAR dummy_car1
-			DELETE_CAR dummy_car2
-			DELETE_OBJECT ramp1
-			DELETE_OBJECT ramp2
-			DELETE_OBJECT f1_stinger
-			REMOVE_CAR_RECORDING 1
-			REMOVE_CAR_RECORDING 2
-			REMOVE_CAR_RECORDING 3
-			REMOVE_CAR_RECORDING 4
-			REMOVE_CAR_RECORDING 5
-			REMOVE_CAR_RECORDING 7
-			REMOVE_CAR_RECORDING 9
-			REMOVE_CAR_RECORDING 10
-			REMOVE_CAR_RECORDING 11
-			REMOVE_CAR_RECORDING 13
-			REMOVE_CAR_RECORDING 14
-			REMOVE_CAR_RECORDING 15
-			REMOVE_CAR_RECORDING 16
-			GOSUB deleting_cones
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+				GOSUB f1_drawing_tv_screen
+				DO_FADE 500 FADE_OUT
+				WHILE GET_FADING_STATUS
+					GOSUB f1_drawing_tv_screen
+					WAIT 0
+					GOSUB f1_drawing_tv_screen
+				ENDWHILE
+				GOSUB f1_drawing_tv_screen
 
-			SET_CAMERA_BEHIND_PLAYER
-			RESTORE_CAMERA_JUMPCUT
+				CLEAR_MISSION_AUDIO 3
 
-			DO_FADE 500 FADE_IN
-			WHILE GET_FADING_STATUS
-				WAIT 0
-			ENDWHILE
-			GOTO mission_failed_dskool
+				CLEAR_PRINTS
+				CLEAR_EXTRA_COLOURS TRUE
+
+				SET_CHAR_AREA_VISIBLE scplayer 3
+				SET_AREA_VISIBLE 3
+				REQUEST_COLLISION -2031.1 -118.2
+				LOAD_SCENE -2031.1 -118.2 1034.2
+				
+				SET_CHAR_COORDINATES scplayer -2029.7 -115.5 1034.2
+				SET_CHAR_HEADING scplayer 0.0
+
+				IF NOT IS_CAR_DEAD instructor_car
+					IF IS_PLAYBACK_GOING_ON_FOR_CAR instructor_car
+						STOP_PLAYBACK_RECORDED_CAR instructor_car 
+					ENDIF
+				ENDIF
+				DELETE_CAR instructor_car
+				CLEAR_AREA -2051.0 -174.0 34.0 300.0 TRUE
+				CLEAR_ONSCREEN_TIMER car_timer
+				FREEZE_ONSCREEN_TIMER FALSE
+				DELETE_CHAR f1_test_crash_dummy 
+				DELETE_CHAR f1_test_crash_dummy2 
+				DELETE_CAR dummy_car1
+				DELETE_CAR dummy_car2
+				DELETE_OBJECT ramp1
+				DELETE_OBJECT ramp2
+				DELETE_OBJECT f1_stinger
+				REMOVE_CAR_RECORDING 1
+				REMOVE_CAR_RECORDING 2
+				REMOVE_CAR_RECORDING 3
+				REMOVE_CAR_RECORDING 4
+				REMOVE_CAR_RECORDING 5
+				REMOVE_CAR_RECORDING 7
+				REMOVE_CAR_RECORDING 9
+				REMOVE_CAR_RECORDING 10
+				REMOVE_CAR_RECORDING 11
+				REMOVE_CAR_RECORDING 13
+				REMOVE_CAR_RECORDING 14
+				REMOVE_CAR_RECORDING 15
+				REMOVE_CAR_RECORDING 16
+				GOSUB deleting_cones
+
+				SET_CAMERA_BEHIND_PLAYER
+				RESTORE_CAMERA_JUMPCUT
+
+				DO_FADE 500 FADE_IN
+				WHILE GET_FADING_STATUS
+					WAIT 0
+				ENDWHILE
+				GOTO mission_failed_dskool
+			ENDIF
 		ENDIF
 
 	GOSUB watching_demo
@@ -774,107 +856,228 @@ IF mission_selection = 1
 				ENDIF
 
 				//checking car is stopped or not
-				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-				OR NOT IS_BUTTON_PRESSED PAD1 SQUARE
-				OR car_timer = 0
+				IF IS_XBOX_VERSION
+					IF NOT IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+					OR NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+					OR car_timer = 0
 
-					GOSUB freeze_car_pos
-				
-					//CALCULATIONS FOR PLAYER SCORE
-					 
-					//position score 
-					GOSUB position_score_calcs					 
+						GOSUB freeze_car_pos
+					
+						//CALCULATIONS FOR PLAYER SCORE
+						
+						//position score 
+						GOSUB position_score_calcs					 
 
-					//heading - perfect heading is 0
-					IF variablec = 4
-						heading_score = 100
-					ENDIF	 
-					IF variablec = 3
-						heading_score = 75
-					ENDIF	 
-					IF variablec = 2
-						heading_score = 50
-					ENDIF	 
-					IF variablec = 1
-						heading_score = 25
-					ENDIF	 
-					IF variablec = 0
-						heading_score = 0
-					ENDIF	 
+						//heading - perfect heading is 0
+						IF variablec = 4
+							heading_score = 100
+						ENDIF	 
+						IF variablec = 3
+							heading_score = 75
+						ENDIF	 
+						IF variablec = 2
+							heading_score = 50
+						ENDIF	 
+						IF variablec = 1
+							heading_score = 25
+						ENDIF	 
+						IF variablec = 0
+							heading_score = 0
+						ENDIF	 
 
-					overall_score = position_score + heading_score				
-					overall_score /= 2  
-					IF position_score = 0
-						overall_score = 0
-					ENDIF	
-					IF variablec = 0
-						overall_score = 0
-					ENDIF	
-					 
+						overall_score = position_score + heading_score				
+						overall_score /= 2  
+						IF position_score = 0
+							overall_score = 0
+						ENDIF	
+						IF variablec = 0
+							overall_score = 0
+						ENDIF	
+						
 
-					//losing points for hitting cones 
-					GOSUB damage_cones_calcs
+						//losing points for hitting cones 
+						GOSUB damage_cones_calcs
 
-					//checking overall score is greater than 0 and clearing prints
-					GOSUB checking_overall_score
+						//checking overall score is greater than 0 and clearing prints
+						GOSUB checking_overall_score
 
-					//checking overall score against the best score at present
-					IF overall_score > f1_the360_best_score  	
-						f1_old_score = f1_the360_best_score 
-						f1_the360_best_score = overall_score
-						f1_print_top_scores_flag = 1
-						GOSUB f1_medal_check
-					ELSE
-						f1_which_medal_displayed = 0	
-					ENDIF 	
-				
-					//opening next level
-					IF f1_which_missions_are_open_flag = 1
-						IF overall_score > 69
-							f1_print_top_scores_flag = 2
-							f1_which_missions_are_open_flag = 2
-							instructor_car_dead_flag = 2
-							f1_last_played = 2
+						//checking overall score against the best score at present
+						IF overall_score > f1_the360_best_score  	
+							f1_old_score = f1_the360_best_score 
+							f1_the360_best_score = overall_score
+							f1_print_top_scores_flag = 1
+							GOSUB f1_medal_check
+						ELSE
+							f1_which_medal_displayed = 0	
+						ENDIF 	
+					
+						//opening next level
+						IF f1_which_missions_are_open_flag = 1
+							IF overall_score > 69
+								f1_print_top_scores_flag = 2
+								f1_which_missions_are_open_flag = 2
+								instructor_car_dead_flag = 2
+								f1_last_played = 2
+							ENDIF
+						ENDIF
+
+						//printing scores onscreen
+						timera = 0
+						the_360_scores_loop_xbox:
+							WAIT 0												    
+
+							//changing camera position 
+							GOSUB setting_up_camera			
+
+							IF NOT f1_print_top_scores_flag = 2
+								//checking player hasnt left car
+								IF IS_JAPANESE_VERSION
+									IF IS_BUTTON_PRESSED PAD1 CROSS
+										instructor_car_dead_flag = 2
+										GOTO after_scores_360_xbox																		  
+									ENDIF
+								ELSE
+									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+										instructor_car_dead_flag = 2
+										GOTO after_scores_360_xbox																		  
+									ENDIF 									    
+								ENDIF
+							ENDIF
+
+							//displaying scores
+							GOSUB display_head_pos_dam_text				   
+
+							//checking if player has skipped watching the scores
+							GOSUB skip_scores
+							IF finished_watching_scores = 1
+								GOTO after_scores_360_xbox
+							ENDIF
+						GOTO the_360_scores_loop_xbox											    
+
+						//reseting for another try
+						after_scores_360_xbox:
+						GOSUB mini_cleanup
+						
+						GOSUB deleting_cones
+																			
+						IF instructor_car_dead_flag = 2 
+							CLEAR_PRINTS
+							GOTO noticeboard_setup
+						ELSE
+							GOTO refresh_360 
 						ENDIF
 					ENDIF
+				ELSE
+					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					OR NOT IS_BUTTON_PRESSED PAD1 SQUARE
+					OR car_timer = 0
 
-					//printing scores onscreen
-					timera = 0
-					the_360_scores_loop:
-						WAIT 0												    
+						GOSUB freeze_car_pos
+					
+						//CALCULATIONS FOR PLAYER SCORE
+						
+						//position score 
+						GOSUB position_score_calcs					 
 
-						//changing camera position 
-						GOSUB setting_up_camera			
+						//heading - perfect heading is 0
+						IF variablec = 4
+							heading_score = 100
+						ENDIF	 
+						IF variablec = 3
+							heading_score = 75
+						ENDIF	 
+						IF variablec = 2
+							heading_score = 50
+						ENDIF	 
+						IF variablec = 1
+							heading_score = 25
+						ENDIF	 
+						IF variablec = 0
+							heading_score = 0
+						ENDIF	 
 
-						IF NOT f1_print_top_scores_flag = 2
-							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						overall_score = position_score + heading_score				
+						overall_score /= 2  
+						IF position_score = 0
+							overall_score = 0
+						ENDIF	
+						IF variablec = 0
+							overall_score = 0
+						ENDIF	
+						
+
+						//losing points for hitting cones 
+						GOSUB damage_cones_calcs
+
+						//checking overall score is greater than 0 and clearing prints
+						GOSUB checking_overall_score
+
+						//checking overall score against the best score at present
+						IF overall_score > f1_the360_best_score  	
+							f1_old_score = f1_the360_best_score 
+							f1_the360_best_score = overall_score
+							f1_print_top_scores_flag = 1
+							GOSUB f1_medal_check
+						ELSE
+							f1_which_medal_displayed = 0	
+						ENDIF 	
+					
+						//opening next level
+						IF f1_which_missions_are_open_flag = 1
+							IF overall_score > 69
+								f1_print_top_scores_flag = 2
+								f1_which_missions_are_open_flag = 2
 								instructor_car_dead_flag = 2
-								GOTO after_scores_360																		  
-							ENDIF 									    
+								f1_last_played = 2
+							ENDIF
 						ENDIF
 
-						//displaying scores
-						GOSUB display_head_pos_dam_text				   
+						//printing scores onscreen
+						timera = 0
+						the_360_scores_loop:
+							WAIT 0												    
 
-						//checking if player has skipped watching the scores
-						GOSUB skip_scores
-						IF finished_watching_scores = 1
-							GOTO after_scores_360
+							//changing camera position 
+							GOSUB setting_up_camera			
+
+							IF NOT f1_print_top_scores_flag = 2
+								//checking player hasnt left car
+								
+								IF IS_JAPANESE_VERSION
+									IF IS_BUTTON_PRESSED PAD1 CROSS
+										instructor_car_dead_flag = 2
+										GOTO after_scores_360																		  
+									ENDIF 									    
+								ELSE
+									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+										instructor_car_dead_flag = 2
+										GOTO after_scores_360																		  
+									ENDIF 									    
+								ENDIF
+							ENDIF
+
+							//displaying scores
+							GOSUB display_head_pos_dam_text				   
+
+							//checking if player has skipped watching the scores
+							GOSUB skip_scores
+							IF finished_watching_scores = 1
+								GOTO after_scores_360
+							ENDIF
+						GOTO the_360_scores_loop											    
+
+						//reseting for another try
+						after_scores_360:
+						GOSUB mini_cleanup
+						
+						GOSUB deleting_cones
+																			
+						IF instructor_car_dead_flag = 2 
+							CLEAR_PRINTS
+							GOTO noticeboard_setup
+						ELSE
+							GOTO refresh_360 
 						ENDIF
-					GOTO the_360_scores_loop											    
-
-					//reseting for another try
-					after_scores_360:
-					GOSUB mini_cleanup
-					 
-					GOSUB deleting_cones
-																		  
-					IF instructor_car_dead_flag = 2 
-						CLEAR_PRINTS
-						GOTO noticeboard_setup
-					ELSE
-						GOTO refresh_360 
 					ENDIF
 				ENDIF
 			ENDIF
@@ -1071,10 +1274,17 @@ IF mission_selection = 2
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_180																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_180																		  
+								ENDIF 	
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_180																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 					
 						//displaying scores
@@ -1333,10 +1543,17 @@ OR mission_selection = 4
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_whip_and_terminate																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_whip_and_terminate																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_whip_and_terminate																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 
 						//displaying scores
@@ -1578,10 +1795,17 @@ IF mission_selection = 5
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_pop_control																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_pop_control																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_pop_control																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 		
 						//displaying scores
@@ -1859,10 +2083,17 @@ OR mission_selection = 7
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_burn_lap																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_burn_lap																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_burn_lap																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 						
 						//displaying scores
@@ -2104,10 +2335,17 @@ OR mission_selection = 9
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_cone_coil																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_cone_coil																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_cone_coil																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 					
 						//displaying scores
@@ -2402,10 +2640,17 @@ IF mission_selection = 10
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_90																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_90																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_90																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 						
 						//displaying scores
@@ -2660,10 +2905,17 @@ IF mission_selection = 11
 
 							IF NOT f1_print_top_scores_flag = 2
 								//checking player hasnt left car
-								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-									instructor_car_dead_flag = 2
-									GOTO after_scores_wheelie_weave																		  
-								ENDIF 									    
+								IF IS_JAPANESE_VERSION
+									IF IS_BUTTON_PRESSED PAD1 CROSS
+										instructor_car_dead_flag = 2
+										GOTO after_scores_wheelie_weave																		  
+									ENDIF 									    
+								ELSE
+									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+										instructor_car_dead_flag = 2
+										GOTO after_scores_wheelie_weave																		  
+									ENDIF 									    
+								ENDIF
 							ENDIF
 
 							//displaying scores
@@ -2894,10 +3146,17 @@ OR mission_selection = 13
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_spin_go																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_spin_go																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_spin_go																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 					
 						//displaying scores
@@ -3172,10 +3431,17 @@ IF mission_selection = 14
 
 							IF NOT f1_print_top_scores_flag = 2
 								//checking player hasnt left car
-								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-									instructor_car_dead_flag = 2
-									GOTO after_scores_pit_technique																		  
-								ENDIF 									    
+								IF IS_JAPANESE_VERSION
+									IF IS_BUTTON_PRESSED PAD1 CROSS
+										instructor_car_dead_flag = 2
+										GOTO after_scores_pit_technique																		  
+									ENDIF 									    
+								ELSE
+									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+										instructor_car_dead_flag = 2
+										GOTO after_scores_pit_technique																		  
+									ENDIF 									    
+								ENDIF
 							ENDIF
 
 							//displaying scores
@@ -3568,10 +3834,17 @@ IF mission_selection = 15
 
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_swift_escape																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_swift_escape																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_swift_escape																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 		
 						//displaying scores
@@ -3814,10 +4087,17 @@ IF mission_selection = 16
 					
 						IF NOT f1_print_top_scores_flag = 2
 							//checking player hasnt left car
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-								instructor_car_dead_flag = 2
-								GOTO after_scores_city_slicking																		  
-							ENDIF 									    
+							IF IS_JAPANESE_VERSION
+								IF IS_BUTTON_PRESSED PAD1 CROSS
+									instructor_car_dead_flag = 2
+									GOTO after_scores_city_slicking																		  
+								ENDIF 									    
+							ELSE
+								IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+									instructor_car_dead_flag = 2
+									GOTO after_scores_city_slicking																		  
+								ENDIF 									    
+							ENDIF
 						ENDIF
 
 						//displaying scores
@@ -3897,6 +4177,7 @@ ENDIF
 mission_failed_dskool:
 CLEAR_PRINTS
 IF instructor_car_dead_flag = 1
+OR NOT IS_PLAYER_PLAYING player1
 	PRINT_BIG M_FAIL 5000 1
 ENDIF
 
@@ -4722,41 +5003,81 @@ has_car_started:////////////////////////////////////////////////////////////////
 			GET_CAR_SPEED instructor_car instructor_car_speed 
 		ENDIF
 	ENDIF
-	IF IS_BUTTON_PRESSED PAD1 CROSS 
-	OR IS_BUTTON_PRESSED PAD1 SQUARE
-		IF instructor_car_speed > 0.1
-			CLEAR_PRINTS
-			IF mission_selection = 10
-			OR mission_selection = 12
-			OR mission_selection = 13
-			OR mission_selection = 5
-			OR mission_selection = 3
-			OR mission_selection = 4 
-				
-				DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
-				SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
-			ENDIF 
-			IF mission_selection = 15
-			OR mission_selection = 8
-			OR mission_selection = 9
-			OR mission_selection = 2
-			OR mission_selection = 1
-				DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
-				SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
-			ENDIF 
+	IF IS_XBOX_VERSION
+		IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1 
+		OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+			IF instructor_car_speed > 0.1
+				CLEAR_PRINTS
+				IF mission_selection = 10
+				OR mission_selection = 12
+				OR mission_selection = 13
+				OR mission_selection = 5
+				OR mission_selection = 3
+				OR mission_selection = 4 
+					
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
+					SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
+				ENDIF 
+				IF mission_selection = 15
+				OR mission_selection = 8
+				OR mission_selection = 9
+				OR mission_selection = 2
+				OR mission_selection = 1
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
+					SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
+				ENDIF 
 
-			IF mission_selection = 6
-			OR mission_selection = 7
-			OR mission_selection = 16
-				DISPLAY_ONSCREEN_TIMER car_timer TIMER_UP
-			ENDIF 
-			IF mission_selection = 14
-				IF NOT IS_CAR_DEAD dummy_car1
-					SET_CAR_FORWARD_SPEED dummy_car1 6.0
-					SET_CAR_TEMP_ACTION dummy_car1 TEMPACT_GOFORWARD 864000000	
+				IF mission_selection = 6
+				OR mission_selection = 7
+				OR mission_selection = 16
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_UP
+				ENDIF 
+				IF mission_selection = 14
+					IF NOT IS_CAR_DEAD dummy_car1
+						SET_CAR_FORWARD_SPEED dummy_car1 6.0
+						SET_CAR_TEMP_ACTION dummy_car1 TEMPACT_GOFORWARD 864000000	
+					ENDIF
 				ENDIF
+				car_started = 1
 			ENDIF
-			car_started = 1
+		ENDIF
+	ELSE
+		IF IS_BUTTON_PRESSED PAD1 CROSS 
+		OR IS_BUTTON_PRESSED PAD1 SQUARE
+			IF instructor_car_speed > 0.1
+				CLEAR_PRINTS
+				IF mission_selection = 10
+				OR mission_selection = 12
+				OR mission_selection = 13
+				OR mission_selection = 5
+				OR mission_selection = 3
+				OR mission_selection = 4 
+					
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
+					SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
+				ENDIF 
+				IF mission_selection = 15
+				OR mission_selection = 8
+				OR mission_selection = 9
+				OR mission_selection = 2
+				OR mission_selection = 1
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN
+					SET_TIMER_BEEP_COUNTDOWN_TIME car_timer 3 
+				ENDIF 
+
+				IF mission_selection = 6
+				OR mission_selection = 7
+				OR mission_selection = 16
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_UP
+				ENDIF 
+				IF mission_selection = 14
+					IF NOT IS_CAR_DEAD dummy_car1
+						SET_CAR_FORWARD_SPEED dummy_car1 6.0
+						SET_CAR_TEMP_ACTION dummy_car1 TEMPACT_GOFORWARD 864000000	
+					ENDIF
+				ENDIF
+				car_started = 1
+			ENDIF
 		ENDIF
 	ENDIF
 RETURN/////////////////////////////////////////////////////////////////////////////////////
@@ -4773,6 +5094,11 @@ freeze_car_pos://///////////////////////////////////////////////////////////////
 	FREEZE_CAR_POSITION instructor_car TRUE
 	FREEZE_ONSCREEN_TIMER TRUE
 	REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DRIVING_AWARD_TRACK_START
+	IF IS_JAPANESE_VERSION
+		WHILE IS_BUTTON_PRESSED PAD1 CROSS
+			WAIT 0
+		ENDWHILE
+	ENDIF
 RETURN/////////////////////////////////////////////////////////////////////////////////////
 
 position_score_calcs://////////////////////////////////////////////////////////////////////
@@ -5147,14 +5473,27 @@ RETURN
 
 skip_scores:///////////////////////////////////////////////////////////////////////////////
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS
-		IF button_pressed = 1
-			button_pressed = 0
-			finished_watching_scores = 1
+	IF IS_JAPANESE_VERSION
+		IF IS_BUTTON_PRESSED PAD1 CIRCLE
+			IF button_pressed = 1
+				button_pressed = 0
+				finished_watching_scores = 1
+			ENDIF
+		ELSE
+			IF button_pressed = 0
+				button_pressed = 1
+			ENDIF
 		ENDIF
 	ELSE
-		IF button_pressed = 0
-			button_pressed = 1
+		IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF button_pressed = 1
+				button_pressed = 0
+				finished_watching_scores = 1
+			ENDIF
+		ELSE
+			IF button_pressed = 0
+				button_pressed = 1
+			ENDIF
 		ENDIF
 	ENDIF
 RETURN/////////////////////////////////////////////////////////////////////////////////////

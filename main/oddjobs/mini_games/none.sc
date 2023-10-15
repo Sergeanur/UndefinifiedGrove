@@ -432,7 +432,7 @@ none_frontend_loop://///////////////////////////////////////////////////////////
 	DRAW_SPRITE 2 480.0 336.0 -320.0 -224.0 150 150 150 255
 	DRAW_SPRITE 2 160.0 336.0 320.0 -224.0 150 150 150 255
 
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 		IF pad1_cross_pressed = 0
 			++ pad1_cross_pressed
@@ -1133,7 +1133,7 @@ DRAW_SPRITE 2 480.0 112.0 -320.0 224.0 150 150 150 255
 DRAW_SPRITE 2 480.0 336.0 -320.0 -224.0 150 150 150 255 
 DRAW_SPRITE 2 160.0 336.0 320.0 -224.0 150 150 150 255 
 
-IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 	quit_game = 1
 ENDIF
 
@@ -1225,7 +1225,7 @@ if new_high_score > -1
 		pad1_dpaddown_pressed = game_timer - 250
 	ENDIF
 	
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 		IF pad1_cross_pressed = 0
 			++ input_letter
@@ -1358,13 +1358,11 @@ DRAW_SPRITE 2 160.0 336.0 320.0 -224.0 150 150 150 255
 
 if new_high_score = -1
 	
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-	OR IS_BUTTON_PRESSED PAD1 SQUARE
-	OR IS_BUTTON_PRESSED PAD1 CIRCLE
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		GOTO none_frontend_loop
 	endif
 
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 		IF pad1_cross_pressed = 0
 			++ pad1_cross_pressed
 			GOTO none_frontend_loop
@@ -1392,7 +1390,11 @@ setup_text_none:////////////////////////////////////////////////////////////////
 	set_text_proportional on
 	set_text_background off
 	set_text_dropshadow 0 0 0 0 180
-	set_text_font FONT_SPACEAGE
+	IF IS_JAPANESE_VERSION
+		set_text_font FONT_STANDARD
+	ELSE
+		set_text_font FONT_SPACEAGE
+	ENDIF
 return//////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -379,24 +379,49 @@ IF startexbike_flag = 1
 
 			gym_TIMERC ++
 
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Quit the bike entirely.
-            AND gym_TIMERC > 20
-				CLEAR_HELP
-				DELETE_MENU main_menu_bike
-				levelbar_bike = 0
-				GOTO bike_quit_back
-		   	ENDIF 
+			IF IS_JAPANESE_VERSION
 
-			IF IS_BUTTON_PRESSED PAD1 CROSS
-	
-				CLEAR_HELP
+				IF IS_BUTTON_PRESSED PAD1 CROSS  // Quit the bike entirely.
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bike
+					levelbar_bike = 0
+					GOTO bike_quit_back
+				ENDIF 
 
-				GET_MENU_ITEM_SELECTED main_menu_bike levelbar_bike
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+		
+					CLEAR_HELP
 
-				levelbar_bike++
-                DELETE_MENU main_menu_bike
-				GOTO bike_out_of_loop
-		   	ENDIF 
+					GET_MENU_ITEM_SELECTED main_menu_bike levelbar_bike
+
+					levelbar_bike++
+					DELETE_MENU main_menu_bike
+					GOTO bike_out_of_loop
+				ENDIF 
+			
+			ELSE
+
+				IF IS_BUTTON_PRESSED PAD1 TRIANGLE  // Quit the bike entirely.
+				AND gym_TIMERC > 20
+					CLEAR_HELP
+					DELETE_MENU main_menu_bike
+					levelbar_bike = 0
+					GOTO bike_quit_back
+				ENDIF 
+
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+		
+					CLEAR_HELP
+
+					GET_MENU_ITEM_SELECTED main_menu_bike levelbar_bike
+
+					levelbar_bike++
+					DELETE_MENU main_menu_bike
+					GOTO bike_out_of_loop
+				ENDIF 
+
+			ENDIF
 		ENDWHILE
 
 		bike_out_of_loop:

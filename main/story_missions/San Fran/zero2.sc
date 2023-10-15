@@ -403,7 +403,7 @@ main_sub_function_zero2:
 
 	SET_ENABLE_RC_DETONATE_ON_CONTACT FALSE
 	SET_ENABLE_RC_DETONATE FALSE
-	SET_CAR_HEALTH rc_playerbaron_zero2 1100	
+	SET_CAR_HEALTH rc_playerbaron_zero2 900	
 	SET_CAR_PROOFS rc_playerbaron_zero2 FALSE TRUE TRUE FALSE FALSE
    //	SET_CAR_PROOFS CarID Bulletproof Flameproof Explosionproof Collisionproof MeleeWeaponproof
  //	SET_CAR_PROOFS CarID Bulletproof Flameproof Explosionproof Collisionproof MeleeWeaponproof
@@ -456,7 +456,7 @@ main_sub_function_zero2:
 		
 	    CREATE_RANDOM_CHAR_AS_DRIVER car_enemy_vans_zero2[index_zero2] char_drivers_zero2[index_zero2]
 		GIVE_WEAPON_TO_CHAR char_drivers_zero2[index_zero2] WEAPONTYPE_MICRO_UZI 500
-		SET_CHAR_ACCURACY char_drivers_zero2[index_zero2] 100
+		SET_CHAR_ACCURACY char_drivers_zero2[index_zero2] 80
 	   
 		SET_LOAD_COLLISION_FOR_CAR_FLAG car_enemy_vans_zero2[index_zero2] FALSE
 
@@ -468,7 +468,7 @@ main_sub_function_zero2:
 			
 			CREATE_RANDOM_CHAR_AS_PASSENGER car_enemy_vans_zero2[index_zero2] 0 char_3_buddy_with_MICRO_UZI[index_zero2]
 			GIVE_WEAPON_TO_CHAR char_3_buddy_with_MICRO_UZI[index_zero2] WEAPONTYPE_MICRO_UZI 500 
-			SET_CHAR_ACCURACY char_3_buddy_with_MICRO_UZI[index_zero2] 100
+			SET_CHAR_ACCURACY char_3_buddy_with_MICRO_UZI[index_zero2] 80
 
 			SET_CHAR_DECISION_MAKER char_3_buddy_with_MICRO_UZI[index_zero2] dm_baddies_zero2
 			SET_CHAR_DECISION_MAKER char_drivers_zero2[index_zero2] dm_baddies_zero2
@@ -696,11 +696,20 @@ main_sub_function_zero2:
 			
 
 			IF NOT IS_CAR_DEAD rc_playerbaron_zero2
-				IF IS_BUTTON_PRESSED PAD1 CROSS 
-					timer_time_limit-=45.0
-					timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
-					timer_time_limit_converted_float*=100.0
-					timer_time_limit_converted_int =# timer_time_limit_converted_float
+				IF IS_XBOX_VERSION
+					IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1 
+						timer_time_limit-=45.0
+						timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
+						timer_time_limit_converted_float*=100.0
+						timer_time_limit_converted_int =# timer_time_limit_converted_float
+					ENDIF
+				ELSE
+					IF IS_BUTTON_PRESSED PAD1 CROSS 
+						timer_time_limit-=45.0
+						timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
+						timer_time_limit_converted_float*=100.0
+						timer_time_limit_converted_int =# timer_time_limit_converted_float
+					ENDIF
 				ENDIF
 
 				GET_CAR_COORDINATES rc_playerbaron_zero2 coord_redbaron_x coord_redbaron_y coord_redbaron_z  
@@ -1082,70 +1091,138 @@ main_sub_function_zero2:
 									flag_self_destruct_zero2 = 1 
 								ENDIF
 
-								IF IS_BUTTON_PRESSED PAD1 CIRCLE
-						 			  flag_main_sub_function_zero2 = 0
-									  flag_fly_next_to_transmittor_zero2 = 0
-									  flag_heli_landing_cutscene_zero2 = 0
-									  flag_fly_back_to_player_zero2 = 0
-									  flag_mission_zero2_passed = 0
-									  flag_mission_zero2_failed = 1
-									  SET_PLAYER_CONTROL player1 OFF
+								IF IS_XBOX_VERSION
+									IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+										flag_main_sub_function_zero2 = 0
+										flag_fly_next_to_transmittor_zero2 = 0
+										flag_heli_landing_cutscene_zero2 = 0
+										flag_fly_back_to_player_zero2 = 0
+										flag_mission_zero2_passed = 0
+										flag_mission_zero2_failed = 1
+										SET_PLAYER_CONTROL player1 OFF
 
-									  PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
-									  PRINT_BIG M_FAIL 5000 1
-									  SET_CAR_HEALTH rc_playerbaron_zero2 1
-									  CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
+										PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+										PRINT_BIG M_FAIL 5000 1
+										SET_CAR_HEALTH rc_playerbaron_zero2 1
+										CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
 
-  									  IF NOT IS_CHAR_DEAD scplayer
-									  	IF IS_CHAR_IN_ANY_CAR scplayer
-									  		WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
+										IF NOT IS_CHAR_DEAD scplayer
+											IF IS_CHAR_IN_ANY_CAR scplayer
+												WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
 
-									  	ELSE
-									  		SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
+											ELSE
+												SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
 
-									  	ENDIF
-									  	SET_CHAR_HEADING scplayer 90.0
-									  ENDIF
+											ENDIF
+											SET_CHAR_HEADING scplayer 90.0
+										ENDIF
 
 
 
-									  ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+										ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
 
-									  LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
-									  WHILE NOT HAS_MISSION_AUDIO_LOADED 1
-									  	WAIT 0
-									  ENDWHILE  
+										LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
+										WHILE NOT HAS_MISSION_AUDIO_LOADED 1
+											WAIT 0
+										ENDWHILE  
 
-									  PLAY_MISSION_AUDIO 1
-									  WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
-									  		WAIT 0
- 									  ENDWHILE
+										PLAY_MISSION_AUDIO 1
+										WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
+												WAIT 0
+										ENDWHILE
 
-									 REMOVE_RC_BUGGY
-								  //	WAIT 1000
-									SET_FADING_COLOUR 0 0 0
-									DO_FADE 1000 FADE_OUT
-								
-									WHILE GET_FADING_STATUS
-										WAIT 0
-									ENDWHILE
-						
-
-								  	
-									LOAD_SCENE -2245.0264 126.8950 34.3047 
-									WAIT 1000
+										REMOVE_RC_BUGGY
+									//	WAIT 1000
+										SET_FADING_COLOUR 0 0 0
+										DO_FADE 1000 FADE_OUT
 									
-									DO_FADE 1000 FADE_IN
+										WHILE GET_FADING_STATUS
+											WAIT 0
+										ENDWHILE
+							
 
-									WHILE GET_FADING_STATUS
-										WAIT 0
-									ENDWHILE 
+										
+										LOAD_SCENE -2245.0264 126.8950 34.3047 
+										WAIT 1000
+										
+										DO_FADE 1000 FADE_IN
 
-									  
-   			   						RETURN 
-									  			
-									 
+										WHILE GET_FADING_STATUS
+											WAIT 0
+										ENDWHILE 
 
+										
+										RETURN 
+													
+										
+
+									ENDIF
+								ELSE
+									IF IS_BUTTON_PRESSED PAD1 CIRCLE
+										flag_main_sub_function_zero2 = 0
+										flag_fly_next_to_transmittor_zero2 = 0
+										flag_heli_landing_cutscene_zero2 = 0
+										flag_fly_back_to_player_zero2 = 0
+										flag_mission_zero2_passed = 0
+										flag_mission_zero2_failed = 1
+										SET_PLAYER_CONTROL player1 OFF
+
+										PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+										PRINT_BIG M_FAIL 5000 1
+										SET_CAR_HEALTH rc_playerbaron_zero2 1
+										CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
+
+										IF NOT IS_CHAR_DEAD scplayer
+											IF IS_CHAR_IN_ANY_CAR scplayer
+												WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
+
+											ELSE
+												SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
+
+											ENDIF
+											SET_CHAR_HEADING scplayer 90.0
+										ENDIF
+
+
+
+										ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+
+										LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
+										WHILE NOT HAS_MISSION_AUDIO_LOADED 1
+											WAIT 0
+										ENDWHILE  
+
+										PLAY_MISSION_AUDIO 1
+										WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
+												WAIT 0
+										ENDWHILE
+
+										REMOVE_RC_BUGGY
+									//	WAIT 1000
+										SET_FADING_COLOUR 0 0 0
+										DO_FADE 1000 FADE_OUT
+									
+										WHILE GET_FADING_STATUS
+											WAIT 0
+										ENDWHILE
+							
+
+										
+										LOAD_SCENE -2245.0264 126.8950 34.3047 
+										WAIT 1000
+										
+										DO_FADE 1000 FADE_IN
+
+										WHILE GET_FADING_STATUS
+											WAIT 0
+										ENDWHILE 
+
+										
+										RETURN 
+													
+										
+
+									ENDIF
 								ENDIF
 							ENDIF
 						ENDIF
@@ -1405,12 +1482,21 @@ land_plane_zero2:
 
 	IF NOT IS_CAR_DEAD rc_playerbaron_zero2
 		GET_CAR_SPEED rc_playerbaron_zero2 speed_rc_playerbaron_zero2
+		IF IS_XBOX_VERSION
+				IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+					timer_time_limit-=45.0
+					timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
+					timer_time_limit_converted_float*=100.0
+					timer_time_limit_converted_int =# timer_time_limit_converted_float
+				ENDIF
+		ELSE
 				IF IS_BUTTON_PRESSED PAD1 CROSS
 					timer_time_limit-=45.0
 					timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
 					timer_time_limit_converted_float*=100.0
 					timer_time_limit_converted_int =# timer_time_limit_converted_float
 				ENDIF
+		ENDIF
 
 
 		IF return_city_zero2 = LEVEL_LOSANGELES
@@ -1437,82 +1523,162 @@ land_plane_zero2:
 						flag_self_destruct_zero2 = 1 
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 CIRCLE
-			 			  flag_main_sub_function_zero2 = 0
-						  flag_fly_next_to_transmittor_zero2 = 0
-						  flag_heli_landing_cutscene_zero2 = 0
-						  flag_fly_back_to_player_zero2 = 0
-						  flag_mission_zero2_passed = 0
-						  flag_mission_zero2_failed = 1
-						  SET_PLAYER_CONTROL player1 OFF
-						  PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+					IF IS_XBOX_VERSION
+						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							flag_main_sub_function_zero2 = 0
+							flag_fly_next_to_transmittor_zero2 = 0
+							flag_heli_landing_cutscene_zero2 = 0
+							flag_fly_back_to_player_zero2 = 0
+							flag_mission_zero2_passed = 0
+							flag_mission_zero2_failed = 1
+							SET_PLAYER_CONTROL player1 OFF
+							PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
 
 
-						  PRINT_BIG M_FAIL 5000 1
-						  SET_CAR_HEALTH rc_playerbaron_zero2 1
+							PRINT_BIG M_FAIL 5000 1
+							SET_CAR_HEALTH rc_playerbaron_zero2 1
 
 
-							
-							CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
+								
+								CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
 
-						  IF NOT IS_CHAR_DEAD scplayer
-						  	IF IS_CHAR_IN_ANY_CAR scplayer
-						  		WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
+							IF NOT IS_CHAR_DEAD scplayer
+								IF IS_CHAR_IN_ANY_CAR scplayer
+									WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
 
-						  	ELSE
-						  		SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
+								ELSE
+									SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
 
-						  	ENDIF
-						  	SET_CHAR_HEADING scplayer 90.0
-						  ENDIF
+								ENDIF
+								SET_CHAR_HEADING scplayer 90.0
+							ENDIF
 
 
 
-						  ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+							ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
 
-							EXPLODE_CAR rc_playerbaron_zero2
-							EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
 
-							EXPLODE_CAR rc_playerbaron_zero2
-							EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
 
-						  LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
-						  WHILE NOT HAS_MISSION_AUDIO_LOADED 1
-						  	WAIT 0
-						  ENDWHILE  
-
-						  PLAY_MISSION_AUDIO 1
-						  WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
-						  		WAIT 0
-						  ENDWHILE
-
-							
-						   REMOVE_RC_BUGGY
-
-						  //	WAIT 1000
-							SET_FADING_COLOUR 0 0 0
-							DO_FADE 1000 FADE_OUT
-						
-							WHILE GET_FADING_STATUS
+							LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
+							WHILE NOT HAS_MISSION_AUDIO_LOADED 1
 								WAIT 0
+							ENDWHILE  
+
+							PLAY_MISSION_AUDIO 1
+							WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
+									WAIT 0
 							ENDWHILE
-				
 
-						  	
-							LOAD_SCENE -2245.0264 126.8950 34.3047 
-							WAIT 1000
+								
+							REMOVE_RC_BUGGY
+
+							//	WAIT 1000
+								SET_FADING_COLOUR 0 0 0
+								DO_FADE 1000 FADE_OUT
 							
-							DO_FADE 1000 FADE_IN
+								WHILE GET_FADING_STATUS
+									WAIT 0
+								ENDWHILE
+					
 
-							WHILE GET_FADING_STATUS
+								
+								LOAD_SCENE -2245.0264 126.8950 34.3047 
+								WAIT 1000
+								
+								DO_FADE 1000 FADE_IN
+
+								WHILE GET_FADING_STATUS
+									WAIT 0
+								ENDWHILE 
+
+							
+							RETURN 
+										
+							
+
+						ENDIF
+					ELSE
+						IF IS_BUTTON_PRESSED PAD1 CIRCLE
+							flag_main_sub_function_zero2 = 0
+							flag_fly_next_to_transmittor_zero2 = 0
+							flag_heli_landing_cutscene_zero2 = 0
+							flag_fly_back_to_player_zero2 = 0
+							flag_mission_zero2_passed = 0
+							flag_mission_zero2_failed = 1
+							SET_PLAYER_CONTROL player1 OFF
+							PRINT_NOW ( ZER2_8 ) 5000 1 // You crashed your plane!
+
+
+							PRINT_BIG M_FAIL 5000 1
+							SET_CAR_HEALTH rc_playerbaron_zero2 1
+
+
+								
+								CLEAR_ONSCREEN_COUNTER timer_time_limit_converted_int
+
+							IF NOT IS_CHAR_DEAD scplayer
+								IF IS_CHAR_IN_ANY_CAR scplayer
+									WARP_CHAR_FROM_CAR_TO_COORD scplayer -2244.4438 136.8633 34.3203
+
+								ELSE
+									SET_CHAR_COORDINATES scplayer -2244.4438 136.8633 34.3203
+
+								ENDIF
+								SET_CHAR_HEADING scplayer 90.0
+							ENDIF
+
+
+
+							ADD_EXPLOSION  stuck_x_zero2 stuck_y_zero2 stuck_z_zero2 EXPLOSION_GRENADE
+
+								EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
+
+								EXPLODE_CAR rc_playerbaron_zero2
+								EXPLODE_CAR rc_playerbaron_zero2
+
+							LOAD_MISSION_AUDIO 1 SOUND_ZER1_EC  //  Noooooooooo!
+							WHILE NOT HAS_MISSION_AUDIO_LOADED 1
 								WAIT 0
-							ENDWHILE 
+							ENDWHILE  
 
-						   
-  						RETURN 
-						  			
-						 
+							PLAY_MISSION_AUDIO 1
+							WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
+									WAIT 0
+							ENDWHILE
 
+								
+							REMOVE_RC_BUGGY
+
+							//	WAIT 1000
+								SET_FADING_COLOUR 0 0 0
+								DO_FADE 1000 FADE_OUT
+							
+								WHILE GET_FADING_STATUS
+									WAIT 0
+								ENDWHILE
+					
+
+								
+								LOAD_SCENE -2245.0264 126.8950 34.3047 
+								WAIT 1000
+								
+								DO_FADE 1000 FADE_IN
+
+								WHILE GET_FADING_STATUS
+									WAIT 0
+								ENDWHILE 
+
+							
+							RETURN 
+										
+							
+
+						ENDIF
 					ENDIF
 				ENDIF
 			ENDIF

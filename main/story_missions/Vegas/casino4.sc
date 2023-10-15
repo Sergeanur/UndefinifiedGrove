@@ -3359,6 +3359,8 @@ AND	cas4_played_cutscene_flag = 1
  				
  				//SMOKER POS stand
 				CLEAR_PRINTS
+				CLEAR_MISSION_AUDIO cas4_audio_slot2
+				CLEAR_MISSION_AUDIO cas4_audio_slot1
 				SET_FIXED_CAMERA_POSITION -21.46 2335.33 23.52 0.0 0.0 0.0				 
 				POINT_CAMERA_AT_POINT -49.14 2356.75 26.09 JUMP_CUT
 				

@@ -642,11 +642,11 @@ shop_clothes_inner:
 
 				IF shop_progress_clothes = 0
 
-				    IF IS_BUTTON_PRESSED PAD1 CROSS
+				    IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						shop_progress_clothes = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_clothes = 2
 					ENDIF
 
@@ -655,7 +655,7 @@ shop_clothes_inner:
 				// ******* PLAYER HAS PRESSED CROSS IN FIRST MENU TO SELECT TORSO LEGS ETC ********
 				IF shop_progress_clothes = 1	
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						GET_MENU_ITEM_ACCEPTED main_menu_shops shop_main_item_picked_shops
 
@@ -681,7 +681,7 @@ shop_clothes_inner:
 				// ******************** PLAYER HAS PRESSED TRIANGLE IN FIRST MENU *****************
 				IF shop_progress_clothes = 2
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF main_menu_drawn_shops = 1
 							DELETE_MENU main_menu_shops
@@ -776,14 +776,14 @@ shop_clothes_inner:
 
 					// quit to menu 1						
 					
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_clothes = 1
 					ENDIF
 
 
 					// View Item
 				   	
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 					
 						player_in_changeroom_clothes = 0
 
@@ -832,7 +832,7 @@ shop_clothes_inner:
 				//	Player has pressed triangle in second menu							
 				IF shop_progress_clothes = 1	
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						shop_progress_clothes = 0
 						flag_clothes = 5
@@ -856,7 +856,7 @@ shop_clothes_inner:
 				
 				IF shop_progress_clothes = 2
 	                IF HAS_MISSION_AUDIO_FINISHED 4
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							shop_progress_clothes = 3
 						ENDIF
 					ENDIF
@@ -946,7 +946,7 @@ shop_clothes_inner:
 
 				IF shop_progress_clothes = 0
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						CLEAR_THIS_PRINT (SHOPNO)
 						CLEAR_THIS_PRINT (CLTHNO2)
 						CLEAR_THIS_PRINT (CLTHNO1)
@@ -957,7 +957,7 @@ shop_clothes_inner:
 						shop_progress_clothes = 1
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						
 						CLEAR_THIS_PRINT (SHOPNO)
 						CLEAR_THIS_PRINT (CLTHNO2)
@@ -1003,7 +1003,7 @@ shop_clothes_inner:
 				// ************************** PLAYER HAS PRESSED CROSS TO BUY ITEM ****************		
 				IF shop_progress_clothes = 1		
 					
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS				
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT				
 
 						STORE_SCORE player1 players_money
 													
@@ -1646,7 +1646,11 @@ RETURN
 
 bought_text_clothes:
 	IF bought_menu_drawn_shops = 0
-		CREATE_MENU CLOTCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU CLOTCHO 29.0 48.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		ELSE
+			CREATE_MENU CLOTCHO 29.0 25.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+		ENDIF
 		SET_MENU_COLUMN_ORIENTATION bought_menu_shops 0 FO_LEFT
 		SET_MENU_COLUMN bought_menu_shops 0 CLOTCHO BOUGHT DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN_ORIENTATION bought_menu_shops 1 FO_RIGHT 

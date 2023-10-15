@@ -1635,7 +1635,7 @@ shop_mod_shop1_inner:
 							GOSUB draw_main_menu_carmod 					
 						ENDIF
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							car_colour1_change_mods = 0
 							car_colour2_change_mods = 0
@@ -1678,7 +1678,7 @@ shop_mod_shop1_inner:
 
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							control_flag_mod = 1
 						ENDIF
 					
@@ -1687,7 +1687,7 @@ shop_mod_shop1_inner:
 					// PLAYER HAS PRESSED TO QUIT OUT OF THE WHOLE MENU
 					IF control_flag_mod = 1
 					
-						IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 							IF main_menu_drawn_shops = 1
 								DELETE_MENU main_menu_shops
@@ -1786,7 +1786,7 @@ shop_mod_shop1_inner:
 				
 					IF control_flag_mod = 5
 					
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							IF main_menu_drawn_shops = 1
 								DELETE_MENU main_menu_shops
@@ -1829,14 +1829,14 @@ shop_mod_shop1_inner:
 
 					IF control_flag_mod = 0
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							flag_no_money_shops = 0
 							flag_bought_item_already_shops = 0
 							flag_car_same_colour = 0
 							control_flag_mod = 1
 						ENDIF
 
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							IF upgradetype[upgrade_meun1_selected] = MOD_GARAGE_CAR_COLOUR
 
@@ -1882,7 +1882,7 @@ shop_mod_shop1_inner:
 					// QUIT FROM MENU 2 BACK TO MENU 1
 					IF control_flag_mod = 1
 					
-						IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 							IF sub_menu_drawn_shops = 1
 								DELETE_MENU sub_menu_shops
@@ -1929,7 +1929,7 @@ shop_mod_shop1_inner:
 
 					IF control_flag_mod = 0
 
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							IF upgradetype[upgrade_meun1_selected] = MOD_GARAGE_CAR_COLOUR  // Tells me either colour1 or colour2
 								control_flag_mod = 1
@@ -2034,11 +2034,11 @@ shop_mod_shop1_inner:
 
 						ENDIF 
 
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 							control_flag_mod = 3
 						ENDIF
 						
-						IF IS_BUTTON_PRESSED PAD1 CROSS
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 							
 							CLEAR_THIS_PRINT (CLTHNO2)
 							CLEAR_THIS_PRINT (COLORNO)
@@ -2055,7 +2055,7 @@ shop_mod_shop1_inner:
 
 					IF control_flag_mod = 3
 					
-						IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 							IF upgradetype[upgrade_meun1_selected] = MOD_GARAGE_CAR_COLOUR 
 								
@@ -2128,7 +2128,7 @@ shop_mod_shop1_inner:
 
 					IF control_flag_mod = 4
 
-						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+						IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 							STORE_SCORE player1 players_money
 
@@ -2521,21 +2521,24 @@ draw_main_menu_carmod:
 		PRINT_HELP_FOREVER MODH1 
 		
 		// Create and populate the main menu.
-
-		IF current_Language = LANGUAGE_ENGLISH
-			CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU UPGRADE 29.0 155.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
 		ELSE
-			IF current_Language = LANGUAGE_FRENCH
-				CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
+			IF current_Language = LANGUAGE_ENGLISH
+				CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
 			ELSE
-				IF current_Language = LANGUAGE_GERMAN
+				IF current_Language = LANGUAGE_FRENCH
 					CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
 				ELSE
-					IF current_Language = LANGUAGE_ITALIAN
-						CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
+					IF current_Language = LANGUAGE_GERMAN
+						CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
 					ELSE
-						IF current_Language = LANGUAGE_SPANISH
+						IF current_Language = LANGUAGE_ITALIAN
 							CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
+						ELSE
+							IF current_Language = LANGUAGE_SPANISH
+								CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT main_menu_shops
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
@@ -2559,20 +2562,24 @@ draw_sub_menu_mod:
 
         // Create and populate the secondary menu.
 		
-		IF current_Language = LANGUAGE_ENGLISH
-			CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU UPGRADE 29.0 155.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
 		ELSE
-			IF current_Language = LANGUAGE_FRENCH
-				CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
+			IF current_Language = LANGUAGE_ENGLISH
+				CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
 			ELSE
-				IF current_Language = LANGUAGE_GERMAN
+				IF current_Language = LANGUAGE_FRENCH
 					CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
 				ELSE
-					IF current_Language = LANGUAGE_ITALIAN
-						CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
+					IF current_Language = LANGUAGE_GERMAN
+						CREATE_MENU UPGRADE 29.0 165.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
 					ELSE
-						IF current_Language = LANGUAGE_SPANISH
+						IF current_Language = LANGUAGE_ITALIAN
 							CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
+						ELSE
+							IF current_Language = LANGUAGE_SPANISH
+								CREATE_MENU UPGRADE 29.0 145.0 186.0 1 TRUE TRUE FO_LEFT sub_menu_shops
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
@@ -3587,20 +3594,24 @@ draw_menu4_mod_shop:
 
 		PRINT_HELP_FOREVER MODH5
 
-		IF current_Language = LANGUAGE_ENGLISH
-			CREATE_MENU UPGRADE 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU UPGRADE 29.0 155.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
 		ELSE
-			IF current_Language = LANGUAGE_FRENCH
-				CREATE_MENU UPGRADE 29.0 165.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
+			IF current_Language = LANGUAGE_ENGLISH
+				CREATE_MENU UPGRADE 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
 			ELSE
-				IF current_Language = LANGUAGE_GERMAN
+				IF current_Language = LANGUAGE_FRENCH
 					CREATE_MENU UPGRADE 29.0 165.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
 				ELSE
-					IF current_Language = LANGUAGE_ITALIAN
-						CREATE_MENU UPGRADE 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
+					IF current_Language = LANGUAGE_GERMAN
+						CREATE_MENU UPGRADE 29.0 165.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
 					ELSE
-						IF current_Language = LANGUAGE_SPANISH
+						IF current_Language = LANGUAGE_ITALIAN
 							CREATE_MENU UPGRADE 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
+						ELSE
+							IF current_Language = LANGUAGE_SPANISH
+								CREATE_MENU UPGRADE 29.0 145.0 93.0 2 TRUE TRUE FO_LEFT forth_menu_shops
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
@@ -3849,20 +3860,24 @@ RETURN
 draw_third_menu_shops:
 	IF third_menu_drawn_shops = 0
 		PRINT_HELP_FOREVER MODH2 
-		IF current_Language = LANGUAGE_ENGLISH
-			CREATE_MENU UPGRADE 29.0 145.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
+		IF IS_XBOX_VERSION
+			CREATE_MENU UPGRADE 29.0 155.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
 		ELSE
-			IF current_Language = LANGUAGE_FRENCH
-				CREATE_MENU UPGRADE 29.0 165.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
+			IF current_Language = LANGUAGE_ENGLISH
+				CREATE_MENU UPGRADE 29.0 145.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
 			ELSE
-				IF current_Language = LANGUAGE_GERMAN
+				IF current_Language = LANGUAGE_FRENCH
 					CREATE_MENU UPGRADE 29.0 165.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
 				ELSE
-					IF current_Language = LANGUAGE_ITALIAN
-						CREATE_MENU UPGRADE 29.0 145.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
+					IF current_Language = LANGUAGE_GERMAN
+						CREATE_MENU UPGRADE 29.0 165.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
 					ELSE
-						IF current_Language = LANGUAGE_SPANISH
+						IF current_Language = LANGUAGE_ITALIAN
 							CREATE_MENU UPGRADE 29.0 145.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
+						ELSE
+							IF current_Language = LANGUAGE_SPANISH
+								CREATE_MENU UPGRADE 29.0 145.0 93.0 2 FALSE TRUE FO_LEFT third_menu_shops
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF

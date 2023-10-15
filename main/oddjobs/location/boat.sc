@@ -551,22 +551,42 @@ WAIT 0
 			ENDIF
 
 			//triggering mission
-			IF IS_BUTTON_PRESSED PAD1 CROSS
-				/*
-				IF boat_mission_selection = 4 
-				OR boat_mission_selection = 7 
-				OR boat_mission_selection = 9 
-				OR boat_mission_selection = 13 
-					boat_control_flag = 1	
-				ELSE */
-					IF boatpb_flag < 4
-						boatpb_flag = 3
-					ENDIF
-					////WRITE_DEBUG xpressed
-					CLEAR_MISSION_AUDIO 3
-					sfx_video = 0
-					GOTO boat_start_mission
-				
+			IF IS_JAPANESE_VERSION
+				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					/*
+					IF boat_mission_selection = 4 
+					OR boat_mission_selection = 7 
+					OR boat_mission_selection = 9 
+					OR boat_mission_selection = 13 
+						boat_control_flag = 1	
+					ELSE */
+						IF boatpb_flag < 4
+							boatpb_flag = 3
+						ENDIF
+						////WRITE_DEBUG xpressed
+						CLEAR_MISSION_AUDIO 3
+						sfx_video = 0
+						GOTO boat_start_mission
+					
+				ENDIF
+			ELSE
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+					/*
+					IF boat_mission_selection = 4 
+					OR boat_mission_selection = 7 
+					OR boat_mission_selection = 9 
+					OR boat_mission_selection = 13 
+						boat_control_flag = 1	
+					ELSE */
+						IF boatpb_flag < 4
+							boatpb_flag = 3
+						ENDIF
+						////WRITE_DEBUG xpressed
+						CLEAR_MISSION_AUDIO 3
+						sfx_video = 0
+						GOTO boat_start_mission
+					
+				ENDIF
 			ENDIF
 
 			//opening all the missions
@@ -575,8 +595,14 @@ WAIT 0
 			ENDIF
 
 			//quitting the boat school
-			IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-				GOTO mission_boat_failed
+			IF IS_JAPANESE_VERSION
+				IF IS_BUTTON_PRESSED PAD1 CROSS
+					GOTO mission_boat_failed
+				ENDIF
+			ELSE
+				IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					GOTO mission_boat_failed
+				ENDIF
 			ENDIF
 
 		ENDIF
@@ -754,26 +780,49 @@ IF boat_mission_selection = 1
 		   //	WRITE_DEBUG_WITH_INT sd boat_damagetaken
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
-		OR IS_BUTTON_PRESSED PAD1 SQUARE
-			SYNC_WATER
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+				SYNC_WATER
 
-			boat_gold = boat_accelerate_gold
-			boat_silver = boat_accelerate_silver
-			boat_bronze = boat_accelerate_bronze
-		   
-			boat_accelerate = 1
+				boat_gold = boat_accelerate_gold
+				boat_silver = boat_accelerate_silver
+				boat_bronze = boat_accelerate_bronze
 			
-			boat_timer = 0 // 30 secs
-		    CLEAR_ONSCREEN_TIMER boat_timer
+				boat_accelerate = 1
+				
+				boat_timer = 0 // 30 secs
+				CLEAR_ONSCREEN_TIMER boat_timer
 
-		   	DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+				
+				GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
+				GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
+				timera = 0 
+
+			ENDIF	
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 SQUARE
+				SYNC_WATER
+
+				boat_gold = boat_accelerate_gold
+				boat_silver = boat_accelerate_silver
+				boat_bronze = boat_accelerate_bronze
 			
-			GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
-	 		GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
-			timera = 0 
+				boat_accelerate = 1
+				
+				boat_timer = 0 // 30 secs
+				CLEAR_ONSCREEN_TIMER boat_timer
 
-		ENDIF	
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+				
+				GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
+				GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
+				timera = 0 
+
+			ENDIF	
+		ENDIF
 
 	ENDIF
 
@@ -890,12 +939,20 @@ IF boat_mission_selection = 1
 						GOSUB boat_setting_up_camera			
 
 						//checking player hasnt left car
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-							instructor_boat_dead_flag = 2
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
-							GOTO after_scores_boat_accelerate																		  
-						ENDIF 									    
-					
+						IF IS_JAPANESE_VERSION
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_accelerate																		  
+							ENDIF 									    
+						ELSE
+							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_accelerate																		  
+							ENDIF 									    
+						ENDIF
+
 						//displaying scores
 						GOSUB display_overall_boat_score_text				   
 
@@ -1064,23 +1121,43 @@ IF boat_mission_selection = 2
 
 		PRINT_NOW BOAT_B4 4000 1  
 		
-		IF IS_BUTTON_PRESSED PAD1 CROSS
-		OR IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
 
-			SYNC_WATER
-			boat_gold = boat_simplecircuit_gold
-			boat_silver = boat_simplecircuit_silver
-			boat_bronze = boat_simplecircuit_bronze
+				SYNC_WATER
+				boat_gold = boat_simplecircuit_gold
+				boat_silver = boat_simplecircuit_silver
+				boat_bronze = boat_simplecircuit_bronze
 
-			boat_simplecircuit = 5
-		  //	ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+				boat_simplecircuit = 5
+			//	ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
-			boat_timer = 0 
-		   
-			CLEAR_ONSCREEN_TIMER boat_timer
+				boat_timer = 0 
+			
+				CLEAR_ONSCREEN_TIMER boat_timer
 
-		   	DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
-		ENDIF	
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+			ENDIF	
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 SQUARE
+
+				SYNC_WATER
+				boat_gold = boat_simplecircuit_gold
+				boat_silver = boat_simplecircuit_silver
+				boat_bronze = boat_simplecircuit_bronze
+
+				boat_simplecircuit = 5
+			//	ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+
+				boat_timer = 0 
+			
+				CLEAR_ONSCREEN_TIMER boat_timer
+
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+			ENDIF	
+		ENDIF
 	ENDIF
 
 
@@ -1377,13 +1454,22 @@ IF boat_mission_selection = 2
 						GOSUB boat_setting_up_camera			
 
 						//checking player hasnt left car
-						If IS_BUTTON_PRESSED PAD1 TRIANGLE
+						IF IS_JAPANESE_VERSION
+							If IS_BUTTON_PRESSED PAD1 CROSS
 
-							instructor_boat_dead_flag = 2
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
-							GOTO after_scores_boat_simplecircuit																		  
-						ENDIF 									    
-					
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_simplecircuit																		  
+							ENDIF 									    
+						ELSE
+							If IS_BUTTON_PRESSED PAD1 TRIANGLE
+
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_simplecircuit																		  
+							ENDIF 									    
+						ENDIF
+
 						//displaying scores
 						GOSUB display_overall_boat_score_text				   
 
@@ -1595,21 +1681,39 @@ boat_refresh_slalom:
 	IF boat_slalom = 0
 		PRINT_NOW BOAT_C1 4000 1
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
-		OR IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
 
-			SYNC_WATER
-			boat_gold = boat_slalom_gold
-			boat_silver = boat_slalom_silver
-			boat_bronze = boat_slalom_bronze
-			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+				SYNC_WATER
+				boat_gold = boat_slalom_gold
+				boat_silver = boat_slalom_silver
+				boat_bronze = boat_slalom_bronze
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
-			boat_slalom = 5
-			boat_timer = 0 
-		   	CLEAR_ONSCREEN_TIMER boat_timer
+				boat_slalom = 5
+				boat_timer = 0 
+				CLEAR_ONSCREEN_TIMER boat_timer
 
-		   	DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
-		ENDIF	
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+			ENDIF	
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 SQUARE
+
+				SYNC_WATER
+				boat_gold = boat_slalom_gold
+				boat_silver = boat_slalom_silver
+				boat_bronze = boat_slalom_bronze
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+
+				boat_slalom = 5
+				boat_timer = 0 
+				CLEAR_ONSCREEN_TIMER boat_timer
+
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+			ENDIF	
+		ENDIF
 	ENDIF
 
 
@@ -2115,11 +2219,19 @@ boat_refresh_slalom:
 						GOSUB boat_setting_up_camera			
 
 						//checking player hasnt left car
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-							instructor_boat_dead_flag = 2
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
-							GOTO after_scores_boat_slalom																		  
-						ENDIF 									    
+						IF IS_JAPANESE_VERSION
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_slalom																		  
+							ENDIF 									    
+						ELSE
+							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_slalom																		  
+							ENDIF 									    
+						ENDIF
 					
 						//displaying scores
 						GOSUB display_overall_boat_score_text				   
@@ -2298,33 +2410,63 @@ IF boat_mission_selection = 4
 	IF boat_skijump = 0
 		PRINT_NOW BOAT_D1 4000 1
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
-		OR IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
 
-			SYNC_WATER
-			boat_gold = boat_skijump_gold
-			boat_silver = boat_skijump_silver
-			boat_bronze = boat_skijump_bronze
+				SYNC_WATER
+				boat_gold = boat_skijump_gold
+				boat_silver = boat_skijump_silver
+				boat_bronze = boat_skijump_bronze
 
-		    CLEAR_ONSCREEN_TIMER boat_timer
-			boat_timer = 46000 // 41 secs
-			boat_skijump = 1
+				CLEAR_ONSCREEN_TIMER boat_timer
+				boat_timer = 46000 // 41 secs
+				boat_skijump = 1
 
-		    DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_DOWN BOAT_T1
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_DOWN BOAT_T1
 
-			REMOVE_BLIP buoyl_b
-			REMOVE_BLIP buoyr_b
-			ADD_BLIP_FOR_OBJECT boat_buoys[0] buoyl_b
-			ADD_BLIP_FOR_OBJECT boat_buoys[1] buoyr_b
-			 CHANGE_BLIP_COLOUR buoyl_b YELLOW
-				 CHANGE_BLIP_COLOUR buoyr_b YELLOW
+				REMOVE_BLIP buoyl_b
+				REMOVE_BLIP buoyr_b
+				ADD_BLIP_FOR_OBJECT boat_buoys[0] buoyl_b
+				ADD_BLIP_FOR_OBJECT boat_buoys[1] buoyr_b
+				CHANGE_BLIP_COLOUR buoyl_b YELLOW
+					CHANGE_BLIP_COLOUR buoyr_b YELLOW
 
-			GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
-	 		GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
-			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+				GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
+				GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
 
-		ENDIF	
+			ENDIF	
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 SQUARE
+
+				SYNC_WATER
+				boat_gold = boat_skijump_gold
+				boat_silver = boat_skijump_silver
+				boat_bronze = boat_skijump_bronze
+
+				CLEAR_ONSCREEN_TIMER boat_timer
+				boat_timer = 46000 // 41 secs
+				boat_skijump = 1
+
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_DOWN BOAT_T1
+
+				REMOVE_BLIP buoyl_b
+				REMOVE_BLIP buoyr_b
+				ADD_BLIP_FOR_OBJECT boat_buoys[0] buoyl_b
+				ADD_BLIP_FOR_OBJECT boat_buoys[1] buoyr_b
+				CHANGE_BLIP_COLOUR buoyl_b YELLOW
+					CHANGE_BLIP_COLOUR buoyr_b YELLOW
+
+				GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
+				GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+
+
+			ENDIF	
+		ENDIF
 	ENDIF
 
 	IF boat_skijump = 1
@@ -2493,11 +2635,19 @@ IF boat_mission_selection = 4
 						GOSUB boat_setting_up_camera			
 
 						//checking player hasnt left car
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-							instructor_boat_dead_flag = 2
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
-							GOTO after_scores_boat_skijump																		  
-						ENDIF 									    
+						IF IS_JAPANESE_VERSION
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_skijump																		  
+							ENDIF 									    
+						ELSE
+							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_skijump																		  
+							ENDIF 									    
+						ENDIF
 					
 						//displaying scores
 						GOSUB display_overall_boat_score_text				   
@@ -2705,23 +2855,43 @@ boat_refresh_hover:
 	IF boat_hover = 0
 		PRINT_NOW BOAT_C1 4000 1
 
-		IF IS_BUTTON_PRESSED PAD1 CROSS
-		OR IS_BUTTON_PRESSED PAD1 SQUARE
+		IF IS_XBOX_VERSION
+			IF IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			OR IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
 
-			SYNC_WATER
-			boat_gold = boat_hover_gold
-			boat_silver = boat_hover_silver
-			boat_bronze = boat_hover_bronze
-			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+				SYNC_WATER
+				boat_gold = boat_hover_gold
+				boat_silver = boat_hover_silver
+				boat_bronze = boat_hover_bronze
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
-			boat_hover = 5
-			boat_timer = 0 
-		   	CLEAR_ONSCREEN_TIMER boat_timer
+				boat_hover = 5
+				boat_timer = 0 
+				CLEAR_ONSCREEN_TIMER boat_timer
 
-		   	DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
-			FREEZE_CAR_POSITION instructor_boat FALSE
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+				FREEZE_CAR_POSITION instructor_boat FALSE
 
-		ENDIF	
+			ENDIF	
+		ELSE
+			IF IS_BUTTON_PRESSED PAD1 CROSS
+			OR IS_BUTTON_PRESSED PAD1 SQUARE
+
+				SYNC_WATER
+				boat_gold = boat_hover_gold
+				boat_silver = boat_hover_silver
+				boat_bronze = boat_hover_bronze
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+
+				boat_hover = 5
+				boat_timer = 0 
+				CLEAR_ONSCREEN_TIMER boat_timer
+
+				DISPLAY_ONSCREEN_TIMER_WITH_STRING boat_timer TIMER_UP BOAT_T1
+				FREEZE_CAR_POSITION instructor_boat FALSE
+
+			ENDIF	
+		ENDIF
 	ENDIF
 
 
@@ -3592,11 +3762,19 @@ boat_refresh_hover:
 						GOSUB boat_setting_up_camera			
 
 						//checking player hasnt left car
-						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-							instructor_boat_dead_flag = 2
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
-							GOTO after_scores_boat_hover																		  
-						ENDIF 									    
+						IF IS_JAPANESE_VERSION
+							IF IS_BUTTON_PRESSED PAD1 CROSS
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_hover																		  
+							ENDIF 									    
+						ELSE
+							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+								instructor_boat_dead_flag = 2
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
+								GOTO after_scores_boat_hover																		  
+							ENDIF 									    
+						ENDIF
 					
 						//displaying scores
 						GOSUB display_overall_boat_score_text				   
@@ -3780,14 +3958,27 @@ RETURN
 //
 
 skip_boat_scores:
-	IF IS_BUTTON_PRESSED PAD1 CROSS
-		IF boat_button_pressed = 1
-			boat_button_pressed = 0
-			finished_watching_boat_scores = 1
+	IF IS_JAPANESE_VERSION
+		IF IS_BUTTON_PRESSED PAD1 CIRCLE
+			IF boat_button_pressed = 1
+				boat_button_pressed = 0
+				finished_watching_boat_scores = 1
+			ENDIF
+		ELSE
+			IF boat_button_pressed = 0
+				boat_button_pressed = 1
+			ENDIF
 		ENDIF
 	ELSE
-		IF boat_button_pressed = 0
-			boat_button_pressed = 1
+		IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF boat_button_pressed = 1
+				boat_button_pressed = 0
+				finished_watching_boat_scores = 1
+			ENDIF
+		ELSE
+			IF boat_button_pressed = 0
+				boat_button_pressed = 1
+			ENDIF
 		ENDIF
 	ENDIF
 	
@@ -3844,6 +4035,12 @@ freeze_boat_pos:
 			FREEZE_CAR_POSITION instructor_boat FALSE
 
 		 ENDIF
+	ENDIF
+
+	IF IS_JAPANESE_VERSION
+		WHILE IS_BUTTON_PRESSED PAD1 CROSS
+			WAIT 0
+		ENDWHILE
 	ENDIF
 
 RETURN
@@ -4754,6 +4951,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				BREAK
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_FLOAT 193.0 75.0 boat_58 dboat_which_score_displayed 2
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
+				BREAK
 				BREAK
 			ENDSWITCH
 		
@@ -4783,6 +4983,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.45 1.35
 				DISPLAY_TEXT_WITH_FLOAT 93.0 75.0 boat_62 dboat_accelerate_qualify 1
 				SET_TEXT_SCALE 0.52 1.45
+				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_62 dboat_accelerate_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -4840,6 +5043,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 276.0 75.0 boat_58 dboat_which_score_displayed 2
+				BREAK
 			ENDSWITCH
 		
 		ELSE
@@ -4870,6 +5076,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.45 1.35
 				DISPLAY_TEXT_WITH_FLOAT 88.0 75.0 boat_62 dboat_simplecircuit_qualify 1
 				SET_TEXT_SCALE 0.52 1.45
+				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_62 dboat_simplecircuit_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -4927,6 +5136,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
+				BREAK
 			ENDSWITCH
 
 		ELSE
@@ -4958,6 +5170,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.45 1.35
 				DISPLAY_TEXT_WITH_FLOAT 103.0 75.0 boat_63 dboat_slalom_qualify 1
 				SET_TEXT_SCALE 0.52 1.45
+				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_63 dboat_slalom_qualify 1
 				BREAK
 			ENDSWITCH
 			
@@ -5014,6 +5229,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_NUMBER 160.0 75.0 boat_60 boat_skijump_best_score
 				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_NUMBER 260.0 75.0 boat_60 boat_skijump_best_score
+				BREAK
 			ENDSWITCH
 
 		ELSE
@@ -5039,6 +5257,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				BREAK
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_NUMBER 103.0 75.0 boat_61 boat_skijump_qualify
+				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_NUMBER 227.0 75.0 boat_61 boat_skijump_qualify
 				BREAK
 			ENDSWITCH
 		ENDIF
@@ -5100,6 +5321,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			CASE LANGUAGE_SPANISH
 				DISPLAY_TEXT_WITH_FLOAT 190.0 75.0 boat_58 dboat_which_score_displayed 2
 				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 271.0 75.0 boat_58 dboat_which_score_displayed 2
+				BREAK
 			ENDSWITCH
 		ELSE
 			
@@ -5129,6 +5353,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 				SET_TEXT_SCALE 0.45 1.35
 				DISPLAY_TEXT_WITH_FLOAT 103.0 75.0 boat_63 dboat_hover_qualify 1
 				SET_TEXT_SCALE 0.52 1.45
+				BREAK
+			CASE 5
+				DISPLAY_TEXT_WITH_FLOAT 247.0 75.0 boat_63 dboat_hover_qualify 1
 				BREAK
 			ENDSWITCH
 		ENDIF
@@ -5195,6 +5422,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 		CASE LANGUAGE_SPANISH
 			DISPLAY_TEXT 216.0 375.0 BOAT_64
 			BREAK
+		CASE 5
+			DISPLAY_TEXT 299.0 375.0 BOAT_64
+			BREAK
 		ENDSWITCH
 	ENDIF
 	
@@ -5220,6 +5450,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			BREAK
 		CASE LANGUAGE_SPANISH
 			DISPLAY_TEXT 280.0 375.0 BOAT_57
+			BREAK
+		CASE 5
+			DISPLAY_TEXT 297.0 375.0 BOAT_57
 			BREAK
 		ENDSWITCH
 	ENDIF
@@ -5247,6 +5480,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 		CASE LANGUAGE_SPANISH
 			DISPLAY_TEXT 286.0 375.0 BOAT_56
 			BREAK
+		CASE 5
+			DISPLAY_TEXT 296.0 375.0 BOAT_56
+			BREAK
 		ENDSWITCH
 	ENDIF
 	
@@ -5272,6 +5508,9 @@ boat_drawing_medal://///////////////////////////////////////////////////////////
 			BREAK
 		CASE LANGUAGE_SPANISH
 			DISPLAY_TEXT 300.0 375.0 BOAT_55
+			BREAK
+		CASE 5
+			DISPLAY_TEXT 295.0 375.0 BOAT_55
 			BREAK
 		ENDSWITCH
 	ENDIF
@@ -5335,6 +5574,7 @@ boat_watching_demo://///////////////////////////////////////////////////////////
 		////WRITE_DEBUG playback//test!
 		//loading in car recordings.
 		IF NOT IS_CAR_DEAD instructor_boat
+
 
 			IF boat_mission_selection = 1
 			IF NOT HAS_CAR_RECORDING_BEEN_LOADED 752
@@ -6090,6 +6330,9 @@ RETURN
 boat_getlanguage:
 	//boat_language = 0 // set to English by default
 	GET_CURRENT_LANGUAGE boat_language
+	IF IS_JAPANESE_VERSION
+		boat_language = 5
+	ENDIF
 RETURN
 
 	

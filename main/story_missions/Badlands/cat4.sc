@@ -631,6 +631,7 @@ streaming_otb_clerk:
 								ADD_SPRITE_BLIP_FOR_COORD coord_spray_shop_x coord_spray_shop_y coord_spray_shop_z RADAR_SPRITE_SPRAY blip_paint_and_spray_cat4  
 							ENDIF
 
+							DISABLE_ALL_ENTRY_EXITS TRUE
 
 							IF flag_dont_make_cat_leave_car = 0
 								IF flag_display_text_cat4 = 1
@@ -809,6 +810,7 @@ streaming_otb_clerk:
 						ADD_BLIP_FOR_COORD coord_hiding_spot_x_cat4 coord_hiding_spot_y_cat4 coord_hiding_spot_z_cat4 blip_hiding_spot
 						CHANGE_BLIP_COLOUR blip_hiding_spot YELLOW
 
+						DISABLE_ALL_ENTRY_EXITS FALSE
 						LOAD_MISSION_AUDIO 1 SOUND_CATX_DE
 						WHILE NOT HAS_MISSION_AUDIO_LOADED 1
 							WAIT 0
@@ -3070,7 +3072,7 @@ getaway_cat4:
 								ADD_BLIP_FOR_COORD coord_hiding_spot_x_cat4 coord_hiding_spot_y_cat4 coord_hiding_spot_z_cat4 blip_hiding_spot
 								CHANGE_BLIP_COLOUR blip_hiding_spot YELLOW
 
-									
+								DISABLE_ALL_ENTRY_EXITS FALSE
 
 							ENDIF
 						ENDIF
@@ -3083,6 +3085,7 @@ getaway_cat4:
 									//	ADD_BLIP_FOR_COORD coord_spray_shop_x coord_spray_shop_y coord_spray_shop_z blip_paint_and_spray_cat4
 										ADD_SPRITE_BLIP_FOR_COORD coord_spray_shop_x coord_spray_shop_y coord_spray_shop_z RADAR_SPRITE_SPRAY blip_paint_and_spray_cat4 
 										PRINT_NOW CAT4_32 5000 1   // GET TO THE PAINT AND SPRAY
+										DISABLE_ALL_ENTRY_EXITS TRUE
 									ENDIF
 								ENDIF
 							ENDIF
@@ -3427,6 +3430,7 @@ RETURN
 										ADD_BLIP_FOR_COORD coord_hiding_spot_x_cat4 coord_hiding_spot_y_cat4 coord_hiding_spot_z_cat4 blip_hiding_spot
 										CHANGE_BLIP_COLOUR blip_hiding_spot YELLOW
 										PRINT_NOW ( CAT4_13 ) 10000 1		// Get back to the hideout
+										DISABLE_ALL_ENTRY_EXITS FALSE
 									ENDIF
 								ENDIF
 
@@ -3434,6 +3438,7 @@ RETURN
 									IF NOT DOES_BLIP_EXIST blip_paint_and_spray_cat4
 										ADD_SPRITE_BLIP_FOR_COORD coord_spray_shop_x coord_spray_shop_y coord_spray_shop_z RADAR_SPRITE_SPRAY blip_paint_and_spray_cat4  
 										PRINT_NOW CAT4_32 5000 1   // GET TO THE PAINT AND SPRAY
+										DISABLE_ALL_ENTRY_EXITS TRUE
 									ENDIF
 								ENDIF
 							ENDIF
@@ -3773,6 +3778,7 @@ mission_cleanup_cat4:
 	CLEAR_HELP
 	flag_player_on_mission = 0
 	DISPLAY_RADAR ON
+	DISABLE_ALL_ENTRY_EXITS FALSE
 	 SWITCH_ENTRY_EXIT genOTB TRUE
 	IF IS_PLAYER_PLAYING player1 
 	 	SHUT_PLAYER_UP player1 FALSE

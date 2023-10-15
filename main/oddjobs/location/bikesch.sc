@@ -294,7 +294,7 @@ bs_mission_selection_loop:
 			ENDWHILE
 		
 			//triggering mission
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 				IF playback_flag < 4
 					playback_flag = 3
 				ENDIF
@@ -336,7 +336,7 @@ bs_mission_selection_loop:
 		ENDIF
 
 		//quitting the driving school
-		IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 			CLEAR_MISSION_AUDIO 3
 			sfx_video = 0 
 			GOTO mission_failed_bskool
@@ -518,125 +518,249 @@ IF mission_selection = 1
 				ENDIF
 
 				//checking car is stopped or not
-				IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-				OR NOT IS_BUTTON_PRESSED PAD1 SQUARE
-				OR NOT IS_CHAR_IN_CAR scplayer instructor_bike
-				OR car_timer = 0
+				IF IS_XBOX_VERSION
+					IF NOT IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+					OR NOT IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+					OR NOT IS_CHAR_IN_CAR scplayer instructor_bike
+					OR car_timer = 0
 
-					GOSUB bs_freeze_car_pos
-				
-					//CALCULATIONS FOR PLAYER SCORE
-					 
-					//position score 
-					GOSUB bs_position_score_calcs					 
-
-					//heading - perfect heading is 0
-					IF variablec = 4
-						heading_score = 100
-					ENDIF	 
-					IF variablec = 3
-						heading_score = 75
-					ENDIF	 
-					IF variablec = 2
-						heading_score = 50
-					ENDIF	 
-					IF variablec = 1
-						heading_score = 25
-					ENDIF	 
-					IF variablec = 0
-						heading_score = 0
-					ENDIF	 
-
-					overall_score = position_score + heading_score				
-					overall_score /= 2  
-					IF position_score = 0
-						overall_score = 0
-					ENDIF	 
-
-					//losing points for hitting cones 
-					GOSUB bs_damage_cones_calcs
-
-					//checking overall score is greater than 0 and clearing prints
-					GOSUB bs_checking_overall_score
-
-					//checking overall score against the best score at present
-					IF overall_score > bs_the360_best_score  	
-						bs_old_score = bs_the360_best_score 
-						bs_the360_best_score = overall_score
-						bs_print_top_scores_flag = 1
-						GOSUB bs_medal_check
-						IF bs_which_medal_displayed = 4 // gold
-							IF bs_the360_goldachieved = 0
-								bs_the360_goldachieved = 1
-								bs_the360_silverachieved = 1
-								bs_the360_bronzeachieved = 1
-							ENDIF
-						ENDIF
-
-						IF bs_which_medal_displayed = 3 // silver
-							IF bs_the360_silverachieved = 0
-								bs_the360_silverachieved = 1
-								bs_the360_bronzeachieved = 1
-							ENDIF
-						ENDIF
+						GOSUB bs_freeze_car_pos
+					
+						//CALCULATIONS FOR PLAYER SCORE
 						
-						IF bs_which_medal_displayed = 2 //bronze
-						   IF bs_the360_bronzeachieved = 0
-								bs_the360_bronzeachieved = 1
+						//position score 
+						GOSUB bs_position_score_calcs					 
+
+						//heading - perfect heading is 0
+						IF variablec = 4
+							heading_score = 100
+						ENDIF	 
+						IF variablec = 3
+							heading_score = 75
+						ENDIF	 
+						IF variablec = 2
+							heading_score = 50
+						ENDIF	 
+						IF variablec = 1
+							heading_score = 25
+						ENDIF	 
+						IF variablec = 0
+							heading_score = 0
+						ENDIF	 
+
+						overall_score = position_score + heading_score				
+						overall_score /= 2  
+						IF position_score = 0
+							overall_score = 0
+						ENDIF	 
+
+						//losing points for hitting cones 
+						GOSUB bs_damage_cones_calcs
+
+						//checking overall score is greater than 0 and clearing prints
+						GOSUB bs_checking_overall_score
+
+						//checking overall score against the best score at present
+						IF overall_score > bs_the360_best_score  	
+							bs_old_score = bs_the360_best_score 
+							bs_the360_best_score = overall_score
+							bs_print_top_scores_flag = 1
+							GOSUB bs_medal_check
+							IF bs_which_medal_displayed = 4 // gold
+								IF bs_the360_goldachieved = 0
+									bs_the360_goldachieved = 1
+									bs_the360_silverachieved = 1
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+
+							IF bs_which_medal_displayed = 3 // silver
+								IF bs_the360_silverachieved = 0
+									bs_the360_silverachieved = 1
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+							
+							IF bs_which_medal_displayed = 2 //bronze
+							IF bs_the360_bronzeachieved = 0
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+						ELSE
+							bs_which_medal_displayed = 0	
+						ENDIF 	
+					
+						//opening next level
+						IF bs_open_tests = 1
+							IF overall_score > 69
+								bs_print_top_scores_flag = 2
+								bs_open_tests = 2
+								instructor_bike_dead_flag = 2
+								bs_last_played ++
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BIKE_AWARD_TRACK_START
 							ENDIF
 						ENDIF
-					ELSE
-						bs_which_medal_displayed = 0	
-					ENDIF 	
-				
-					//opening next level
-					IF bs_open_tests = 1
-						IF overall_score > 69
-							bs_print_top_scores_flag = 2
-							bs_open_tests = 2
-							instructor_bike_dead_flag = 2
-							bs_last_played ++
-							REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BIKE_AWARD_TRACK_START
+
+						//printing scores onscreen
+						timera = 0 
+						WHILE timera > -1
+							
+							WAIT 0												    
+
+							//changing camera position 
+							GOSUB bs_setting_up_camera			
+
+							//checking player hasnt left car
+							IF NOT bs_print_top_scores_flag = 2
+								IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
+									instructor_bike_dead_flag = 2
+									GOTO bs_after_scores_360_xbox																		  
+								ENDIF 
+							ENDIF
+												
+							//displaying scores
+							GOSUB bs_display_head_pos_dam_text				   
+
+							//checking if player has skipped watching the scores
+							GOSUB bs_skip_scores
+							IF finished_watching_scores = 1
+								GOTO bs_after_scores_360
+							ENDIF
+						ENDWHILE											    
+
+						//reseting for another try
+						bs_after_scores_360_xbox:
+
+						GOSUB bs_mini_cleanup
+						GOSUB bs_deleting_cones
+																			
+						IF instructor_bike_dead_flag = 2 
+							GOTO bs_noticeboard_setup
+						ELSE
+							GOTO bs_refresh_360 
 						ENDIF
 					ENDIF
+				ELSE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
+					OR NOT IS_BUTTON_PRESSED PAD1 SQUARE
+					OR NOT IS_CHAR_IN_CAR scplayer instructor_bike
+					OR car_timer = 0
 
-					//printing scores onscreen
-					timera = 0 
-					WHILE timera > -1
+						GOSUB bs_freeze_car_pos
+					
+						//CALCULATIONS FOR PLAYER SCORE
 						
-						WAIT 0												    
+						//position score 
+						GOSUB bs_position_score_calcs					 
 
-						//changing camera position 
-						GOSUB bs_setting_up_camera			
+						//heading - perfect heading is 0
+						IF variablec = 4
+							heading_score = 100
+						ENDIF	 
+						IF variablec = 3
+							heading_score = 75
+						ENDIF	 
+						IF variablec = 2
+							heading_score = 50
+						ENDIF	 
+						IF variablec = 1
+							heading_score = 25
+						ENDIF	 
+						IF variablec = 0
+							heading_score = 0
+						ENDIF	 
 
-						//checking player hasnt left car
-						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						overall_score = position_score + heading_score				
+						overall_score /= 2  
+						IF position_score = 0
+							overall_score = 0
+						ENDIF	 
+
+						//losing points for hitting cones 
+						GOSUB bs_damage_cones_calcs
+
+						//checking overall score is greater than 0 and clearing prints
+						GOSUB bs_checking_overall_score
+
+						//checking overall score against the best score at present
+						IF overall_score > bs_the360_best_score  	
+							bs_old_score = bs_the360_best_score 
+							bs_the360_best_score = overall_score
+							bs_print_top_scores_flag = 1
+							GOSUB bs_medal_check
+							IF bs_which_medal_displayed = 4 // gold
+								IF bs_the360_goldachieved = 0
+									bs_the360_goldachieved = 1
+									bs_the360_silverachieved = 1
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+
+							IF bs_which_medal_displayed = 3 // silver
+								IF bs_the360_silverachieved = 0
+									bs_the360_silverachieved = 1
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+							
+							IF bs_which_medal_displayed = 2 //bronze
+							IF bs_the360_bronzeachieved = 0
+									bs_the360_bronzeachieved = 1
+								ENDIF
+							ENDIF
+						ELSE
+							bs_which_medal_displayed = 0	
+						ENDIF 	
+					
+						//opening next level
+						IF bs_open_tests = 1
+							IF overall_score > 69
+								bs_print_top_scores_flag = 2
+								bs_open_tests = 2
 								instructor_bike_dead_flag = 2
-								GOTO bs_after_scores_360																		  
-							ENDIF 
+								bs_last_played ++
+								REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_BIKE_AWARD_TRACK_START
+							ENDIF
 						ENDIF
-				    						
-						//displaying scores
-						GOSUB bs_display_head_pos_dam_text				   
 
-						//checking if player has skipped watching the scores
-						GOSUB bs_skip_scores
-						IF finished_watching_scores = 1
-							GOTO bs_after_scores_360
+						//printing scores onscreen
+						timera = 0 
+						WHILE timera > -1
+							
+							WAIT 0												    
+
+							//changing camera position 
+							GOSUB bs_setting_up_camera			
+
+							//checking player hasnt left car
+							IF NOT bs_print_top_scores_flag = 2
+								IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
+									instructor_bike_dead_flag = 2
+									GOTO bs_after_scores_360																		  
+								ENDIF 
+							ENDIF
+												
+							//displaying scores
+							GOSUB bs_display_head_pos_dam_text				   
+
+							//checking if player has skipped watching the scores
+							GOSUB bs_skip_scores
+							IF finished_watching_scores = 1
+								GOTO bs_after_scores_360
+							ENDIF
+						ENDWHILE											    
+
+						//reseting for another try
+						bs_after_scores_360:
+
+						GOSUB bs_mini_cleanup
+						GOSUB bs_deleting_cones
+																			
+						IF instructor_bike_dead_flag = 2 
+							GOTO bs_noticeboard_setup
+						ELSE
+							GOTO bs_refresh_360 
 						ENDIF
-					ENDWHILE											    
-
-					//reseting for another try
-					bs_after_scores_360:
-
-					GOSUB bs_mini_cleanup
-					GOSUB bs_deleting_cones
-																		  
-					IF instructor_bike_dead_flag = 2 
-						GOTO bs_noticeboard_setup
-					ELSE
-						GOTO bs_refresh_360 
 					ENDIF
 				ENDIF
 			ENDIF
@@ -845,7 +969,7 @@ IF mission_selection = 2
 
 						//checking player hasnt left car
 						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								instructor_bike_dead_flag = 2
 								GOTO bs_after_scores_180																		  
 							ENDIF
@@ -1118,7 +1242,7 @@ IF mission_selection = 3
 
 						//checking player hasnt left car
 						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								instructor_bike_dead_flag = 2
 								GOTO bs_after_scores_wheelie																		  
 							ENDIF 	 
@@ -1393,7 +1517,7 @@ IF mission_selection = 5
 
 						//checking player hasnt left car
 						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								instructor_bike_dead_flag = 2
 								GOTO bs_after_scores_stoppie																		  
 							ENDIF 
@@ -1656,7 +1780,7 @@ IF mission_selection = 4
 
 						//checking player hasnt left car
 						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								instructor_bike_dead_flag = 2
 								GOTO bs_after_scores_jump_and_stop																		  
 							ENDIF 
@@ -1933,7 +2057,7 @@ IF mission_selection = 6
 
 						//checking player hasnt left car
 						IF NOT bs_print_top_scores_flag = 2
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								instructor_bike_dead_flag = 2
 								GOTO bs_after_scores_jump_and_stoppie																		  
 							ENDIF 
@@ -2736,19 +2860,37 @@ bs_has_car_started://///////////////////////////////////////////////////////////
 		ENDIF
 	ENDIF
 
-	IF IS_BUTTON_PRESSED PAD1 CROSS
-	OR IS_BUTTON_PRESSED PAD1 SQUARE
-		IF instructor_bike_speed > 0.1
-			CLEAR_PRINTS
-			IF mission_selection = 1
-			OR mission_selection = 2
-			OR mission_selection = 3
-			OR mission_selection = 5
-			OR mission_selection = 4
-			OR mission_selection = 6
-				DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN  // Time
-			ENDIF 
-			car_started = 1
+	IF IS_XBOX_VERSION
+		IF IS_BUTTON_PRESSED PAD1 RIGHTSHOULDER1
+		OR IS_BUTTON_PRESSED PAD1 LEFTSHOULDER1
+			IF instructor_bike_speed > 0.1
+				CLEAR_PRINTS
+				IF mission_selection = 1
+				OR mission_selection = 2
+				OR mission_selection = 3
+				OR mission_selection = 5
+				OR mission_selection = 4
+				OR mission_selection = 6
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN  // Time
+				ENDIF 
+				car_started = 1
+			ENDIF
+		ENDIF
+	ELSE
+		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
+		OR IS_BUTTON_PRESSED PAD1 SQUARE
+			IF instructor_bike_speed > 0.1
+				CLEAR_PRINTS
+				IF mission_selection = 1
+				OR mission_selection = 2
+				OR mission_selection = 3
+				OR mission_selection = 5
+				OR mission_selection = 4
+				OR mission_selection = 6
+					DISPLAY_ONSCREEN_TIMER car_timer TIMER_DOWN  // Time
+				ENDIF 
+				car_started = 1
+			ENDIF
 		ENDIF
 	ENDIF
 	
@@ -3086,7 +3228,7 @@ RETURN//////////////////////////////////////////////////////////////////////////
 
 bs_skip_scores:///////////////////////////////////////////////////////////////////////////////
 
-	IF IS_BUTTON_PRESSED PAD1 CROSS
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 		IF button_pressed = 1
 			button_pressed = 0
 			finished_watching_scores = 1

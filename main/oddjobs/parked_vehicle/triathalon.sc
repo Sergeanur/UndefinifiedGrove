@@ -201,6 +201,38 @@ y_scale[6] = 58.2072
 
 
 
+racer_model_triathalon[0] = wmybe
+racer_model_triathalon[1] = bmybe
+racer_model_triathalon[2] = hmybe
+racer_model_triathalon[3] = bmybe
+racer_model_triathalon[4] = hmybe
+racer_model_triathalon[5] = wmybe
+racer_model_triathalon[6] = wmybe
+racer_model_triathalon[7] = wmybell
+racer_model_triathalon[8] = wmybell
+racer_model_triathalon[9] = wmybell
+racer_model_triathalon[10] = wmybell
+racer_model_triathalon[11] = wmybell
+
+
+
+
+
+racers_car_model_triathalon[0] = mtbike
+racers_car_model_triathalon[1] = mtbike
+racers_car_model_triathalon[2] = mtbike
+racers_car_model_triathalon[3] = mtbike
+racers_car_model_triathalon[4] = mtbike
+racers_car_model_triathalon[5] = mtbike
+racers_car_model_triathalon[6] = mtbike
+racers_car_model_triathalon[7] = mtbike
+racers_car_model_triathalon[8] = mtbike
+racers_car_model_triathalon[9] = mtbike
+racers_car_model_triathalon[10] = mtbike
+racers_car_model_triathalon[11] = mtbike
+
+
+
 
 
 
@@ -222,7 +254,44 @@ IF triathalon_selection = 2
 	GOTO triathalon2
 ENDIF
 
+IF triathalon_selection = 100000
+	racer_model_triathalon[0] = wmybe
+	racer_model_triathalon[1] = bmybe
+	racer_model_triathalon[2] = hmybe
+	racer_model_triathalon[3] = bmybe
+	racer_model_triathalon[4] = hmybe
+	racer_model_triathalon[5] = wmybe
+	racer_model_triathalon[6] = wmybe
+	racer_model_triathalon[7] = wmybell
+	racer_model_triathalon[11] = wmybell
 
+	flag_help_text_triath = 0
+	flag_help_text_triath = 0
+	flag_help_text_triath = 0
+
+	racers_car_model_triathalon[1] = mtbike
+	racers_car_model_triathalon[2] = mtbike
+	racers_car_model_triathalon[3] = mtbike
+	racers_car_model_triathalon[2] = mtbike
+	racers_car_model_triathalon[3] = mtbike
+	racers_car_model_triathalon[2] = mtbike
+	racers_car_model_triathalon[3] = mtbike
+	racers_car_model_triathalon[4] = mtbike
+
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+	WAIT 0 
+ENDIF
 
 
 /////////////////////////////////////////////
@@ -591,38 +660,6 @@ triathalon1:
 	total_racers_mtbike = 9
 
    //	total_racers_mtbike = 2
-
-
-
-	racer_model_triathalon[0] = wmybe
-	racer_model_triathalon[1] = bmybe
-	racer_model_triathalon[2] = hmybe
-	racer_model_triathalon[3] = bmybe
-	racer_model_triathalon[4] = hmybe
-	racer_model_triathalon[5] = wmybe
-	racer_model_triathalon[6] = wmybe
-	racer_model_triathalon[7] = wmybell
-	racer_model_triathalon[8] = wmybell
-	racer_model_triathalon[9] = wmybell
-	racer_model_triathalon[10] = wmybell
-	racer_model_triathalon[11] = wmybell
-
-
-
-
-
-	racers_car_model_triathalon[0] = mtbike
-	racers_car_model_triathalon[1] = mtbike
-	racers_car_model_triathalon[2] = mtbike
-	racers_car_model_triathalon[3] = mtbike
-	racers_car_model_triathalon[4] = mtbike
-	racers_car_model_triathalon[5] = mtbike
-	racers_car_model_triathalon[6] = mtbike
-	racers_car_model_triathalon[7] = mtbike
-	racers_car_model_triathalon[8] = mtbike
-	racers_car_model_triathalon[9] = mtbike
-	racers_car_model_triathalon[10] = mtbike
-	racers_car_model_triathalon[11] = mtbike
 
 
 
@@ -1253,37 +1290,6 @@ triathalon2:
 	total_checkpoints_triathalon_triathalon = 104
 
 	total_racers_mtbike = 9
-
-
-	racer_model_triathalon[0] = wmybe
-	racer_model_triathalon[1] = bmybe
-	racer_model_triathalon[2] = hmybe
-	racer_model_triathalon[3] = bmybe
-	racer_model_triathalon[4] = hmybe
-	racer_model_triathalon[5] = wmybe
-	racer_model_triathalon[6] = wmybe
-	racer_model_triathalon[7] = wmybell
-	racer_model_triathalon[8] = wmybell
-	racer_model_triathalon[9] = wmybell
-	racer_model_triathalon[10] = wmybell
-	racer_model_triathalon[11] = wmybell
-
-
-
-
-
-	racers_car_model_triathalon[0] = mtbike
-	racers_car_model_triathalon[1] = mtbike
-	racers_car_model_triathalon[2] = mtbike
-	racers_car_model_triathalon[3] = mtbike
-	racers_car_model_triathalon[4] = mtbike
-	racers_car_model_triathalon[5] = mtbike
-	racers_car_model_triathalon[6] = mtbike
-	racers_car_model_triathalon[7] = mtbike
-	racers_car_model_triathalon[8] = mtbike
-	racers_car_model_triathalon[9] = mtbike
-	racers_car_model_triathalon[10] = mtbike
-	racers_car_model_triathalon[11] = mtbike
 
 
 
@@ -2494,7 +2500,7 @@ IF race_flag_triathalon > 6
 					temp_int2_tri = start_run +1
 					IF cpcounter_triathalon[a] >= start_run
 					AND cpcounter_triathalon[a] < temp_int2_tri
-						IF NOT IS_CAR_DEAD racers_mtbike[playaz_triathalon]
+						//IF NOT IS_CAR_DEAD racers_mtbike[playaz_triathalon]
 							IF IS_CHAR_IN_ANY_CAR scplayer 
 								IF out_of_car_flag_triathalon = 0
 									STORE_CAR_CHAR_IS_IN scplayer racers_mtbike[playaz_triathalon]
@@ -2548,34 +2554,9 @@ IF race_flag_triathalon > 6
 								ENDIF	*/
 		 
 							ELSE
-								IF out_of_car_flag_triathalon = 1
-									CLEAR_THIS_PRINT RACES48
-								   	REMOVE_BLIP	first_blip_triathalon
-									racer_cp_y_triathalon[a] -= 1000.0
-									c = 0
-									temp_int_triathalon = total_racers_mtbike - 1
-									ADD_BLIP_FOR_COORD racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] first_blip_triathalon
-									CHANGE_BLIP_COLOUR first_blip_triathalon RED
-									CHANGE_BLIP_DISPLAY first_blip_triathalon BLIP_ONLY
-									CHANGE_BLIP_SCALE first_blip_triathalon 3
-									IF cpcounter_triathalon[stored_checkpoint_when_not_on_bike] = total_checkpoints_triathalon_triathalon_minus_1
-								   //	AND lap_cpcounter[a] = total_laps_minus_1
-										CREATE_CHECKPOINT CHECKPOINT_ENDTUBE racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] 0.0 0.0 0.0 6.0 cp_marker_triathalon
-									ELSE
-										temp_int_triathalon = cpcounter_triathalon[stored_checkpoint_when_not_on_bike]
-										++ temp_int_triathalon
-										
-										IF cpcounter_triathalon[stored_checkpoint_when_not_on_bike] = total_checkpoints_triathalon_triathalon_minus_1
-											temp_int_triathalon = 1
-										ENDIF
-
-										CREATE_CHECKPOINT CHECKPOINT_TUBE racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] second_cp_triathalonx second_cp_triathalony second_cp_triathalonz 6.0 cp_marker_triathalon
-									ENDIF
-									out_of_car_flag_triathalon = 0
-								ENDIF
-
+								GOSUB triathalon_create_checkpoint
 							ENDIF
-						ENDIF
+						//ENDIF
 					ENDIF	// END RUNNING
 
 
@@ -2583,7 +2564,7 @@ IF race_flag_triathalon > 6
 					temp_int2_tri = start_run +1
 					IF cpcounter_triathalon[a] >= temp_int2_tri
 					AND cpcounter_triathalon[a] <= end_run
-						IF NOT IS_CAR_DEAD racers_mtbike[playaz_triathalon]
+						//IF NOT IS_CAR_DEAD racers_mtbike[playaz_triathalon]
 							IF IS_CHAR_IN_ANY_CAR scplayer 
 								IF out_of_car_flag_triathalon = 0
 									STORE_CAR_CHAR_IS_IN scplayer racers_mtbike[playaz_triathalon]
@@ -2650,7 +2631,7 @@ IF race_flag_triathalon > 6
 								ENDIF
 
 							ENDIF
-						ENDIF
+						//ENDIF
 					ENDIF	// END RUNNING
 
 
@@ -2986,17 +2967,12 @@ passed_a_checkpoint_triathalon:
 
 		IF cpcounter_triathalon[a] = 3
 			DELETE_CHAR flag_girl_triathalon
-			DELETE_CHAR spectator_triathalon[0]
-			DELETE_CHAR spectator_triathalon[1]
-			DELETE_CHAR spectator_triathalon[2]
-			DELETE_CHAR spectator_triathalon[3]
-			DELETE_CHAR spectator_triathalon[4]
-			DELETE_CHAR spectator_triathalon[5]
-			DELETE_CHAR spectator_triathalon[6]
-			DELETE_CHAR spectator_triathalon[7]
-			DELETE_CHAR spectator_triathalon[8]
-			DELETE_CHAR spectator_triathalon[9]
-			DELETE_CHAR spectator_triathalon[10]
+
+			temp_int2_tri = 0
+			WHILE NOT temp_int2_tri > 10
+				DELETE_CHAR spectator_triathalon[temp_int2_tri]
+				temp_int2_tri++
+			ENDWHILE
 
 		ENDIF
 
@@ -3269,14 +3245,35 @@ passed_a_checkpoint_triathalon:
 //GOTO exit_locate_loop_triathalon
 GOTO exit_locate_loop_triathalon
 
+triathalon_create_checkpoint:
 
+	IF out_of_car_flag_triathalon = 1
+		CLEAR_THIS_PRINT RACES48
+		REMOVE_BLIP	first_blip_triathalon
+		racer_cp_y_triathalon[a] -= 1000.0
+		c = 0
+		temp_int_triathalon = total_racers_mtbike - 1
+		ADD_BLIP_FOR_COORD racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] first_blip_triathalon
+		CHANGE_BLIP_COLOUR first_blip_triathalon RED
+		CHANGE_BLIP_DISPLAY first_blip_triathalon BLIP_ONLY
+		CHANGE_BLIP_SCALE first_blip_triathalon 3
+		IF cpcounter_triathalon[stored_checkpoint_when_not_on_bike] = total_checkpoints_triathalon_triathalon_minus_1
+		//	AND lap_cpcounter[a] = total_laps_minus_1
+			CREATE_CHECKPOINT CHECKPOINT_ENDTUBE racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] 0.0 0.0 0.0 6.0 cp_marker_triathalon
+		ELSE
+			temp_int_triathalon = cpcounter_triathalon[stored_checkpoint_when_not_on_bike]
+			++ temp_int_triathalon
+			
+			IF cpcounter_triathalon[stored_checkpoint_when_not_on_bike] = total_checkpoints_triathalon_triathalon_minus_1
+				temp_int_triathalon = 1
+			ENDIF
 
+			CREATE_CHECKPOINT CHECKPOINT_TUBE racer_cp_x_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_y_triathalon[stored_checkpoint_when_not_on_bike] racer_cp_z_triathalon[stored_checkpoint_when_not_on_bike] second_cp_triathalonx second_cp_triathalony second_cp_triathalonz 6.0 cp_marker_triathalon
+		ENDIF
+		out_of_car_flag_triathalon = 0
+	ENDIF
 
-
-
-
-
-
+RETURN
 
 // Mission triathalon failed
 

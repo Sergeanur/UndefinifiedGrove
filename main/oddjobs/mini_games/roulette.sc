@@ -309,16 +309,30 @@ roulette_script_loop:
 													get_object_coordinates roulette_table x y z
 													TASK_TURN_CHAR_TO_FACE_COORD scplayer x y z
 													
-													if IS_WIDESCREEN_ON_IN_OPTIONS
-														GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.6320 -1.9669 1.9144 x y z
-														SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
-														GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.5003 -1.3914 1.1073 x y z
-														POINT_CAMERA_AT_POINT x y z INTERPOLATION
+													if IS_XBOX_VERSION
+														if IS_WIDESCREEN_ON_IN_OPTIONS
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.5348 -2.3653 1.0906 x y z
+															SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.4623 -1.5448 0.5236 x y z
+															POINT_CAMERA_AT_POINT x y z INTERPOLATION
+														else
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.7407 -1.7668 1.4824 x y z
+															SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.6227 -1.1631 0.694 x y z
+															POINT_CAMERA_AT_POINT x y z INTERPOLATION
+														endif
 													else
-														GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.5689 -1.5476 1.8759 x y z
-														SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
-														GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.4106 -1.0626 1.0159 x y z
-														POINT_CAMERA_AT_POINT x y z INTERPOLATION
+														if IS_WIDESCREEN_ON_IN_OPTIONS
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.6320 -1.9669 1.9144 x y z
+															SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.5003 -1.3914 1.1073 x y z
+															POINT_CAMERA_AT_POINT x y z INTERPOLATION
+														else
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.5689 -1.5476 1.8759 x y z
+															SET_FIXED_CAMERA_POSITION x y z 0.0 0.0 0.0
+															GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.4106 -1.0626 1.0159 x y z
+															POINT_CAMERA_AT_POINT x y z INTERPOLATION
+														endif
 													endif
 													SET_NEAR_CLIP 0.1
 
@@ -348,6 +362,7 @@ roulette_script_loop:
 													lvar_int done_credit_speech
 													done_credit_speech = 0
 													++ flag
+													pad1_square_pressed = game_timer + 500
 													pad1_triangle_pressed = 1
 												ENDIF
 											ELSE
@@ -467,7 +482,7 @@ roulette_script_loop:
 							PRINT_HELP_FOREVER ROUHELP
 							SET_OBJECT_VISIBLE chips_stack true
 							
-							IF IS_BUTTON_PRESSED PAD1 CROSS
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 								IF pad1_cross_pressed = 0
 									if total_stake_this_round > 0
 										load_MISSION_AUDIO 4 SOUND_BANK_ROULETTE
@@ -499,7 +514,7 @@ roulette_script_loop:
 								pad1_cross_pressed = 0
 							ENDIF
 							
-							IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 								IF pad1_triangle_pressed = 0
 									++ pad1_triangle_pressed
 									roulette_flag = 0
@@ -613,7 +628,7 @@ roulette_script_loop:
 								endif
 							endif
 
-							IF IS_BUTTON_PRESSED PAD1 CROSS
+							IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 								IF pad1_cross_pressed = 0
 									pad1_cross_pressed = game_timer + 999999
 									ADD_SCORE player1 winnings_this_round
@@ -981,7 +996,7 @@ WHILE i < 151
 		IF spot_selection_y = selected_spot_y[i]
 			spot_bet = spot_bets[i]
 				
-			IF IS_BUTTON_PRESSED PAD1 SQUARE
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
  				
 				IF pad1_square_pressed < game_timer
 					
@@ -1113,7 +1128,7 @@ WHILE i < 151
 				pad1_square_pressed = game_timer//pad1_square_pressed = 0
 				square_press_timer = 500
 				
-				IF IS_BUTTON_PRESSED PAD1 CIRCLE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 					
 					IF pad1_CIRCLE_pressed < game_timer
 						

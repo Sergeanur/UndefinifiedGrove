@@ -199,13 +199,29 @@ GOSUB runco_set_camera
 
 		ENDIF
 
-		IF IS_BUTTON_PRESSED PAD2 CROSS 
+		IF IS_JAPANESE_VERSION
 
-			GOSUB runco_restore_camera
+			IF IS_BUTTON_PRESSED PAD2 CIRCLE 
 
-			CLEAR_HELP
+				GOSUB runco_restore_camera
 
-			GOTO runco_main_loop
+				CLEAR_HELP
+
+				GOTO runco_main_loop
+
+			ENDIF
+
+		ELSE
+
+			IF IS_BUTTON_PRESSED PAD2 CROSS 
+
+				GOSUB runco_restore_camera
+
+				CLEAR_HELP
+
+				GOTO runco_main_loop
+
+			ENDIF
 
 		ENDIF
 

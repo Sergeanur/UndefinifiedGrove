@@ -673,11 +673,11 @@ shop_ammunation_inner:
 																
 				IF shop_progress_ammunation = 0				
 			
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						shop_progress_ammunation = 3						
 					ENDIF
 					
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_ammunation = 1
 					ENDIF 
 
@@ -685,7 +685,7 @@ shop_ammunation_inner:
 
 				IF shop_progress_ammunation = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF main_menu_drawn_shops = 1
 							CLEAR_HELP
@@ -763,7 +763,7 @@ shop_ammunation_inner:
  				
 				IF shop_progress_ammunation = 3
 
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 					    GET_MENU_ITEM_ACCEPTED main_menu_shops main_menu_selection_ammu
 					    
@@ -818,18 +818,18 @@ shop_ammunation_inner:
 
 				IF shop_progress_ammunation = 0
 				
-					IF IS_BUTTON_PRESSED PAD1 CROSS						 
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT						 
 						shop_progress_ammunation = 2		
 					ENDIF
 
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_ammunation = 1	
 					ENDIF
 				ENDIF
 				
 				IF shop_progress_ammunation = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 
 						IF sub_menu_drawn_shops = 1
 							CLEAR_HELP
@@ -851,7 +851,7 @@ shop_ammunation_inner:
 				
 				IF shop_progress_ammunation = 2
 				    
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 					    GET_MENU_ITEM_ACCEPTED sub_menu_shops sub_menu_selection_ammu
 					   
@@ -1008,11 +1008,11 @@ shop_ammunation_inner:
 
 				IF shop_progress_ammunation = 0
 
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						shop_progress_ammunation = 5
 					ENDIF
 					
-					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						shop_progress_ammunation = 1
 					ENDIF
 										
@@ -1021,7 +1021,7 @@ shop_ammunation_inner:
 				// PLAYER DECIDED TO GO BACK TO WEAPON TYPE MENU
 				IF shop_progress_ammunation = 1
 				
-					IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 						
 						IF cost_menu_drawn_shops = 1
 							CLEAR_HELP
@@ -1103,7 +1103,7 @@ shop_ammunation_inner:
 
 				IF shop_progress_ammunation = 5
 
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 											
 						CLEAR_THIS_PRINT (AMMUA)
 						CLEAR_THIS_PRINT (SHOPNO)
@@ -1193,7 +1193,11 @@ shop_ammunation_inner:
 					ENDIF
 					
 					IF bought_menu_drawn_shops = 0
-						CREATE_MENU AMMUN 29.0 20.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+						IF IS_XBOX_VERSION
+							CREATE_MENU AMMUN 29.0 48.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+						ELSE
+							CREATE_MENU AMMUN 29.0 20.0 93.0 2 FALSE TRUE FO_LEFT bought_menu_shops
+						ENDIF
 						SET_MENU_COLUMN_ORIENTATION bought_menu_shops 0 FO_LEFT 
 						SET_MENU_COLUMN bought_menu_shops 0 WEAPON BOUGHT DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 						SET_MENU_COLUMN_ORIENTATION bought_menu_shops 1 FO_CENTRE 

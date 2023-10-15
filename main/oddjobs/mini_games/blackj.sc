@@ -350,6 +350,7 @@ max_bet = -99
 																		active_bj_table = table
 																		bj_initial_last_bet = 0
 																		tri_is_pressed = 1
+																		square_is_pressed = 1
 																	ELSE
 																		IF NOT IS_CHAR_DEAD croupier
 																			GENERATE_RANDOM_INT_IN_RANGE 0 2 temp_int
@@ -726,7 +727,7 @@ ENDIF
 
 // ' /\ ' to quit game
 IF tri_is_pressed = 0
-	IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+	IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 	AND NOT m_stage = 2
 
 		IF NOT IS_CHAR_DEAD croupier
@@ -748,7 +749,7 @@ IF tri_is_pressed = 0
 		bj_last_bet = 0
 	ENDIF
 ELSE
-	IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+	IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
 		tri_is_pressed = 0
 	ENDIF
 ENDIF
@@ -783,7 +784,11 @@ PLAYER_SPRITE1B_Y[0] = 311.0000
 PLAYER_SPRITE2_X[0] = 233.0000 
 PLAYER_SPRITE2_Y[0] = 381.0000 
 DEALER_SPRITE_X[0] = 226.0000 
-DEALER_SPRITE_Y[0] = 60.0000 
+IF IS_XBOX_VERSION
+	DEALER_SPRITE_Y[0] = 67.0000 
+ELSE
+	DEALER_SPRITE_Y[0] = 60.0000 
+ENDIF
 BORDER_WIDTH = 6.0000 
 
 //------ SCREEN COORDS ------
@@ -1177,7 +1182,7 @@ bj_m_stage_1:
 				GOSUB bj_update_casino_credit
 				bj_players_cash += casino_credit
 
-				IF IS_BUTTON_PRESSED PAD1 SQUARE
+				IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 					
 					IF NOT square_is_pressed = 1 
 					AND NOT square_is_pressed = -1
@@ -1245,7 +1250,7 @@ bj_m_stage_1:
 					
 					// remove wager
 					
-					IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 
 						IF NOT circle_is_pressed = 1
 							// sort out betting step
@@ -1304,7 +1309,7 @@ bj_m_stage_1:
 
 				// ' X '  to ok the bet
 				IF cross_is_pressed = 0
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 
 						bj_initial_last_bet = bj_bet1
 					
@@ -1323,7 +1328,7 @@ bj_m_stage_1:
 						m_goals = 99
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 0
 					ENDIF
 				ENDIF
@@ -1335,12 +1340,12 @@ bj_m_stage_1:
 				ENDIF		
 			ELSE
 				IF cross_is_pressed = 0
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 1
 						CLEAR_PRINTS
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 0
 					ENDIF
 				ENDIF
@@ -1706,7 +1711,7 @@ bj_m_stage_4:
 				// hit
 				
 				IF circle_is_pressed = 0
-					IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 						player_has_hit = 1
 						m_goals2 = 0
 						m_goals++
@@ -1714,7 +1719,7 @@ bj_m_stage_4:
 						GOTO end_of_input2
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 						circle_is_pressed = 0
 					ENDIF
 				ENDIF
@@ -1733,7 +1738,7 @@ bj_m_stage_4:
 
 				// double
 				IF player_cannot_double = 0
-					IF IS_BUTTON_PRESSED PAD1 SQUARE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_UP
 						IF player_has_stuck1 = 0
 							player_has_doubled1 = 1
 						ELSE
@@ -1746,7 +1751,7 @@ bj_m_stage_4:
 
 				// stick
 				IF cross_is_pressed = 0
-			   		IF IS_BUTTON_PRESSED PAD1 CROSS
+			   		IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						IF player_has_stuck1 = 0
 							player_has_stuck1 = 1
 						ELSE
@@ -1757,19 +1762,19 @@ bj_m_stage_4:
 						GOTO end_of_input2	
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 0
 					ENDIF
 				ENDIF
 
 			ELSE
 				IF circle_is_pressed = 0
-					IF IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 						circle_is_pressed = 1
 						CLEAR_PRINTS
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CIRCLE
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_BET_DOWN
 						circle_is_pressed = 0
 					ENDIF
 				ENDIF
@@ -2634,12 +2639,12 @@ bj_m_stage_6:
 			
 			ELSE
 				IF cross_is_pressed = 0
-					IF IS_BUTTON_PRESSED PAD1 CROSS
+					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 1
 						m_goals++
 					ENDIF
 				ELSE
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+					IF NOT IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 						cross_is_pressed = 0
 					ENDIF
 				ENDIF
@@ -2656,7 +2661,7 @@ bj_m_stage_6:
 		// wait a couple of ticks before starting next hand
 		IF m_goals = 3
 			
-			IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
 				cross_is_pressed = 1
 				m_goals = 99
 			ELSE
