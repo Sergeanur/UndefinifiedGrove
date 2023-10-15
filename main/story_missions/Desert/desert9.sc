@@ -470,6 +470,24 @@ cutscene_1a:
 	
 	SET_FADING_COLOUR 0 0 0
 
+	LVAR_INT d9_skip_flag	
+	IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		IF NOT GET_FADING_STATUS
+			IF d9_skip_flag = 0
+				DO_FADE 600 FADE_OUT
+				d9_skip_flag = 1
+			ENDIF
+		ENDIF
+	ENDIF
+
+	IF d9_skip_flag = 1
+		IF NOT GET_FADING_STATUS
+			audio_flag = 5
+			d9_skip_flag = 2
+			d9_cut_flag = 9				
+		ENDIF
+	ENDIF
+
 	IF d9_cut_flag = 0
 
 		SET_CHAR_AREA_VISIBLE scplayer 0
@@ -898,31 +916,13 @@ cutscene_1a:
 				SET_CAR_COORDINATES d9_plane 394.6384 2497.9270 15.4884
 				SET_CAR_HEADING d9_plane 90.0
 			ENDIF
-
-			LVAR_INT d9_skip_flag			
+		
 			d9_cut_flag = 0
 			IF d9_skip_flag > 0
 				d9_flag = 22
 			ELSE
 				d9_flag = 21
 			ENDIF
-		ENDIF
-	ENDIF
-
-	IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
-		IF NOT GET_FADING_STATUS
-			IF d9_skip_flag = 0
-				DO_FADE 600 FADE_OUT
-				d9_skip_flag = 1
-			ENDIF
-		ENDIF
-	ENDIF
-
-	IF d9_skip_flag = 1
-		IF NOT GET_FADING_STATUS
-			audio_flag = 5
-			d9_skip_flag = 2
-			d9_cut_flag = 9				
 		ENDIF
 	ENDIF
 

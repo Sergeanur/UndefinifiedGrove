@@ -190,6 +190,15 @@ roulette_script_loop:
 							++ flag
 						endif
 					ENDIF
+					IF flag > 1
+						IF IS_CHAR_DEAD croupier
+							iSetCasinoPanic = 1
+						ELSE
+							IF HAS_CHAR_BEEN_DAMAGED_BY_CHAR croupier scplayer
+								iSetCasinoPanic = 1
+							ENDIF
+						ENDIF
+					ENDIF
 					IF flag = 2
 						IF LOCATE_CHAR_ON_FOOT_OBJECT_2D scplayer roulette_table 5.0 5.0 0
 							GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -0.215 1.34 -0.086 x y z//-0.102 1.136 -0.033
@@ -200,6 +209,7 @@ roulette_script_loop:
 					ENDIF
 					IF flag = 3
 						IF LOCATE_CHAR_ON_FOOT_OBJECT_2D scplayer roulette_table 5.0 5.0 0
+						AND CAN_PLAYER_START_MISSION player1
 							if iSetCasinoPanic = 0
 								GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -1.839 -2.4444 -0.6 x y z
 								GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table 0.761 0.9556 0.6 x_temp y_temp z_temp
@@ -228,6 +238,7 @@ roulette_script_loop:
 					IF flag = 4
 						if roulette_triggered = 0
 							IF LOCATE_CHAR_ON_FOOT_OBJECT_2D scplayer roulette_table 5.0 5.0 0
+							AND CAN_PLAYER_START_MISSION player1
 								if iSetCasinoPanic = 0
 									GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -1.839 -2.4444 -0.6 x y z
 									GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table 0.761 0.9556 0.6 x_temp y_temp z_temp

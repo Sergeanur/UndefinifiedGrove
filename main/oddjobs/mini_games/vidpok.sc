@@ -190,6 +190,7 @@ ENDSWITCH
 				IF IS_PLAYER_PLAYING player1
 					IF iSetCasinoPanic = 0
 						IF LOCATE_CHAR_ON_FOOT_OBJECT_2D scplayer machine 5.0 5.0 FALSE
+						AND CAN_PLAYER_START_MISSION player1
 							temp_int = 0
 							GET_OBJECT_MODEL machine temp_int2
 							GET_MODEL_DIMENSIONS temp_int2 vec_x vec_y vec_z vec2_x vec2_y vec2_z

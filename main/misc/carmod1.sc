@@ -2140,7 +2140,7 @@ shop_mod_shop1_inner:
 
 									IF car_colour1_change_mods = 1
 									    
-										IF NOT stored_car_colour1 = upgrade_colour_selected
+										//IF NOT stored_car_colour1 = upgrade_colour_selected
 											
 											ADD_SCORE player1 -150
 											INCREMENT_FLOAT_STAT CAR_MOD_BUDGET 150.0
@@ -2188,22 +2188,22 @@ shop_mod_shop1_inner:
 											SET_FIXED_CAMERA_POSITION cam_general_modX cam_general_modY cam_general_modZ 0.0 0.0 0.0
 											POINT_CAMERA_AT_POINT cam_general_look_at_modX cam_general_look_at_modY cam_general_look_at_modZ JUMP_CUT
 
-										ELSE
+										//ELSE
 
-											IF flag_car_same_colour = 0 
-								 				REPORT_MISSION_AUDIO_EVENT_AT_POSITION player_x player_y player_z SOUND_SHOP_BUY_DENIED
-												PRINT_NOW (COLORNO) 3000 1 //"You're vehicle is already this colour."
-												control_flag_mod = 2
-												flag_car_same_colour = 1
-											ENDIF	
+										//	IF flag_car_same_colour = 0 
+								 		//		REPORT_MISSION_AUDIO_EVENT_AT_POSITION player_x player_y player_z SOUND_SHOP_BUY_DENIED
+										//		PRINT_NOW (COLORNO) 3000 1 //"You're vehicle is already this colour."
+										//		control_flag_mod = 2
+										//		flag_car_same_colour = 1
+										//	ENDIF	
 
-										ENDIF
+										//ENDIF
 
 									// Interior color changes.
 
 									ELSE
 										
-										IF NOT stored_car_colour2 = upgrade_colour_selected
+										//IF NOT stored_car_colour2 = upgrade_colour_selected
 
 											ADD_SCORE player1 -150
 											INCREMENT_FLOAT_STAT CAR_MOD_BUDGET 150.0
@@ -2249,16 +2249,16 @@ shop_mod_shop1_inner:
 											SET_FIXED_CAMERA_POSITION cam_general_modX cam_general_modY cam_general_modZ 0.0 0.0 0.0
 											POINT_CAMERA_AT_POINT cam_general_look_at_modX cam_general_look_at_modY cam_general_look_at_modZ JUMP_CUT
 
-										ELSE
+										//ELSE
 
-											IF flag_car_same_colour = 0
-								 				REPORT_MISSION_AUDIO_EVENT_AT_POSITION player_x player_y player_z SOUND_SHOP_BUY_DENIED
-												PRINT_NOW (COLORNO) 3000 1 //"You're vehicle is already this colour."
-												control_flag_mod = 2
-												flag_car_same_colour = 1
-											ENDIF
+										//	IF flag_car_same_colour = 0
+								 		//		REPORT_MISSION_AUDIO_EVENT_AT_POSITION player_x player_y player_z SOUND_SHOP_BUY_DENIED
+										//		PRINT_NOW (COLORNO) 3000 1 //"You're vehicle is already this colour."
+										//		control_flag_mod = 2
+										//		flag_car_same_colour = 1
+										//	ENDIF
 
-										ENDIF
+										//ENDIF
 
 									ENDIF
 

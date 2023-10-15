@@ -369,6 +369,10 @@ AND NOT IS_CHAR_DEAD scplayer
 
 	ENDIF
 
+		IF tread_helpflag > 3
+			GOSUB print_exit_help
+		ENDIF
+
 	    // When get on animation has finished start the next one 
 		IF playerexercising_flag = 3
 		AND NOT IS_CHAR_DEAD scplayer
@@ -965,6 +969,20 @@ AND NOT IS_CHAR_DEAD scplayer
 ENDIF
 
 GOTO gym_tread_loop
+
+print_exit_help:
+	IF TIMERA > 4000
+	AND TIMERA < 8000
+	AND tread_helpflag = 4
+		PRINT_HELP_FOREVER GYM1_25
+	ENDIF
+
+	IF TIMERA > 8000
+	AND TIMERA < 8100
+		CLEAR_HELP
+	ENDIF
+
+RETURN
 
 }
 

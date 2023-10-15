@@ -1153,8 +1153,8 @@ Crash1_Stage_GoIntoHouse:
 				statusBigFires = 2
 				GOSUB Crash1_Update_Big_Fires
 
-				DO_FADE 200 FADE_IN
-				timerCutscene = m_mission_timer + 200
+				DO_FADE 500 FADE_IN
+				timerCutscene = m_mission_timer + 500
 
 				m_goals++
 			ENDIF
@@ -1247,9 +1247,10 @@ Crash1_Stage_GoIntoHouse:
 	// NOTE: Should never enter here unless skipped
 	
 	IF flagCutscenePlaying = 1
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = 0
-		flagSkipCutscene = 1
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = 0
+			flagSkipCutscene = 1
+		ENDIF
 	ENDIF
 
 	// fade out
@@ -1466,7 +1467,7 @@ Crash1_Stage_ReachTheLady:
 			flagPlayOnlyCoochieLoopingAnim = TRUE
 
 			// Initiate cutscene if fire extinguisher not collected
-			IF NOT HAS_PICKUP_BEEN_COLLECTED pickupFireExtinguisher
+			IF NOT HAS_CHAR_GOT_WEAPON scplayer WEAPONTYPE_EXTINGUISHER
 				DO_FADE 500 FADE_OUT
 				timerCutscene = m_mission_timer + 550
 
@@ -1484,7 +1485,6 @@ Crash1_Stage_ReachTheLady:
 				timerCoochieAnim = 0
 
 				flagFireExtinguisherCutscenePlaying = 1
-				flagCutscenePlaying = 1
 
 				// Prepare the 'No Way Out' speech
 				GOSUB Crash1_Conversation_Command_Cancel
@@ -1503,6 +1503,7 @@ Crash1_Stage_ReachTheLady:
 	IF m_goals = 3
 		IF flagSkipCutscene = 1
 			m_goals++
+			DO_FADE 500 FADE_IN
 		ELSE
 			IF NOT nCurrentConversationID = CRASH1_CONVERSATION_NO_WAY_OUT
 				nRequiredConversationID = CRASH1_CONVERSATION_NO_WAY_OUT
@@ -1516,6 +1517,7 @@ Crash1_Stage_ReachTheLady:
 				GOSUB Crash1_Cutscene_Get_Fire_Extinguisher
 				DO_FADE 500 FADE_IN
 				timerCutscene = m_mission_timer + 550
+				flagCutscenePlaying = 1
 
 				m_goals++
 			ENDIF
@@ -1706,9 +1708,10 @@ Crash1_Stage_ReachTheLady:
 	// Check if the cutscene was skipped
 	// NOTE: Should never enter here unless skipped
 	IF flagCutscenePlaying = 1
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = 0
-		flagSkipCutscene = 1
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = 0
+			flagSkipCutscene = 1
+		ENDIF
 	ENDIF
 
 
@@ -2106,10 +2109,11 @@ Crash1_Stage_CollapsingWall:
 	// Check if the cutscene was skipped
 	// NOTE: Should never enter here unless skipped
 	IF flagCutscenePlaying = TRUE
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = FALSE
-		// Cutscene was skipped
-		flagSkipCutscene = TRUE
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = FALSE
+			// Cutscene was skipped
+			flagSkipCutscene = TRUE
+		ENDIF
 	ENDIF
 
 
@@ -2478,10 +2482,11 @@ Crash1_Stage_GetTheLadyOut:
 	// Check if the cutscene was skipped
 	// NOTE: Should never enter here unless skipped
 	IF flagCutscenePlaying = 1
-	AND IS_SKIP_CUTSCENE_BUTTON_PRESSED
-	AND flagSkipCutscene = 0
-		// Cutscene was skipped
-	    flagSkipCutscene = 1
+		IF IS_SKIP_CUTSCENE_BUTTON_PRESSED
+		AND flagSkipCutscene = 0
+			// Cutscene was skipped
+			flagSkipCutscene = 1
+		ENDIF
 	ENDIF
 
 

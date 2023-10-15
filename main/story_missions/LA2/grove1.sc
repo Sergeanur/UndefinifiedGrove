@@ -887,6 +887,7 @@ SET_SPECIFIC_ZONE_TO_TRIGGER_GANG_WAR GLN1
 
 SET_WANTED_MULTIPLIER 0.5
 SET_GANG_WARS_ACTIVE TRUE
+DISABLE_ALL_ENTRY_EXITS TRUE
 
 CAN_TRIGGER_GANG_WAR_WHEN_ON_A_MISSION TRUE
 
@@ -3382,6 +3383,8 @@ RETURN
 // ********************************** mission cleanup ************************************
 
 mission_cleanup_grove1:
+
+DISABLE_ALL_ENTRY_EXITS FALSE
 
 REMOVE_CHAR_ELEGANTLY sweet_grove1
 

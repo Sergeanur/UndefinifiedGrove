@@ -96,7 +96,7 @@ slot_machine_loop:
 					IF ped_using_slot = -1
 						
 						IF LOCATE_CHAR_ON_FOOT_3D scplayer x y z 0.6 0.6 1.0 0
-							
+						AND CAN_PLAYER_START_MISSION player1
 							PRINT_HELP_FOREVER_WITH_NUMBER SLOT_02 slot_cost
 
 							SET_PLAYER_ENTER_CAR_BUTTON player1 FALSE

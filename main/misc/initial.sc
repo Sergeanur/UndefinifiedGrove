@@ -1579,8 +1579,8 @@ bs_gold_rewardgiven = 0
 VAR_INT bs_bronze_generator bs_silver_generator bs_gold_generator
 
 CREATE_CAR_GENERATOR 1174.7596 1364.8319 10.1203 280.0355 FREEWAY -1 -1 TRUE 0 0 0 10000 bs_bronze_generator
-CREATE_CAR_GENERATOR 1174.9988 1366.4785 10.1203 282.2258 FCR900 -1 -1 TRUE 0 0 0 10000 bs_silver_generator
-CREATE_CAR_GENERATOR 1174.4670 1368.3585 10.1203 283.0546 NRG500 -1 -1 TRUE 0 0 0 10000 bs_gold_generator
+CREATE_CAR_GENERATOR 1174.9988 1368.4785 10.1203 282.2258 FCR900 -1 -1 TRUE 0 0 0 10000 bs_silver_generator
+CREATE_CAR_GENERATOR 1174.4670 1372.3585 10.1203 283.0546 NRG500 -1 -1 TRUE 0 0 0 10000 bs_gold_generator
 SWITCH_CAR_GENERATOR bs_bronze_generator 0
 SWITCH_CAR_GENERATOR bs_silver_generator 0
 SWITCH_CAR_GENERATOR bs_gold_generator 0
@@ -2401,7 +2401,7 @@ flag_on_doberman_mission = 0
 VAR_INT flag_gang_war_active
 flag_gang_war_active = 0
 
-VAR_INT ammu_shop_blip[10] mod_garage_blips[3] barbers_blips[5] pizza_blips[8] burger_blips[10] chicken_blips[12] tattoo_blips[4] gym_blips[2] clothes_blips[17] spray_shop[6]
+VAR_INT ammu_shop_blip[10] mod_garage_blips[3] barbers_blips[6] pizza_blips[8] burger_blips[10] chicken_blips[12] tattoo_blips[4] gym_blips[2] clothes_blips[17] spray_shop[6]
 
 
 ADD_SHORT_RANGE_SPRITE_BLIP_FOR_COORD 2067.4 -1831.2 13.5 RADAR_SPRITE_SPRAY spray_shop1

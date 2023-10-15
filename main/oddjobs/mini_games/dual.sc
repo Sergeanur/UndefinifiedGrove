@@ -608,9 +608,11 @@ dual_frontend_loop://///////////////////////////////////////////////////////////
 				endif
 				if menu_selection = 1//QUIT
 					REMOVE_TEXTURE_DICTIONARY
-					set_player_control player1 on
 					do_fade 0 fade_out
 					wait 0
+					IF IS_PLAYER_PLAYING player1
+						set_player_control player1 on
+					ENDIF
 					do_fade 500 fade_in
 					return
 				endif
