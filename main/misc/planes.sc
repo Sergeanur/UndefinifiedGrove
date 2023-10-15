@@ -383,8 +383,14 @@ pl_plane_flying_loop:
 						pl_print_flag_11 = 1
 					ENDIF
 					
-					IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
-						pl_control_flag = 2
+					IF IS_JAPANESE_VERSION
+						IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+							pl_control_flag = 2
+						ENDIF
+					ELSE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_CANCEL
+							pl_control_flag = 2
+						ENDIF
 					ENDIF
 				ENDIF
 			ENDIF
@@ -423,66 +429,130 @@ pl_plane_flying_loop:
 							
 				IF pl_stop_player_skipping_flag < 2  
 
-					IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
-						
-						DO_FADE 500 FADE_OUT
-						WHILE GET_FADING_STATUS
-						    WAIT 0
-							IF NOT IS_PLAYER_PLAYING player1 
-								GOTO mission_cleanup_planes
-							ENDIF
-						ENDWHILE 
-						IF NOT IS_CAR_DEAD pl_plane 
-							IF IS_PLAYBACK_GOING_ON_FOR_CAR pl_plane
-								IF pl_undercarriage_flag = 1
-									SET_PLANE_UNDERCARRIAGE_UP pl_plane FALSE
+					IF IS_JAPANESE_VERSION
+						IF IS_BUTTON_PRESSED PAD1 CROSS
+							
+							DO_FADE 500 FADE_OUT
+							WHILE GET_FADING_STATUS
+								WAIT 0
+								IF NOT IS_PLAYER_PLAYING player1 
+									GOTO mission_cleanup_planes
 								ENDIF
-								SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane -10000000.0 
-								SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane pl_skip_in_how_much
-								
-								SET_CINEMA_CAMERA FALSE
-								
-								//LA
-								IF pl_which_recording = 48 //LV - LA
-								OR pl_which_recording = 49 //SF - LA
-									SET_FIXED_CAMERA_POSITION 1774.9 -2529.3 30.9 0.0 0.0 0.0
-									IF NOT IS_CAR_DEAD pl_plane 
-										POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+							ENDWHILE 
+							IF NOT IS_CAR_DEAD pl_plane 
+								IF IS_PLAYBACK_GOING_ON_FOR_CAR pl_plane
+									IF pl_undercarriage_flag = 1
+										SET_PLANE_UNDERCARRIAGE_UP pl_plane FALSE
 									ENDIF
-									LOAD_SCENE_IN_DIRECTION 1774.9 -2529.3 13.9 48.0
-								ENDIF
-						
-								//SF
-								IF pl_which_recording = 42 //LA - SF 
-								OR pl_which_recording = 43 //LV - SF
-									SET_FIXED_CAMERA_POSITION -1268.5 106.9 37.1 0.0 0.0 0.0
-									IF NOT IS_CAR_DEAD pl_plane 
-										POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+									SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane -10000000.0 
+									SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane pl_skip_in_how_much
+									
+									SET_CINEMA_CAMERA FALSE
+									
+									//LA
+									IF pl_which_recording = 48 //LV - LA
+									OR pl_which_recording = 49 //SF - LA
+										SET_FIXED_CAMERA_POSITION 1774.9 -2529.3 30.9 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION 1774.9 -2529.3 13.9 48.0
 									ENDIF
-									LOAD_SCENE_IN_DIRECTION -1268.5 106.9 13.0 350.0
-								ENDIF
-								
-								//LV
-								IF pl_which_recording = 46 //LA - LV 
-								OR pl_which_recording = 44 //SF - LV
-									SET_FIXED_CAMERA_POSITION 1396.1 1382.3 25.4 0.0 0.0 0.0
-									IF NOT IS_CAR_DEAD pl_plane 
-										POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+							
+									//SF
+									IF pl_which_recording = 42 //LA - SF 
+									OR pl_which_recording = 43 //LV - SF
+										SET_FIXED_CAMERA_POSITION -1268.5 106.9 37.1 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION -1268.5 106.9 13.0 350.0
 									ENDIF
-									LOAD_SCENE_IN_DIRECTION 1396.1 1382.3 10.0 264.0
-								ENDIF
+									
+									//LV
+									IF pl_which_recording = 46 //LA - LV 
+									OR pl_which_recording = 44 //SF - LV
+										SET_FIXED_CAMERA_POSITION 1396.1 1382.3 25.4 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION 1396.1 1382.3 10.0 264.0
+									ENDIF
 
-								pl_has_player_skipped = 1
-							ENDIF
-						ENDIF 
-						CLEAR_PRINTS
-						DO_FADE 2500 FADE_IN
-						WHILE GET_FADING_STATUS	
-						    WAIT 0
-							IF NOT IS_PLAYER_PLAYING player1 
-								GOTO mission_cleanup_planes
-							ENDIF
-						ENDWHILE 
+									pl_has_player_skipped = 1
+								ENDIF
+							ENDIF 
+							CLEAR_PRINTS
+							DO_FADE 2500 FADE_IN
+							WHILE GET_FADING_STATUS	
+								WAIT 0
+								IF NOT IS_PLAYER_PLAYING player1 
+									GOTO mission_cleanup_planes
+								ENDIF
+							ENDWHILE 
+						ENDIF
+					ELSE
+						IF IS_BUTTON_PRESSED PAD1 BUTTON_ACCEPT
+							
+							DO_FADE 500 FADE_OUT
+							WHILE GET_FADING_STATUS
+								WAIT 0
+								IF NOT IS_PLAYER_PLAYING player1 
+									GOTO mission_cleanup_planes
+								ENDIF
+							ENDWHILE 
+							IF NOT IS_CAR_DEAD pl_plane 
+								IF IS_PLAYBACK_GOING_ON_FOR_CAR pl_plane
+									IF pl_undercarriage_flag = 1
+										SET_PLANE_UNDERCARRIAGE_UP pl_plane FALSE
+									ENDIF
+									SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane -10000000.0 
+									SKIP_IN_PLAYBACK_RECORDED_CAR pl_plane pl_skip_in_how_much
+									
+									SET_CINEMA_CAMERA FALSE
+									
+									//LA
+									IF pl_which_recording = 48 //LV - LA
+									OR pl_which_recording = 49 //SF - LA
+										SET_FIXED_CAMERA_POSITION 1774.9 -2529.3 30.9 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION 1774.9 -2529.3 13.9 48.0
+									ENDIF
+							
+									//SF
+									IF pl_which_recording = 42 //LA - SF 
+									OR pl_which_recording = 43 //LV - SF
+										SET_FIXED_CAMERA_POSITION -1268.5 106.9 37.1 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION -1268.5 106.9 13.0 350.0
+									ENDIF
+									
+									//LV
+									IF pl_which_recording = 46 //LA - LV 
+									OR pl_which_recording = 44 //SF - LV
+										SET_FIXED_CAMERA_POSITION 1396.1 1382.3 25.4 0.0 0.0 0.0
+										IF NOT IS_CAR_DEAD pl_plane 
+											POINT_CAMERA_AT_CAR pl_plane FIXED JUMP_CUT 
+										ENDIF
+										LOAD_SCENE_IN_DIRECTION 1396.1 1382.3 10.0 264.0
+									ENDIF
+
+									pl_has_player_skipped = 1
+								ENDIF
+							ENDIF 
+							CLEAR_PRINTS
+							DO_FADE 2500 FADE_IN
+							WHILE GET_FADING_STATUS	
+								WAIT 0
+								IF NOT IS_PLAYER_PLAYING player1 
+									GOTO mission_cleanup_planes
+								ENDIF
+							ENDWHILE 
+						ENDIF
 					ENDIF
 				ENDIF
 			ENDIF
@@ -689,26 +759,30 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 	GOSUB planes_large_text
 	SET_TEXT_COLOUR 255 255 255 255
 
-	IF current_Language = LANGUAGE_ENGLISH
-		DISPLAY_TEXT 269.0 65.0 PLA_1
-	ENDIF
+	IF NOT IS_JAPANESE_VERSION
+		IF current_Language = LANGUAGE_ENGLISH
+			DISPLAY_TEXT 269.0 65.0 PLA_1
+		ENDIF
 
-	IF current_Language = LANGUAGE_FRENCH
-		SET_TEXT_SCALE 0.9 3.4
-		DISPLAY_TEXT 327.0 65.0 PLA_1
-	ENDIF
+		IF current_Language = LANGUAGE_FRENCH
+			SET_TEXT_SCALE 0.9 3.4
+			DISPLAY_TEXT 327.0 65.0 PLA_1
+		ENDIF
 
-	IF current_Language = LANGUAGE_GERMAN
-		DISPLAY_TEXT 269.0 65.0 PLA_1
-	ENDIF
+		IF current_Language = LANGUAGE_GERMAN
+			DISPLAY_TEXT 269.0 65.0 PLA_1
+		ENDIF
 
-	IF current_Language = LANGUAGE_ITALIAN
-		SET_TEXT_SCALE 0.91 3.43
-		DISPLAY_TEXT 322.0 65.0 PLA_1
-	ENDIF
+		IF current_Language = LANGUAGE_ITALIAN
+			SET_TEXT_SCALE 0.91 3.43
+			DISPLAY_TEXT 322.0 65.0 PLA_1
+		ENDIF
 
-	IF current_Language = LANGUAGE_SPANISH
-		SET_TEXT_SCALE 0.9 3.4
+		IF current_Language = LANGUAGE_SPANISH
+			SET_TEXT_SCALE 0.9 3.4
+			DISPLAY_TEXT 322.0 65.0 PLA_1
+		ENDIF
+	ELSE
 		DISPLAY_TEXT 322.0 65.0 PLA_1
 	ENDIF
 	
@@ -731,7 +805,11 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 		GOSUB planes_small_text	
 		SET_TEXT_SCALE 0.62 1.94
 		SET_TEXT_COLOUR 255 255 255 255
-		DISPLAY_TEXT 277.0 370.0 PLA_23
+		IF IS_JAPANESE_VERSION
+			DISPLAY_TEXT 362.0 370.0 SCHX
+		ELSE
+			DISPLAY_TEXT 277.0 370.0 PLA_23
+		ENDIF
 		
 		GOSUB planes_small_text			 
 		SET_TEXT_COLOUR 255 255 255 255
@@ -811,24 +889,28 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			SET_TEXT_SCALE 0.62 1.94
 			SET_TEXT_COLOUR 255 255 255 255
 
-			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 260.0 370.0 PLA_24
-			ENDIF
+			IF IS_JAPANESE_VERSION
+				DISPLAY_TEXT 260.0 370.0 SCHO
+			ELSE
+				IF current_Language = LANGUAGE_ENGLISH
+					DISPLAY_TEXT 260.0 370.0 PLA_24
+				ENDIF
 
-			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 295.0 370.0 PLA_24
-			ENDIF
+				IF current_Language = LANGUAGE_FRENCH
+					DISPLAY_TEXT 295.0 370.0 PLA_24
+				ENDIF
 
-			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 295.0 370.0 PLA_24
-			ENDIF
+				IF current_Language = LANGUAGE_GERMAN
+					DISPLAY_TEXT 295.0 370.0 PLA_24
+				ENDIF
 
-			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 258.0 370.0 PLA_24
-			ENDIF
+				IF current_Language = LANGUAGE_ITALIAN
+					DISPLAY_TEXT 258.0 370.0 PLA_24
+				ENDIF
 
-			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 295.0 370.0 PLA_24
+				IF current_Language = LANGUAGE_SPANISH
+					DISPLAY_TEXT 295.0 370.0 PLA_24
+				ENDIF
 			ENDIF
 			
 
@@ -859,24 +941,28 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			SET_TEXT_SCALE 0.62 1.94
 			SET_TEXT_COLOUR 255 255 255 255
 
-			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 362.0 370.0 PLA_23
-			ENDIF
+			IF IS_JAPANESE_VERSION
+				DISPLAY_TEXT 362.0 370.0 SCHX
+			ELSE
+				IF current_Language = LANGUAGE_ENGLISH
+					DISPLAY_TEXT 362.0 370.0 PLA_23
+				ENDIF
 
-			IF current_Language = LANGUAGE_FRENCH
-				DISPLAY_TEXT 458.0 370.0 PLA_23
-			ENDIF
+				IF current_Language = LANGUAGE_FRENCH
+					DISPLAY_TEXT 458.0 370.0 PLA_23
+				ENDIF
 
-			IF current_Language = LANGUAGE_GERMAN
-				DISPLAY_TEXT 458.0 370.0 PLA_23
-			ENDIF
+				IF current_Language = LANGUAGE_GERMAN
+					DISPLAY_TEXT 458.0 370.0 PLA_23
+				ENDIF
 
-			IF current_Language = LANGUAGE_ITALIAN
-				DISPLAY_TEXT 458.0 370.0 PLA_23
-			ENDIF
+				IF current_Language = LANGUAGE_ITALIAN
+					DISPLAY_TEXT 458.0 370.0 PLA_23
+				ENDIF
 
-			IF current_Language = LANGUAGE_SPANISH
-				DISPLAY_TEXT 458.0 370.0 PLA_23
+				IF current_Language = LANGUAGE_SPANISH
+					DISPLAY_TEXT 458.0 370.0 PLA_23
+				ENDIF
 			ENDIF
 
 			GOSUB planes_small_text			 
@@ -907,10 +993,14 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			GOSUB planes_small_text			 
 			SET_TEXT_SCALE 0.62 1.94
 			SET_TEXT_COLOUR 255 255 255 255
-			IF current_Language = LANGUAGE_ENGLISH
-				DISPLAY_TEXT 220.0 370.0 PLA_24
+			IF IS_JAPANESE_VERSION
+				DISPLAY_TEXT 220.0 370.0 SCHO
 			ELSE
-				DISPLAY_TEXT 170.0 370.0 PLA_24
+				IF current_Language = LANGUAGE_ENGLISH
+					DISPLAY_TEXT 220.0 370.0 PLA_24
+				ELSE
+					DISPLAY_TEXT 170.0 370.0 PLA_24
+				ENDIF
 			ENDIF
 
 			GOSUB planes_small_text			
@@ -924,7 +1014,11 @@ drawing_ticket_machine://///////////////////////////////////////////////////////
 			GOSUB planes_small_text			
 			SET_TEXT_SCALE 0.62 1.94 
 			SET_TEXT_COLOUR 255 255 255 255
-			DISPLAY_TEXT 328.0 370.0 PLA_23
+			IF IS_JAPANESE_VERSION
+				DISPLAY_TEXT 328.0 370.0 SCHX
+			ELSE
+				DISPLAY_TEXT 328.0 370.0 PLA_23
+			ENDIF
 
 			GOSUB planes_small_text			
 			SET_TEXT_COLOUR 255 255 255 255

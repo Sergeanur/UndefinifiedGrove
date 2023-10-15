@@ -431,7 +431,11 @@ betting_otb_loop:
 
 	LVAR_FLOAT otb_text_pos_x
 	LVAR_INT str_width
-	otb_text_pos_x = 60.1776
+	IF IS_JAPANESE_VERSION
+		otb_text_pos_x = 25.1776
+	ELSE
+		otb_text_pos_x = 60.1776
+	ENDIF
 
  	GOSUB setup_text_otb
 	SET_TEXT_SCALE 0.527 2.0
@@ -441,6 +445,11 @@ betting_otb_loop:
 	DISPLAY_TEXT otb_text_pos_x 395.7635 XSELECT
 	temp_float =# str_width
 	otb_text_pos_x += temp_float
+	IF IS_JAPANESE_VERSION
+		otb_text_pos_x += 15.1776
+	ELSE
+		otb_text_pos_x += temp_float // bug?
+	ENDIF
 
  	GOSUB setup_text_otb
 	SET_TEXT_SCALE 0.527 2.0

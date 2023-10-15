@@ -495,10 +495,18 @@ Strip_Lap_Dance:
 					TIMERA = 0 // to avoid multiple changes due to the button remaining down for a few frames
 				ENDIF
 				
-				IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-					DO_FADE 500 FADE_OUT
-					++iLapDanceStatus
-					BREAK
+				IF NOT IS_JAPANESE_VERSION
+					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+						DO_FADE 500 FADE_OUT
+						++iLapDanceStatus
+						BREAK
+					ENDIF
+				ELSE
+					IF IS_BUTTON_PRESSED PAD1 CROSS
+						DO_FADE 500 FADE_OUT
+						++iLapDanceStatus
+						BREAK
+					ENDIF
 				ENDIF
 			ELSE			
 				++iLapDanceStatus

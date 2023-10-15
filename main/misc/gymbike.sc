@@ -888,7 +888,7 @@ IF startexbike_flag = 1
 
 					bike_txt = 0
 
-					WHILE IS_BUTTON_PRESSED PAD1 CROSS
+					WHILE IS_BUTTON_PRESSED PAD1 TRIANGLE
 						WAIT 0
 					ENDWHILE
 				ENDIF

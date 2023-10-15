@@ -994,8 +994,10 @@ IF des1_mission_progression = 2
 			GOSUB setup_text1_des1
 			SET_TEXT_SCALE des1x_scale[3] des1y_scale[3]
 			SET_TEXT_CENTRE ON
-			IF des1_current_check_point = 11
-				SET_TEXT_PROPORTIONAL OFF
+			IF NOT IS_JAPANESE_VERSION
+				IF des1_current_check_point = 11
+					SET_TEXT_PROPORTIONAL OFF
+				ENDIF
 			ENDIF
 
 			DISPLAY_TEXT_WITH_2_NUMBERS 583.7526 des1y_pos[3] DES1_67 des1_current_check_point des1_number_of_check_points
@@ -1019,9 +1021,11 @@ IF des1_mission_progression = 2
 			SET_TEXT_CENTRE ON
 			SET_TEXT_SCALE des1x_scale[4] des1y_scale[4]
 
-			IF des1_seconds = 11
-			OR des1_minutes = 11
-				SET_TEXT_PROPORTIONAL OFF
+			IF NOT IS_JAPANESE_VERSION
+				IF des1_seconds = 11
+				OR des1_minutes = 11
+					SET_TEXT_PROPORTIONAL OFF
+				ENDIF
 			ENDIF
 			
 			
@@ -1285,10 +1289,19 @@ toreno1_end_cut_scene:
 					
 	SWITCH des1_player_ranking
 	CASE 0
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 DES1_50 $des1_board_name[0] $des1_board_name[1] $des1_board_name[2] $des1_board_name[3] DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
@@ -1320,10 +1333,19 @@ toreno1_end_cut_scene:
 		ENDWHILE
 		BREAK
 	CASE 1
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 $des1_board_name[0] DES1_50 $des1_board_name[1] $des1_board_name[2] $des1_board_name[3] DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
@@ -1355,10 +1377,19 @@ toreno1_end_cut_scene:
 		ENDWHILE
 		BREAK
 	CASE 2
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 $des1_board_name[0] $des1_board_name[1] DES1_50 $des1_board_name[2] $des1_board_name[3] DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
@@ -1390,10 +1421,19 @@ toreno1_end_cut_scene:
 		ENDWHILE
 		BREAK
 	CASE 3
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 $des1_board_name[0] $des1_board_name[1] $des1_board_name[2] DES1_50 $des1_board_name[3] DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
@@ -1425,10 +1465,19 @@ toreno1_end_cut_scene:
 		ENDWHILE
 		BREAK
 	CASE 4
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 $des1_board_name[0] $des1_board_name[1] $des1_board_name[2] $des1_board_name[3] DES1_50 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
@@ -1460,10 +1509,19 @@ toreno1_end_cut_scene:
 		ENDWHILE
 		BREAK
 	DEFAULT
-		CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		IF IS_JAPANESE_VERSION
+			CREATE_MENU DES1_34 354.0 200.0 300.0 3 FALSE TRUE 0 des1_ranking_menu
+		ELSE
+			CREATE_MENU DES1_34 354.0 200.0 80.0 3 FALSE TRUE 0 des1_ranking_menu
+		ENDIF
 		SET_MENU_COLUMN des1_ranking_menu 0 DES1_52 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 1 DES1_53 $des1_board_name[0] $des1_board_name[1] $des1_board_name[2] $des1_board_name[3] $des1_board_name[4] DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
 		SET_MENU_COLUMN des1_ranking_menu 2 DES1_54 DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY DUMMY
+		IF IS_JAPANESE_VERSION
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 0 20 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 1 150 
+			SET_MENU_COLUMN_WIDTH des1_ranking_menu 2 80 
+		ENDIF
 		des1_counter = 0
 		WHILE des1_counter < 5
 			des1_temp_int = des1_counter
