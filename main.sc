@@ -1094,11 +1094,6 @@ DISPLAY_ZONE_NAMES FALSE
 WAIT 0
 WAIT 0
 
-SWITCH_WORLD_PROCESSING OFF //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-SET_FADING_COLOUR 0 0 0
-WAIT 2000 //Wait until keys are initialised	//TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-SWITCH_WORLD_PROCESSING ON //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 SET_MAX_WANTED_LEVEL 4	
 
 IF IS_PLAYER_PLAYING player1
