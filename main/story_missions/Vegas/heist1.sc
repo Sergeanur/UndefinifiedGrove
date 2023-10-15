@@ -1235,6 +1235,7 @@ IF he1_progress = 1
 		IF TIMERA > 2000
 		 	 IF NOT IS_CHAR_DEAD he1_tourist1
 				IF NOT IS_CHAR_DEAD he1_tourist3
+				IF NOT IS_CHAR_IN_WATER he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist1
 		    		TASK_TURN_CHAR_TO_FACE_CHAR he1_tourist3 he1_tourist1
@@ -1252,6 +1253,7 @@ IF he1_progress = 1
 					TIMERA = 0
 					he1_touristsnap = 1
 				ENDIF
+				ENDIF
 			ENDIF
 		ENDIF
 		ENDIF
@@ -1260,6 +1262,7 @@ IF he1_progress = 1
 		IF he1_touristsnap = 1
 			IF TIMERA > 2000
 			IF NOT IS_CHAR_DEAD he1_tourist3
+				   IF NOT IS_CHAR_IN_WATER he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist3
 					//anim goes here
 					 TASK_PLAY_ANIM he1_tourist3 picstnd_take CAMERA 8.0 FALSE FALSE FALSE TRUE -1
@@ -1270,6 +1273,7 @@ IF he1_progress = 1
 
 					TIMERA = 0
 					he1_touristsnap = 2	  
+					ENDIF
 			ENDIF
 			ENDIF
 		ENDIF
@@ -1278,6 +1282,7 @@ IF he1_progress = 1
 		IF TIMERA > 1000
 		 	 IF NOT IS_CHAR_DEAD he1_tourist2
 				IF NOT IS_CHAR_DEAD he1_tourist3
+				IF NOT IS_CHAR_IN_WATER he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist2
 					TASK_TURN_CHAR_TO_FACE_CHAR he1_tourist2 he1_tourist3
@@ -1296,6 +1301,7 @@ IF he1_progress = 1
 					TIMERA = 0
 					he1_touristsnap = 3
 				ENDIF
+				ENDIF
 			ENDIF
 		ENDIF
 		ENDIF
@@ -1304,6 +1310,7 @@ IF he1_progress = 1
 		IF he1_touristsnap = 3
 			IF TIMERA > 1000
 			IF NOT IS_CHAR_DEAD he1_tourist3
+			IF NOT IS_CHAR_IN_WATER he1_tourist3
 					CLEAR_CHAR_TASKS he1_tourist3
 					//anim goes here
 					 TASK_PLAY_ANIM he1_tourist3 piccrch_take CAMERA 8.0 FALSE FALSE FALSE TRUE -1
@@ -1314,6 +1321,7 @@ IF he1_progress = 1
 
 					TIMERA = 0
 					he1_touristsnap = 0
+			ENDIF
 			ENDIF
 			ENDIF
 		ENDIF
@@ -3896,8 +3904,17 @@ IF he1_progress = 55
 	SET_CAMERA_BEHIND_PLAYER
 	RESTORE_CAMERA_JUMPCUT
 
+	//PC bug fix
+	CLEAR_CHAR_TASKS scplayer
+	
+
 	SWITCH_WIDESCREEN OFF 
 	DO_FADE 500 FADE_IN
+
+	//PC bug fix
+	CLEAR_CHAR_TASKS scplayer
+
+
 
 	SET_PLAYER_CONTROL player1 ON
 

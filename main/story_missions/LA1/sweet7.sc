@@ -710,6 +710,9 @@ ELSE
 
 
 
+	SET_CHAR_MAX_HEALTH sweet 1000
+	SET_CHAR_CANT_BE_DRAGGED_OUT sweet TRUE
+	//07.10.04
 
 	GIVE_WEAPON_TO_CHAR sweet WEAPONTYPE_MICRO_UZI 99999
 	SET_CHAR_NEVER_TARGETTED sweet TRUE
@@ -719,10 +722,10 @@ ELSE
 	//SET_RADIO_CHANNEL RS_NEW_JACK_SWING 
 
 
+
+
 	SET_CHAR_MAX_HEALTH sweet 1000
 	SET_CHAR_CANT_BE_DRAGGED_OUT sweet TRUE
-
-
 	SET_CHAR_STAY_IN_CAR_WHEN_JACKED sweet TRUE
 	SET_CHAR_GET_OUT_UPSIDE_DOWN_CAR sweet FALSE
 
@@ -732,11 +735,13 @@ ELSE
 
 
 
+	/*
 	CREATE_CAR sadler 2491.9124 -1681.3718 12.3450  sw7_parkedcar
 	SET_CAR_HEADING sw7_parkedcar 87.9
 	CHANGE_CAR_COLOUR sw7_parkedcar 113 8
 
 
+	*/
 
 	//After submission fix, using variable for final cut.
 
@@ -752,7 +757,7 @@ ELSE
 
 
 	CREATE_CHAR PEDTYPE_GANG_FLAT BALLAS1 2262.7969 -1348.5397 22.9850 sw7_respect1
-	SET_CHAR_HEADING sw7_respect1 312.0
+	//SET_CHAR_HEADING sw7_respect1 312.0  07.10.04
 	GIVE_WEAPON_TO_CHAR sw7_respect1 WEAPONTYPE_MICRO_UZI 2000
 	SET_CHAR_DECISION_MAKER sw7_respect1 sw7_emptydm
 
@@ -3117,6 +3122,7 @@ IF sw7_checkkane = 0
 		IF sw7_pursuitunderway = 0
 			IF IS_CHAR_DEAD sw7_kane
     			REMOVE_BLIP sw7_kaneb
+                sw7_missionprogress = 1352 // Added 07.10.04
 
 				GOSUB sw7_mopup	
 				CLEAR_PRINTS
@@ -3173,6 +3179,7 @@ IF sw7_checkkane = 0
 		IF sw7_pursuitunderway > 0
 			IF IS_CHAR_DEAD sw7_kane
 				REMOVE_BLIP sw7_kaneb
+				sw7_missionprogress = 1352 // Added 07.10.04
                 sw7_checkkane = 4
 			ENDIF
 		ENDIF
@@ -3340,11 +3347,17 @@ IF sw7_checkkane = 74
 		sw7_convo_counter = 1
 		sw7_checkkane = 77
 
+		sw7_parkedcar = 1  // new segment 07.10.04
+
 
 
 ENDIF
 
-IF sw7_checkkane = 77
+//IF sw7_checkkane = 77 // taken out 07.10.04
+IF sw7_parkedcar = 1 //using this variable as a stopgap
+
+	sw7_checkkane = 77
+
 
 	IF sw7_convo_counter  > 0
 			IF sw7_audio_underway = 0
@@ -3365,6 +3378,7 @@ IF sw7_checkkane = 77
 					CASE 4 
 						sw7_counter = 0
 						sw7_checkkane = 80
+						sw7_parkedcar = 2	// added 07.10.04
 						sw7_convo_counter = 0 // finish convo
 						BREAK
 				ENDSWITCH
@@ -3372,7 +3386,7 @@ IF sw7_checkkane = 77
 		ENDIF
 ENDIF
 
-IF sw7_checkkane = 80
+IF sw7_parkedcar = 2
 	SET_CAMERA_BEHIND_PLAYER
 	DELETE_CHAR sweet
 
@@ -4630,6 +4644,7 @@ IF sw7_missionprogress = 60
 		ENDIF
 
 		IF NOT IS_CHAR_DEAD sw7_reinforce1
+			CLEAR_CHAR_TASKS sw7_reinforce1
 			OPEN_SEQUENCE_TASK sw7_reinforce1seq
 				TASK_LEAVE_ANY_CAR -1
 				TASK_GO_STRAIGHT_TO_COORD -1 916.3773 -1107.9373 23.1694 PEDMOVE_RUN 10000
@@ -4642,6 +4657,7 @@ IF sw7_missionprogress = 60
 		ENDIF
 
 		IF NOT IS_CHAR_DEAD sw7_reinforce2
+			CLEAR_CHAR_TASKS sw7_reinforce2
 			OPEN_SEQUENCE_TASK sw7_reinforce2seq
 				TASK_LEAVE_ANY_CAR -1
 				TASK_GO_STRAIGHT_TO_COORD -1 918.4471 -1094.8062 23.4897 PEDMOVE_RUN 10000
@@ -5601,7 +5617,19 @@ sw7_mopup:
 		muP6 = 1
 	ENDIF
 	IF NOT IS_CHAR_DEAD sw7_reinforce1
-	
+		//PC bug fix
+			CLEAR_CHAR_TASKS sw7_reinforce1
+			OPEN_SEQUENCE_TASK sw7_reinforce1seq
+				TASK_LEAVE_ANY_CAR -1
+			   //	TASK_GO_STRAIGHT_TO_COORD -1 916.3773 -1107.9373 23.1694 PEDMOVE_RUN 10000
+				TASK_KILL_CHAR_ON_FOOT -1 scplayer
+				//TASK_GO_STRAIGHT_TO_COORD -1 833.1347 -1095.1868 22.8281 PEDMOVE_WALK 10000
+	  	    CLOSE_SEQUENCE_TASK sw7_reinforce1seq
+			PERFORM_SEQUENCE_TASK sw7_reinforce1 sw7_reinforce1seq
+			CLEAR_SEQUENCE_TASK sw7_reinforce1seq
+		// End PC bug fix
+
+
 		ADD_BLIP_FOR_CHAR sw7_reinforce1 sw7_reinforce1B
 		CHANGE_BLIP_SCALE sw7_reinforce1B 2
 
@@ -5610,6 +5638,19 @@ sw7_mopup:
 
 	ENDIF
 	IF NOT IS_CHAR_DEAD sw7_reinforce2
+		// PC bug fix
+			CLEAR_CHAR_TASKS sw7_reinforce2
+			OPEN_SEQUENCE_TASK sw7_reinforce2seq
+				TASK_LEAVE_ANY_CAR -1
+				//TASK_GO_STRAIGHT_TO_COORD -1 916.3773 -1107.9373 23.1694 PEDMOVE_RUN 10000
+				TASK_KILL_CHAR_ON_FOOT -1 scplayer
+				//TASK_GO_STRAIGHT_TO_COORD -1 833.1347 -1095.1868 22.8281 PEDMOVE_WALK 10000
+	  	    CLOSE_SEQUENCE_TASK sw7_reinforce2seq
+			PERFORM_SEQUENCE_TASK sw7_reinforce2 sw7_reinforce2seq
+			CLEAR_SEQUENCE_TASK sw7_reinforce2seq
+		// End PC bug fix
+
+
 
 		ADD_BLIP_FOR_CHAR sw7_reinforce2 sw7_reinforce2B
 		CHANGE_BLIP_SCALE sw7_reinforce2B 2
@@ -5617,6 +5658,15 @@ sw7_mopup:
 		sw7_mopupcount ++
 		muR2 = 1
 	ENDIF
+
+
+	// New PC section 08.12.04
+	IF NOT IS_CHAR_DEAD sw7_escapechauffeur
+		CLEAR_CHAR_TASKS sw7_escapechauffeur
+		TASK_SMART_FLEE_CHAR sw7_escapechauffeur scplayer 100.0 -1
+
+	ENDIF
+	// End PC section.
 
 
 RETURN

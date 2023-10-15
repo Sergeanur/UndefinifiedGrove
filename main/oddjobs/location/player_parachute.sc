@@ -617,7 +617,7 @@ jump_loop:
 					ENDIF
 
 					IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-						CLEAR_CHAR_TASKS scplayer
+						CLEAR_CHAR_TASKS_IMMEDIATELY scplayer
 						player_fall_state = 6
 						player_landed = 3
 					ENDIF

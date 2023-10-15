@@ -259,12 +259,13 @@ ENDIF
 		TERMINATE_THIS_SCRIPT
 	ENDIF
 
-	IF NOT IS_CHAR_DEAD scplayer
+	IF IS_PLAYER_PLAYING player1
 
 	//locate around the gym area - locate around the exercise bike 
 	IF startexbike_flag = 0
 
 		IF finishedbike_flag = 0
+		AND NOT IS_PLAYER_USING_JETPACK player1
 
 			IF LOCATE_CHAR_ON_FOOT_3D scplayer exbikex exbikey exbikez 1.2 1.2 4.0 FALSE
 

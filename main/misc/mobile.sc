@@ -4397,7 +4397,9 @@ loading_and_playing_audio:
 			ENDIF
 		ENDIF
 	ENDWHILE
-	PLAY_MISSION_AUDIO audio_slot_mobile
+	IF NOT IS_CHAR_IN_WATER scplayer
+		PLAY_MISSION_AUDIO audio_slot_mobile
+	ENDIF
 
 RETURN
 

@@ -1,6 +1,7 @@
 MISSION_START
 // ***********************************************************************
-// ***************************** boat scripts ****************************
+// ***************************** boat PC  scripts ************************
+// * New fix added to clear area for video playback 20.12.04
 // ***********************************************************************
 
 SCRIPT_NAME boat
@@ -140,6 +141,8 @@ LVAR_FLOAT buoyl_z
 LVAR_FLOAT boat_rampX
 LVAR_FLOAT boat_rampY
 LVAR_FLOAT boat_rampZ
+
+LVAR_FLOAT clearX clearY clearZ
 
 //timers
 
@@ -456,7 +459,7 @@ WAIT 0
 		FORCE_WEATHER_NOW WEATHER_EXTRASUNNY_COUNTRYSIDE
 		SET_TIME_OF_DAY 12 50
 		
-		ADD_ONE_OFF_SOUND 0.0 0.0 0.0 SOUND_DISABLE_HELI_AUDIO
+		REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_DISABLE_HELI_AUDIO
 
 		//CHOOSING WHICH MISSION//
 		IF boat_control_flag = 0 
@@ -768,7 +771,6 @@ IF boat_mission_selection = 1
 			
 			GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
 	 		GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
-			ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_CLAXON_START
 			timera = 0 
 
 		ENDIF	
@@ -1094,7 +1096,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 				 CLEAR_HELP 
 				 PRINT_HELP BOAT_B5  
@@ -1127,7 +1129,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_simplecircuit = 15 // go to next buoy pair
@@ -1154,7 +1156,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 	  			 boat_simplecircuit = 20 // go to next buoy pair
 				 REMOVE_BLIP buoyl_b
@@ -1180,7 +1182,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_simplecircuit = 25 // go to next buoy pair
@@ -1207,7 +1209,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_simplecircuit = 30 // go to next buoy pair
@@ -1236,7 +1238,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_simplecircuit = 35 // go to next buoy pair
@@ -1263,7 +1265,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_simplecircuit = 40 // go to next buoy pair
@@ -1292,7 +1294,7 @@ IF boat_mission_selection = 2
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_33 1000 1 // checkpoint ping finished!
 
 	  			 boat_simplecircuit = 99 // go to complete
@@ -1600,7 +1602,7 @@ boat_refresh_slalom:
 			boat_gold = boat_slalom_gold
 			boat_silver = boat_slalom_silver
 			boat_bronze = boat_slalom_bronze
-			ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
 			boat_slalom = 5
 			boat_timer = 0 
@@ -1623,7 +1625,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 10 // go to next buoy pair
@@ -1649,7 +1651,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 15 // go to next buoy pair
@@ -1675,7 +1677,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 20 // go to next buoy pair
@@ -1713,7 +1715,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 25 // go to next buoy pair
@@ -1740,7 +1742,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 30 // go to next buoy pair
@@ -1766,7 +1768,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 35 // go to next buoy pair
@@ -1792,7 +1794,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 40 // go to next buoy pair
@@ -1818,7 +1820,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 45 // go to next buoy pair
@@ -1843,7 +1845,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 50 // go to next buoy pair
@@ -1869,7 +1871,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 55 // go to next buoy pair
@@ -1895,7 +1897,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 60 // go to next buoy pair
@@ -1921,7 +1923,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 65 // go to next buoy pair
@@ -1960,7 +1962,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 70 // go to next buoy pair
@@ -1999,7 +2001,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 80 // go to final buoy pair
@@ -2029,7 +2031,7 @@ boat_refresh_slalom:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_33 1000 1 // checkpoint ping!
 
 	  			 boat_slalom = 99 // go to complete
@@ -2319,7 +2321,7 @@ IF boat_mission_selection = 4
 
 			GET_OBJECT_COORDINATES boat_buoys[0] buoyl_x buoyl_y buoyl_z
 	 		GET_OBJECT_COORDINATES boat_buoys[1] buoyr_x buoyr_y buoyr_z
-			ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
 
 		ENDIF	
@@ -2329,7 +2331,7 @@ IF boat_mission_selection = 4
 		
 		IF NOT IS_CAR_DEAD instructor_boat
 			IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_3D scplayer buoyl_x buoyl_y 1.0 buoyr_x buoyr_y 3.0 10.0 FALSE // height of ramp
-				ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				REMOVE_BLIP buoyl_b
 				REMOVE_BLIP buoyr_b
 				GET_CAR_SPEED instructor_boat boat_speed
@@ -2355,7 +2357,7 @@ IF boat_mission_selection = 4
 			IF boat_targetz < 1.0
 			   //	WRITE_DEBUG inwater
 				IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 600.0 FALSE 
-				   ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				   REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				   boat_skijump = 3
 				   timerb = 0
 				   //WRITE_DEBUG landed
@@ -2710,7 +2712,7 @@ boat_refresh_hover:
 			boat_gold = boat_hover_gold
 			boat_silver = boat_hover_silver
 			boat_bronze = boat_hover_bronze
-			ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
+			REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z SOUND_RACE_START_GO
 
 			boat_hover = 5
 			boat_timer = 0 
@@ -2735,7 +2737,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 10 // go to next buoy pair
@@ -2762,7 +2764,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 15 // go to next buoy pair
@@ -2789,7 +2791,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 20 // go to next buoy pair
@@ -2825,7 +2827,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 25 // go to next buoy pair
@@ -2852,7 +2854,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 30 // go to next buoy pair
@@ -2881,7 +2883,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 35 // go to next buoy pair
@@ -2908,7 +2910,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 40 // go to next buoy pair
@@ -2935,7 +2937,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 45 // go to next buoy pair
@@ -2961,7 +2963,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 50 // go to next buoy pair
@@ -2986,7 +2988,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 55 // go to next buoy pair
@@ -3012,7 +3014,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 60 // go to next buoy pair
@@ -3039,7 +3041,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 65 // go to next buoy pair
@@ -3076,7 +3078,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 70 // go to next buoy pair
@@ -3115,7 +3117,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 75 // go to next buoy pair
@@ -3150,7 +3152,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 80 // go to next buoy pair
@@ -3188,7 +3190,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 82 // go to next buoy pair
@@ -3223,7 +3225,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 84 // go to next buoy pair
@@ -3263,7 +3265,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 86 // go to next buoy pair
@@ -3297,7 +3299,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 88 // go to next buoy pair
@@ -3332,7 +3334,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 90 // go to next buoy pair
@@ -3367,7 +3369,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 91 // go to final buoy pair
@@ -3392,7 +3394,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_33 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 99//92 // go to final buoy pair
@@ -3418,7 +3420,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 93 // go to final buoy pair
@@ -3444,7 +3446,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 94 // go to final buoy pair
@@ -3470,7 +3472,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_31 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 97 // go to final buoy pair
@@ -3495,7 +3497,7 @@ boat_refresh_hover:
 
 	 		IF IS_CHAR_IN_ANGLED_AREA_IN_CAR_2D scplayer buoyl_x buoyl_y buoyr_x buoyr_y 3.0 FALSE
 	  			 //WRITE_DEBUG buoypair
-				 ADD_ONE_OFF_SOUND buoyl_x buoyl_y buoyl_z buoy_sound
+				 REPORT_MISSION_AUDIO_EVENT_AT_POSITION buoyl_x buoyl_y buoyl_z buoy_sound
 				 PRINT_NOW BOAT_33 1000 1 // checkpoint ping!
 
 	  			 boat_hover = 99 // go to complete
@@ -5381,6 +5383,7 @@ boat_watching_demo://///////////////////////////////////////////////////////////
 			IF NOT HAS_CAR_RECORDING_BEEN_LOADED 759
 				REQUEST_CAR_RECORDING 759
 			ELSE
+				//playing back car recordings
 
 				SYNC_WATER	
 				START_PLAYBACK_RECORDED_CAR instructor_boat 759
@@ -5624,6 +5627,12 @@ boat_stopsetup://///////////////////////////////////////////////////////////////
 		 LOAD_SCENE -2318.0493 2312.3018 10.0
 		 WAIT 0
 	ENDIF
+																														 
+	IF NOT IS_CAR_DEAD instructor_boat
+		GET_CAR_COORDINATES instructor_boat clearX clearY clearZ
+		CLEAR_AREA clearX clearY clearZ 1000.0 TRUE
+	   //	WRITE_DEBUG x
+	ENDIF
 
 
 
@@ -5634,6 +5643,12 @@ boat_stopsetup://///////////////////////////////////////////////////////////////
 	//RESTORE_CAMERA_JUMPCUT    
 	//SET_CAMERA_BEHIND_PLAYER
     //SET_PLAYER_CONTROL player1 on
+
+	IF NOT IS_CAR_DEAD instructor_boat
+		GET_CAR_COORDINATES instructor_boat clearX clearY clearZ
+		CLEAR_AREA clearX clearY clearZ 1000.0 TRUE
+		//WRITE_DEBUG y
+	ENDIF
 
 
 
@@ -6193,7 +6208,7 @@ RETURN
 
 // mission cleanup
 mission_cleanup_boat:
-ADD_ONE_OFF_SOUND 0.0 0.0 0.0 SOUND_ENABLE_HELI_AUDIO
+REPORT_MISSION_AUDIO_EVENT_AT_POSITION 0.0 0.0 0.0 SOUND_ENABLE_HELI_AUDIO
 REPORT_MISSION_AUDIO_EVENT_AT_POSITION -1000.0 -1000.0 -1000.0 SOUND_AWARD_TRACK_STOP
 
 

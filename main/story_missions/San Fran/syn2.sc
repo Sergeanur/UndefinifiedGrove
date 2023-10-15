@@ -3050,6 +3050,7 @@ SYN2_m_stage_6:
 		SWITCH_PED_ROADS_ON -1950.0 718.0 44.0 -1912.0 731.0 48.0 
 		SWITCH_ROADS_ON -1950.0 718.0 44.0 -1912.0 731.0 48.0 
 		
+		CLEAR_PRINTS
 		SWITCH_WIDESCREEN OFF
 		SET_PLAYER_CONTROL player1 ON
 		SET_PED_DENSITY_MULTIPLIER 1.0
@@ -3118,6 +3119,7 @@ SYN2_m_stage_7:
 		player_has_attacked_convoy = 0
 		rich_car_timer = 0
 
+		CLEAR_PRINTS
 		PRINT_NOW SYN2_70 10000 1 // kill the rich punter
 		
 		IF NOT IS_CAR_DEAD rich_car

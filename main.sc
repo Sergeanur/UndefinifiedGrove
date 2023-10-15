@@ -673,7 +673,7 @@ GOTO dont_run_the_blips
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT cesarX cesarY cesarZ cesar_blip_icon cesar_contact_blip
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT bcrashX bcrashY bcrashZ crash_blip_icon bcrash_contact_blip
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT catX[0] catY[0] catZ[0] cat_blip_icon cat_contact_blip  //cat lodge
-	ADD_SPRITE_BLIP_FOR_CONTACT_POINT catX[5] catY[5] catZ[5] cat_blip_icon cat_contact_blip //Cat Truck Stop
+	//ADD_SPRITE_BLIP_FOR_CONTACT_POINT catX[5] catY[5] catZ[5] cat_blip_icon cat_contact_blip //Cat Truck Stop
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT truthX truthY truthZ truth_blip_icon truth_contact_blip
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT bcesarX bcesarY bcesarZ cesar_blip_icon bcesar_contact_blip
 	ADD_SPRITE_BLIP_FOR_CONTACT_POINT garageX garageY garageZ crash_blip_icon scrash_contact_blip
@@ -728,9 +728,11 @@ GOTO dont_run_the_blips
 	CREATE_OBJECT ad_flatdoor 1900.89 -2020.11 12.5 riot2_door[9]
 	CREATE_OBJECT ad_flatdoor 1914.4 -2020.91 12.5 riot2_door[10]
 	CREATE_OBJECT ad_flatdoor 1906.54 -2035.52 12.5 riot2_door[11]
-	CREATE_OBJECT ad_flatdoor 1851.86 -2020.14 12.5 riot2_door[12]
-	CREATE_OBJECT ad_flatdoor 1865.42 -2020.89 12.5 riot2_door[13]
-	CREATE_OBJECT ad_flatdoor 1857.55 -2035.52 12.5 riot2_door[14]
+	//CREATE_OBJECT ad_flatdoor 1851.86 -2020.14 12.5 riot2_door[12]
+	//CREATE_OBJECT ad_flatdoor 1865.42 -2020.89 12.5 riot2_door[13]
+	//CREATE_OBJECT ad_flatdoor 1857.55 -2035.52 12.5 riot2_door[14]
+
+	WRITE_DEBUG AAAAAAAAA
 
 dont_run_the_blips:
 
@@ -1091,6 +1093,11 @@ DO_FADE 0 FADE_OUT
 DISPLAY_ZONE_NAMES FALSE
 WAIT 0
 WAIT 0
+
+SWITCH_WORLD_PROCESSING OFF //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+SET_FADING_COLOUR 0 0 0
+WAIT 2000 //Wait until keys are initialised	//TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SWITCH_WORLD_PROCESSING ON //TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 SET_MAX_WANTED_LEVEL 4	
 
@@ -4450,8 +4457,8 @@ WAIT mission_trigger_wait_time
 						ENDIF
                 	ELSE
 
-		            	GOSUB mini_fade
 						PRINT_BIG ( STAD_02 ) 1000 2//Kickstart
+		            	GOSUB mini_fade
 	                	LOAD_AND_LAUNCH_MISSION kickstart.sc 
 					ENDIF
                 ENDIF
@@ -5069,18 +5076,21 @@ planes_loop_inner:
 							CREATE_USER_3D_MARKER 1685.7 -2238.9 14.0 HUD_COLOUR_ENTRYEXIT_YELLOW airport_marker[0] //LEVEL_LOSANGELES
 							created_marker[0] = 1
 						ENDIF
-						IF LOCATE_CHAR_ON_FOOT_3D scplayer 1685.7 -2238.9 12.5 1.2 1.2 1.2 FALSE
-							IF CAN_PLAYER_START_MISSION player1
+						IF CAN_PLAYER_START_MISSION player1
+							IF LOCATE_CHAR_ON_FOOT_3D scplayer 1685.7 -2238.9 12.5 1.2 1.2 1.2 FALSE
 								SET_PLAYER_CONTROL player1 Off
 								GOSUB mini_fade
 								STREAM_SCRIPT planes.sc
-							
-								IF HAS_STREAMED_SCRIPT_LOADED planes.sc
-									START_NEW_STREAMED_SCRIPT planes.sc
-								ENDIF
+								flag_dozer_passed_1stime = 1
+							//ELSE
+								//MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
 							ENDIF
-						ELSE
-							MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
+							
+							IF HAS_STREAMED_SCRIPT_LOADED planes.sc
+							AND flag_dozer_passed_1stime = 1
+								START_NEW_STREAMED_SCRIPT planes.sc
+								flag_dozer_passed_1stime = 0
+							ENDIF
 						ENDIF												
 					ENDIF
 				ELSE
@@ -5104,18 +5114,21 @@ planes_loop_inner:
 							CREATE_USER_3D_MARKER -1421.5 -287.2 14.6 HUD_COLOUR_ENTRYEXIT_YELLOW airport_marker[1] //LEVEL_SANFRANCISCO
 							created_marker[1] = 1
 						ENDIF
-						IF LOCATE_CHAR_ON_FOOT_3D scplayer -1421.5 -287.2 14.6 1.2 1.2 1.2 FALSE
-							IF CAN_PLAYER_START_MISSION player1
+						IF CAN_PLAYER_START_MISSION player1
+							IF LOCATE_CHAR_ON_FOOT_3D scplayer -1421.5 -287.2 14.6 1.2 1.2 1.2 FALSE
 								SET_PLAYER_CONTROL player1 Off
 								GOSUB mini_fade
 								STREAM_SCRIPT planes.sc
-
-								IF HAS_STREAMED_SCRIPT_LOADED planes.sc
-									START_NEW_STREAMED_SCRIPT planes.sc
-								ENDIF
+								flag_dozer_passed_1stime = 1
+							//ELSE
+								//MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
 							ENDIF
-						ELSE
-							MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
+
+							IF HAS_STREAMED_SCRIPT_LOADED planes.sc
+							AND flag_dozer_passed_1stime = 1
+								START_NEW_STREAMED_SCRIPT planes.sc
+								flag_dozer_passed_1stime = 0
+							ENDIF
 						ENDIF												
 					ENDIF
 				ELSE
@@ -5139,18 +5152,21 @@ planes_loop_inner:
 							CREATE_USER_3D_MARKER 1663.0 1423.6 11.2 HUD_COLOUR_ENTRYEXIT_YELLOW airport_marker[2] //LEVEL_LASVEGAS
 							created_marker[2] = 1
 						ENDIF
-						IF LOCATE_CHAR_ON_FOOT_3D scplayer 1663.0 1423.6 11.2 1.2 1.2 1.2 FALSE
-							IF CAN_PLAYER_START_MISSION player1
+						IF CAN_PLAYER_START_MISSION player1
+							IF LOCATE_CHAR_ON_FOOT_3D scplayer 1663.0 1423.6 11.2 1.2 1.2 1.2 FALSE
 								SET_PLAYER_CONTROL player1 Off
 								GOSUB mini_fade
-								STREAM_SCRIPT planes.sc							
-							
-								IF HAS_STREAMED_SCRIPT_LOADED planes.sc
-									START_NEW_STREAMED_SCRIPT planes.sc
-								ENDIF
+								STREAM_SCRIPT planes.sc	
+								flag_dozer_passed_1stime = 1								
+							//ELSE
+								//MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
 							ENDIF
-						ELSE
-							MARK_STREAMED_SCRIPT_AS_NO_LONGER_NEEDED planes.sc
+
+							IF HAS_STREAMED_SCRIPT_LOADED planes.sc
+							AND flag_dozer_passed_1stime = 1
+								START_NEW_STREAMED_SCRIPT planes.sc
+								flag_dozer_passed_1stime = 0
+							ENDIF
 						ENDIF
 					ENDIF
 				ELSE
@@ -5333,7 +5349,11 @@ territory_cash_loop_inner:
 
 	GET_TERRITORY_UNDER_CONTROL_PERCENTAGE player_territory_owned
 	 
-	territory_cash = player_territory_owned * 50
+	IF Return_cities_passed > 1
+		territory_cash = player_territory_owned * 100
+	ELSE
+		territory_cash = player_territory_owned * 50
+	ENDIF
 	 
 	UPDATE_PICKUP_MONEY_PER_DAY territory_pickup territory_cash
 

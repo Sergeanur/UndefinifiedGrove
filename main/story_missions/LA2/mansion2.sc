@@ -3383,15 +3383,21 @@ Mansion2_Destroy_Spy_Boats:
 
 		IF NOT LOCATE_CHAR_ANY_MEANS_3D scplayer -1343.5 504.1 30.0 250.0 250.0 200.0 FALSE
 		AND nCurrentConversationID = MANSION2_CONVERSATION_STOLEN_HARRIER
-			// ...player a distance away from Carrier, so trigger cutscene
-			GOSUB Mansion2_Conversation_Command_Play
+			IF IS_CHAR_IN_CAR scplayer carPlayerPlane
+				// ...player a distance away from Carrier, so trigger cutscene
+				GOSUB Mansion2_Conversation_Command_Play
 
-			flagLeftCarrierCutscenePlayed = TRUE
+				flagLeftCarrierCutscenePlayed = TRUE
 
-			// Make sure the player gets a 6* rating again whenever he sets foot on the aircraft carrier
-			SET_DISABLE_MILITARY_ZONES FALSE
+				// Make sure the player gets a 6* rating again whenever he sets foot on the aircraft carrier
+				SET_DISABLE_MILITARY_ZONES FALSE
 
-			m_goals++
+				m_goals++
+			ELSE
+				m_failed = TRUE
+				m_fail_reason = MANSION2_FAILED_LEFT_CARRIER
+				RETURN
+			ENDIF
 		ENDIF
 	ENDIF
 

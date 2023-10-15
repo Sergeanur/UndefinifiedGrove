@@ -144,6 +144,8 @@ LVAR_FLOAT pool_stop_rotation_velocity
 pool_stop_velocity				= 0.05
 pool_stop_rotation_velocity		= 2.0
 
+triangle_is_pressed = 1 // fix for bug 1014
+
 mission_loop_POOL2:
 
     WAIT 0
@@ -208,7 +210,6 @@ mission_loop_POOL2:
 	ENDIF
 
 	GOSUB pl_global_functions
-	GOSUB edit_pool_turn_mass
 
 // end of main loop
 
@@ -476,7 +477,6 @@ ENDIF
 
 IF pool2_debug_mode = 5
 	
-	pool_view_debug[0] = aim_cue
 	pool_view_debug[1] = skip_chalk_cue
 	pool_view_debug[2] = no_of_balls_potted_this_turn
 	pool_view_debug[3] = spots_potted
@@ -485,7 +485,6 @@ IF pool2_debug_mode = 5
 	pool_view_debug[6] = first_moving_ball
 	pool_view_debug[7] = camera_mode
 
-	VIEW_INTEGER_VARIABLE pool_view_debug[0] aim_cue
 	VIEW_INTEGER_VARIABLE pool_view_debug[1] skip_chalk_cue
 	VIEW_INTEGER_VARIABLE pool_view_debug[2] no_of_balls_potted_this_turn
 	VIEW_INTEGER_VARIABLE pool_view_debug[3] spots_potted
@@ -631,20 +630,6 @@ IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_A
 	ELSE
 		player1_is_human = 1
 		WRITE_DEBUG cheat_player1_human
-	ENDIF
-ENDIF
-
-IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
-	IF DOES_OBJECT_EXIST p_ball[0]
-		GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS p_ball[0] 0.0 0.01 0.0 x y z
-		SET_OBJECT_COORDINATES p_ball[0] x y z
-	ENDIF
-ENDIF
-
-IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_DOWN
-	IF DOES_OBJECT_EXIST p_ball[0]
-		GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS p_ball[0] 0.0 -0.01 0.0 x y z
-		SET_OBJECT_COORDINATES p_ball[0] x y z
 	ENDIF
 ENDIF
 
@@ -1207,6 +1192,16 @@ pl_stage_2:
 
 		camera_mode = 1
 
+		IF camera_mode = 0
+			BUTT_ANGLE = 10.0 
+			RAISE_CUE = 0.02 
+			CUE_X_CORRECTION = 0.0  
+		ELSE
+			BUTT_ANGLE = 22.5000 
+			RAISE_CUE = 0.02 
+			CUE_X_CORRECTION = 0.0 
+		ENDIF
+
 		this_is_break = 1
 
 		// go to next stage
@@ -1284,6 +1279,7 @@ pl_stage_3:
 	ENDIF
 
 	IF m_goals = 99
+		CLEAR_MISSION_AUDIO 4 
 		CLEAR_HELP
 		TIMERA = 0
 		m_stage++
@@ -1742,6 +1738,16 @@ pl_stage_5:
 					help_timer = 0
 				ENDIF
 
+				IF camera_mode = 0
+					BUTT_ANGLE = 10.0 
+					RAISE_CUE = 0.02 
+					CUE_X_CORRECTION = 0.0  
+				ELSE
+					BUTT_ANGLE = 22.5000 
+					RAISE_CUE = 0.02 
+					CUE_X_CORRECTION = 0.0 
+				ENDIF
+
 
 			ELSE
 				IF select_is_pressed = 1
@@ -1782,46 +1788,6 @@ pl_stage_5:
 		ENDIF
 
 		// set aim --------
-		IF m_goals = 2
-			x = 0.0
-			y = -0.5
-			z = -1.7
-
-			IF IS_BUTTON_PRESSED current_pad RIGHTSTICKX
-			OR IS_BUTTON_PRESSED current_pad RIGHTSTICKY
-				GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
-				
-				temp_float =# RStickX
-				temp_float /= 128.0
-				temp_float *= 0.2
-				x += temp_float
-				temp_float =# RStickY
-				temp_float /= 128.0
-				IF temp_float < -0.1
-					temp_float = -0.1
-				ENDIF
-				temp_float *= 0.5
-				z += temp_float
-			ENDIF
-
-			GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS p_ball[0] x y z x y z
-			SET_OBJECT_COORDINATES camera_object x y z
- 			GET_OBJECT_COORDINATES p_ball[0] x2 y2 z2
-			
-			vec_x = x2 - x
-			vec_y = y2 - y
-			GET_HEADING_FROM_VECTOR_2D vec_x vec_y heading
-			SET_OBJECT_HEADING camera_object heading
-
-			IF IS_BUTTON_PRESSED current_pad SELECT
-				RESTORE_CAMERA_JUMPCUT
-				IF DOES_OBJECT_EXIST camera_object
-					DELETE_OBJECT camera_object
-				ENDIF
-				m_goals = 0 
-			ENDIF
-		ENDIF
-
 		IF IS_BUTTON_PRESSED current_pad LEFTSTICKX
 			GET_OBJECT_HEADING p_ball[0] heading
 			GET_POSITION_OF_ANALOGUE_STICKS current_pad LStickX LStickY RStickX RStickY
@@ -1838,24 +1804,14 @@ pl_stage_5:
 		
 		IF DOES_OBJECT_EXIST aim_cue
 			IF camera_mode = 0
-				BUTT_ANGLE = 0.0
-				RAISE_CUE = 0.063
-				CUE_X_CORRECTION = 0.0063
 				GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS p_ball[0] cue_x_correction -0.05 raise_cue x2 y2 z2
 			ELSE
-				BUTT_ANGLE = 22.5000 
-				RAISE_CUE = 0.021
-				CUE_X_CORRECTION = 0.0063
 				GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS p_ball[0] cue_x_correction -0.05 raise_cue x2 y2 z2
 			ENDIF
 			GET_OBJECT_HEADING p_ball[0] heading
 			heading += 180.0
 			SET_OBJECT_COORDINATES aim_cue x2 y2 z2
-			IF camera_mode = 0
-				SET_OBJECT_ROTATION aim_cue 0.0 0.0 heading
-			ELSE
- 				SET_OBJECT_ROTATION aim_cue butt_angle 0.0 heading
-			ENDIF
+ 			SET_OBJECT_ROTATION aim_cue butt_angle 0.0 heading
 		ENDIF
 
 		// draw ball projection	 
@@ -1878,12 +1834,43 @@ pl_stage_5:
 			projection_calculated = 0
 			TIMERA = 0
 		ENDIF  
-
-		// goto shooting ----
 		
+		// raise butt and cue
 		LVAR_FLOAT butt_angle  
 		LVAR_FLOAT raise_cue
 		LVAR_FLOAT cue_x_correction
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
+			butt_angle += 0.5
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_DOWN
+			butt_angle += -0.5
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_W
+			raise_cue += 0.001
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_S
+			raise_cue += -0.001
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_RIGHT
+			cue_x_correction += 0.0001
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_LEFT
+			cue_x_correction += -0.0001
+		ENDIF
+		IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_ENTER
+			SAVE_NEWLINE_TO_DEBUG_FILE 
+			SAVE_STRING_TO_DEBUG_FILE "butt_angle = "
+			SAVE_FLOAT_TO_DEBUG_FILE butt_angle
+			SAVE_NEWLINE_TO_DEBUG_FILE 
+			SAVE_STRING_TO_DEBUG_FILE "raise_cue = "
+			SAVE_FLOAT_TO_DEBUG_FILE raise_cue
+			SAVE_NEWLINE_TO_DEBUG_FILE
+			SAVE_STRING_TO_DEBUG_FILE "cue_x_correction = "
+			SAVE_FLOAT_TO_DEBUG_FILE cue_x_correction
+		ENDIF 
+		
+
+		// goto shooting ----
 
 		IF IS_BUTTON_PRESSED current_pad CROSS
 
@@ -2373,8 +2360,8 @@ RETURN
 pool_set_camera1:
 
 	SET_CHAR_COLLISION current_char FALSE  
-	shoot_stance_z += 1.1
-	GET_GROUND_Z_FOR_3D_COORD shoot_stance_x shoot_stance_y shoot_stance_z shoot_stance_z
+	temp_float = table_z + 1.0
+	GET_GROUND_Z_FOR_3D_COORD table_x table_y temp_float shoot_stance_z
 	SET_CHAR_COORDINATES current_char shoot_stance_x shoot_stance_y shoot_stance_z
 	SET_CHAR_HEADING current_char shoot_stance_h
 
@@ -3701,6 +3688,27 @@ pool_draw_projection:
 
 	proj_stage = 0
 	proj_dist = 1.7
+
+	// only draw projection if ball is more than 2cm away from cushion
+	IF DOES_OBJECT_EXIST p_ball[0]
+		GET_OBJECT_COORDINATES p_ball[0] x y z
+		temp_float = pool_table_min_x + 0.02
+		IF x < temp_float
+			proj_stage = 99		
+		ENDIF 
+		temp_float = pool_table_max_x - 0.02
+		IF x > temp_float
+			proj_stage = 99		
+		ENDIF
+		temp_float = pool_table_min_y + 0.02
+		IF y < temp_float
+			proj_stage = 99		
+		ENDIF 
+		temp_float = pool_table_max_y - 0.02
+		IF y > temp_float
+			proj_stage = 99		
+		ENDIF
+	ENDIF
 
 
 	WHILE NOT proj_stage = 99
@@ -5978,6 +5986,9 @@ LVAR_FLOAT table_path_v2_x table_path_v2_y
 LVAR_FLOAT table_path_v3_x table_path_v3_y	
 LVAR_FLOAT table_path_v4_x table_path_v4_y
 LVAR_FLOAT safe_stance_x safe_stance_y safe_stance_z	
+LVAR_FLOAT stance_angle
+LVAR_FLOAT stance_vec_x	stance_vec_y 
+LVAR_FLOAT cushion_vec_x cushion_vec_y
 update_stance_coords:
 
 	table_path_v1_x = -0.9600 	  
@@ -6000,6 +6011,8 @@ update_stance_coords:
 		stance_x = x
 		stance_y = y
 		stance_z = z
+		cushion_vec_x =	table_path_v2_x	- table_path_v1_x
+		cushion_vec_y =	table_path_v2_y	- table_path_v1_y
 	ENDIF
 	// v2 --- v3
 	GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table table_path_v3_x table_path_v3_y 0.0 Lb_x1 Lb_y1 Lb_z1
@@ -6007,6 +6020,8 @@ update_stance_coords:
 		stance_x = x
 		stance_y = y
 		stance_z = z
+		cushion_vec_x =	table_path_v3_x	- table_path_v2_x
+		cushion_vec_y =	table_path_v3_y	- table_path_v2_y
 	ENDIF
 	// v3 --- v4
 	GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table table_path_v4_x table_path_v4_y 0.0 Lb_x2 Lb_y2 Lb_z2
@@ -6014,6 +6029,8 @@ update_stance_coords:
 		stance_x = x
 		stance_y = y
 		stance_z = z
+		cushion_vec_x =	table_path_v4_x	- table_path_v3_x
+		cushion_vec_y =	table_path_v4_y	- table_path_v3_y
 	ENDIF
 	// v4 --- v1
 	GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS table table_path_v1_x table_path_v1_y 0.0 Lb_x1 Lb_y1 Lb_z1
@@ -6021,7 +6038,19 @@ update_stance_coords:
 		stance_x = x
 		stance_y = y
 		stance_z = z
+		cushion_vec_x =	table_path_v1_x	- table_path_v4_x
+		cushion_vec_y =	table_path_v1_y	- table_path_v4_y
 	ENDIF
+
+	// get stance angle
+	stance_vec_x = La_x2 - La_x1	
+	stance_vec_y = La_y2 - La_y1
+	GET_ANGLE_BETWEEN_2D_VECTORS stance_vec_x stance_vec_y cushion_vec_x cushion_vec_y stance_angle
+	IF stance_angle > 90.0
+		stance_angle += -180.0
+		stance_angle *= -1.0
+	ENDIF
+	//WRITE_DEBUG_WITH_FLOAT  stance_angle stance_angle
 
 	// get heading
 	vec_x = La_x2 - stance_x
@@ -6075,6 +6104,14 @@ update_stance_coords:
 				// v.far
 				current_stance = 4
 			ENDIF
+		ENDIF
+	ENDIF
+
+	// if stance angle is greater than 70 degrees than increment the current_stance
+	IF stance_angle > 70.0
+		current_stance++
+		IF current_stance > 4
+			current_stance = 4
 		ENDIF
 	ENDIF
 
@@ -6948,34 +6985,8 @@ RETURN
 LVAR_FLOAT ball_turn_mass
 edit_pool_turn_mass:
 
-	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_UP
-
-		IF DOES_OBJECT_EXIST p_ball[0]
-			GET_OBJECT_TURN_MASS p_ball[0] ball_turn_mass
-		ENDIF
-		ball_turn_mass += 0.001
-
-		// update all the balls
-		temp_int = 0
-		WHILE temp_int < 16
-			IF DOES_OBJECT_EXIST p_ball[temp_int]
-				SET_OBJECT_TURN_MASS p_Ball[temp_int] ball_turn_mass
-			ENDIF
-		temp_int++
-		ENDWHILE
-	ENDIF
-
 	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_DOWN
-
-		IF DOES_OBJECT_EXIST p_ball[0]
-			GET_OBJECT_TURN_MASS p_ball[0] ball_turn_mass
-		ENDIF
 		ball_turn_mass += -0.0001
-
-		IF ball_turn_mass <= 0.0
-			ball_turn_mass = 0.0001
-		ENDIF
-
 		// update all the balls
 		temp_int = 0
 		WHILE temp_int < 16
@@ -6988,7 +6999,7 @@ edit_pool_turn_mass:
 
 	// update all the balls
 	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_ENTER
-		temp_int = 0
+
 		WHILE temp_int < 16
 			IF DOES_OBJECT_EXIST p_ball[temp_int]
 				SET_OBJECT_TURN_MASS p_Ball[temp_int] ball_turn_mass
@@ -7001,7 +7012,7 @@ edit_pool_turn_mass:
 
 	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_NUMPAD_8
 		// increase 
-		pool_stop_velocity += 0.001
+		//pool_stop_velocity += 0.001
 		//WRITE_DEBUG_WITH_FLOAT pool_stop_velocity pool_stop_velocity
 	ENDIF
 	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_NUMPAD_2

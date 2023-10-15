@@ -57,6 +57,8 @@ LVAR_INT lv_cheer[3]
 
 // ****************************************Mission Start************************************
 
+REGISTER_MISSION_GIVEN
+
 mission_start_gymlv:
 
 IF NOT IS_CHAR_DEAD scplayer
@@ -70,8 +72,6 @@ gym_is_running = 1
 flag_player_on_mission = 1
 
 INCREMENT_INT_STAT VISITS_TO_GYM 1
-
-REGISTER_MISSION_GIVEN
 
 LOAD_MISSION_TEXT GYM
 

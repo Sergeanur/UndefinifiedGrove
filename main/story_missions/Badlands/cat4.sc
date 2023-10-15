@@ -2241,14 +2241,16 @@ SET_PED_DENSITY_MULTIPLIER 0.0
 									// cats comments
 									IF index_random_char = 5
     			  					   	LOAD_MISSION_AUDIO 1 SOUND_CATX_TQ
-									  	WHILE NOT HAS_MISSION_AUDIO_LOADED 1
-									   	   	WAIT 0
-									   	ENDWHILE  
+									  //	WHILE NOT HAS_MISSION_AUDIO_LOADED 1
+									   	   //	WAIT 0
+									   //	ENDWHILE  
 
-									   	PLAY_MISSION_AUDIO 1
-										WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
-									   		WAIT 0
-									  	ENDWHILE
+									   	PRINT_NOW ( CATX_TQ ) 100 1		//	who wants me now?
+									   //	PLAY_MISSION_AUDIO 1
+									//	WHILE NOT HAS_MISSION_AUDIO_FINISHED 1
+									   //	WAIT 0
+									  //	ENDWHILE
+									 //	CLEAR_THIS_PRINT CATX_TQ 
 									ENDIF
 
 										
@@ -2448,6 +2450,13 @@ SET_PED_DENSITY_MULTIPLIER 0.0
 
 
 
+							SET_CHAR_COORDINATES scplayer 824.8268 10.0672 1003.1870
+							SET_CHAR_HEADING scplayer 100.0
+						 	SET_CHAR_AREA_VISIBLE scplayer 3
+						  	SET_AREA_VISIBLE 3
+
+
+						
 							flag_cutscene1_cat4 = 2
 							TASK_GO_STRAIGHT_TO_COORD scplayer 821.3832 9.7296 1003.1951  PEDMOVE_WALK -1
 

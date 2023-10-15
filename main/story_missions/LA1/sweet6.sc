@@ -2335,6 +2335,13 @@ sweet6_m_stage_4:
 
 		// wager screen
 		IF m_Goals = 6
+
+			// check for language change
+			IF HAS_GAME_JUST_RETURNED_FROM_FRONTEND
+			AND HAS_LANGUAGE_CHANGED
+				CLEAR_HELP 
+				PRINT_HELP_FOREVER S6_37
+			ENDIF
 			
 			// ' X '  to increase bet
 			

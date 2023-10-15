@@ -2023,6 +2023,11 @@ WAIT 0
 					SWITCH_WIDESCREEN ON
 					MAKE_PLAYER_GANG_DISAPPEAR
 					HIDE_CHAR_WEAPON_FOR_SCRIPTED_CUTSCENE scplayer TRUE
+				
+					IF NOT main_visible_area = 0
+						SET_AREA_VISIBLE 0
+						SET_CHAR_AREA_VISIBLE scplayer 0 
+					ENDIF
 							
 					
 					SHUT_ALL_CHARS_UP TRUE

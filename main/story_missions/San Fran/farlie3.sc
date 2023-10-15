@@ -1488,8 +1488,9 @@ exit_get_in_car_loop_farlie3:
 						PRINT_NOW ( dri2_26 ) 5000 1	//  you fled
 						RETURN
 					ENDIF	
-					
 				ENDIF
+					
+				
 			ENDIF
 
 
@@ -1699,13 +1700,15 @@ shoot_correct_container:
 					IF flag_van_drives_off = 1
 							
 					 //	IF NOT LOCATE_CHAR_ANY_MEANS_3D scplayer coord_van_end_point_x coord_van_end_point_y coord_van_end_point_z 500.0 500.0 500.0 FALSE
-						IF NOT LOCATE_CHAR_ANY_MEANS_CAR_3D scplayer car_van_with_buddy_inside 400.0 400.0 400.0 FALSE
-							flag_shoot_correct_container = 0
-							flag_get_to_location_of_girl = 0
+						IF NOT IS_CAR_DEAD car_van_with_buddy_inside // to fix bug 264 in PC VERSION
+							IF NOT LOCATE_CHAR_ANY_MEANS_CAR_3D scplayer car_van_with_buddy_inside 400.0 400.0 400.0 FALSE
+								flag_shoot_correct_container = 0
+								flag_get_to_location_of_girl = 0
 
-							flag_mission_failed_farlie3 = 1
-							PRINT_NOW ( dri2_26 ) 5000 1	//  you fled
-							RETURN
+								flag_mission_failed_farlie3 = 1
+								PRINT_NOW ( dri2_26 ) 5000 1	//  you fled
+								RETURN
+							ENDIF
 						ENDIF
 					ENDIF
 				ENDIF
@@ -2992,9 +2995,9 @@ tbone_checks_farlie3:
 								ENDIF
 
 								IF flag_phone_dialog_driv3 >= 9	 // docks
-								AND flag_phone_dialog_driv3 < 12 
+								AND flag_phone_dialog_driv3 < 15 
 									IF NOT DOES_BLIP_EXIST blip_destination_farlie3
-										ADD_BLIP_FOR_COORD -2071.0 209.0 35.0 blip_destination_farlie3 
+										ADD_BLIP_FOR_COORD -1772.0 152.0 152.0 blip_destination_farlie3 
 									ENDIF
 
 								ENDIF

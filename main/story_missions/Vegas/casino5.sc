@@ -190,11 +190,11 @@ LVAR_INT never_run_this_C5
 	$audio_text_label_C5[15] = &CAS5_DB
 	audio_sound_label_C5[15]= SOUND_CAS5_DB
 
-	audio_pointer_C5 = 0
-	audio_status_C5 = 0
+	audio_pointer_C5 = audio_status_C5
+	//audio_status_C5 = 0
 	TIMERB = 0
 
-	patriot_status_C5 = 0
+	//patriot_status_C5 = 0
 
 // ########################################################################################################################################
 // ##
@@ -412,6 +412,7 @@ mission_casino5_CUT_in_hospital:
 	
 	CREATE_CAR AMBULAN 2152.0291 1912.4558 9.6797 ambulance_C5[0]
 	SET_CAR_HEADING ambulance_C5[0] 0.0
+	SET_CAR_HEALTH ambulance_C5[0] 2000
 	ADD_BLIP_FOR_CAR ambulance_C5[0] ambulance_blip_C5[0] 
 	LOCK_CAR_DOORS ambulance_C5[0] CARLOCK_LOCKOUT_PLAYER_ONLY
 	SET_LOAD_COLLISION_FOR_CAR_FLAG ambulance_C5[0] FALSE
@@ -432,6 +433,7 @@ mission_casino5_CUT_in_hospital:
 	
 	CREATE_CAR AMBULAN 2050.2913 1358.5164 9.6719 ambulance_C5[1]
 	SET_CAR_HEADING ambulance_C5[1] 180.0
+	SET_CAR_HEALTH ambulance_C5[1] 2000
 	ADD_BLIP_FOR_CAR ambulance_C5[1] ambulance_blip_C5[1] 
 	LOCK_CAR_DOORS ambulance_C5[1] CARLOCK_LOCKOUT_PLAYER_ONLY
 	SET_LOAD_COLLISION_FOR_CAR_FLAG ambulance_C5[1] FALSE
@@ -452,6 +454,7 @@ mission_casino5_CUT_in_hospital:
 	
 	CREATE_CAR AMBULAN 2544.9802 1395.7972 9.7800 ambulance_C5[2]
 	SET_CAR_HEADING ambulance_C5[2] 180.0
+	SET_CAR_HEALTH ambulance_C5[2] 2000
 	ADD_BLIP_FOR_CAR ambulance_C5[2] ambulance_blip_C5[2] 
 	LOCK_CAR_DOORS ambulance_C5[2] CARLOCK_LOCKOUT_PLAYER_ONLY
 	SET_LOAD_COLLISION_FOR_CAR_FLAG ambulance_C5[2] FALSE
@@ -1222,7 +1225,7 @@ mission_casino5_SUB_backup_controller:
 								CREATE_CHAR_INSIDE_CAR backup_car_C5[backup_pointer_C5] PEDTYPE_MISSION1 VMAFF2 backup_driver_C5[backup_pointer_C5]  
 
 								GIVE_WEAPON_TO_CHAR backup_driver_C5[backup_pointer_C5] WEAPONTYPE_MP5 30000
-								SET_CURRENT_CHAR_WEAPON backup_driver_C5[backup_pointer_C5] WEAPONTYPE_MP5
+								//SET_CURRENT_CHAR_WEAPON backup_driver_C5[backup_pointer_C5] WEAPONTYPE_MP5
 								SET_CHAR_DECISION_MAKER backup_driver_C5[backup_pointer_C5] empty_dm_C5
 		
 								SET_CHAR_CANT_BE_DRAGGED_OUT backup_driver_C5[backup_pointer_C5] TRUE

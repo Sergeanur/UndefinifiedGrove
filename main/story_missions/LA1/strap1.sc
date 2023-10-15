@@ -713,7 +713,7 @@ WAIT 0
 
 					CLEAR_PRINTS
 
-					IF iDanceScore >= 4000
+					IF iDanceScore >= 2500
 
 						SWITCH_AUDIO_ZONE BEACH TRUE
 

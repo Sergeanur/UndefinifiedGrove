@@ -855,8 +855,10 @@ shop_clothes_inner:
 				//	Player has pressed square in second menu
 				
 				IF shop_progress_clothes = 2
-					IF NOT IS_BUTTON_PRESSED PAD1 CROSS
-						shop_progress_clothes = 3
+	                IF HAS_MISSION_AUDIO_FINISHED 4
+						IF NOT IS_BUTTON_PRESSED PAD1 CROSS
+							shop_progress_clothes = 3
+						ENDIF
 					ENDIF
 				ENDIF
 

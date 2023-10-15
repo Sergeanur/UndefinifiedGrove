@@ -105,8 +105,8 @@ vending_machine_loop:
 												LOAD_MISSION_AUDIO 4 SOUND_DRINKS_CAN
 											endif
 											if has_mission_audio_loaded 4
-												PLAY_MISSION_AUDIO 4
 												ATTACH_MISSION_AUDIO_TO_CHAR 4 scplayer
+												PLAY_MISSION_AUDIO 4
 											endif
 											
 											timer = game_timer + 3000//800

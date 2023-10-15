@@ -162,19 +162,23 @@ bball_loop:
 					IF bball_active = 0
 						IF LOCATE_CHAR_ANY_MEANS_OBJECT_2D scplayer bbhoop 50.0 50.0 FALSE								
 							IF NOT DOES_OBJECT_EXIST m_ball
-								bball_active = 1
+								
 								IF HAS_MODEL_LOADED this_hoop_model
 									GET_LEVEL_DESIGN_COORDS_FOR_OBJECT bbhoop 1 x y z
-								ENDIF
-								
-								z += 1.0
-								CREATE_OBJECT_NO_OFFSET BBALL_COL x y z m_ball
-								col_loaded_for_ball = 1
-								SET_OBJECT_DYNAMIC m_ball TRUE
-								SET_OBJECT_COLLISION m_ball TRUE
-								SET_OBJECT_VELOCITY m_ball 0.0 0.0 -0.1	
-								m_stage++
+									
+									IF NOT IS_POINT_ON_SCREEN x y z 2.0
+										z += 1.0
+										CLEAR_AREA x y z 0.5 FALSE
+										CREATE_OBJECT_NO_OFFSET BBALL_COL x y z m_ball
+										col_loaded_for_ball = 1
+										SET_OBJECT_DYNAMIC m_ball TRUE
+										SET_OBJECT_COLLISION m_ball TRUE
+										SET_OBJECT_VELOCITY m_ball 0.0 0.0 -0.1	
+										bball_active = 1
+										m_stage++
+									ENDIF
 							
+								ENDIF
 							ENDIF
 						ENDIF
 					ELSE
@@ -203,9 +207,14 @@ bball_loop:
 											z3 = z + 2.0
 											IF NOT IS_AREA_OCCUPIED x2 y2 z2 x3 y3 z3 FALSE TRUE FALSE FALSE FALSE
 												// check the player is safe to use
-												SET_PLAYER_ENTER_CAR_BUTTON player1 FALSE
-												PRINT_HELP_FOREVER BB_01 // press triangle to start game
-												m_stage++
+												IF NOT IS_PLAYER_USING_JETPACK player1
+													GET_SCRIPT_TASK_STATUS scplayer TASK_USE_MOBILE_PHONE temp_int
+													IF temp_int = FINISHED_TASK
+														SET_PLAYER_ENTER_CAR_BUTTON player1 FALSE
+														PRINT_HELP_FOREVER BB_01 // press triangle to start game
+														m_stage++
+													ENDIF
+												ENDIF 
 											ENDIF
 										ENDIF
 									ELSE
@@ -227,52 +236,60 @@ bball_loop:
 				CASE 2
 					IF LOCATE_CHAR_ANY_MEANS_OBJECT_2D scplayer bbhoop 50.0 50.0 FALSE
 						IF DOES_OBJECT_EXIST m_ball
-							// check m_ball is on court
-							IF HAS_MODEL_LOADED this_hoop_model
-								GET_LEVEL_DESIGN_COORDS_FOR_OBJECT bbhoop 2 x2 y2 z2
-								GET_LEVEL_DESIGN_COORDS_FOR_OBJECT bbhoop 3 x3 y3 z3
-								IF IS_OBJECT_IN_AREA_3D m_ball x2 y2 z2 x3 y3 z3 FALSE
-									IF LOCATE_CHAR_ON_FOOT_OBJECT_3D scplayer m_ball 0.7 0.7 2.0 FALSE
-										GET_OBJECT_COORDINATES m_ball x y z
-										x2 = x - 0.71
-										y2 = y - 0.71
-										z2 = z - 0.71
-										x3 = x + 0.71
-										y3 = y + 0.71
-										z3 = z + 2.0
-										IF NOT IS_AREA_OCCUPIED x2 y2 z2 x3 y3 z3 FALSE TRUE FALSE FALSE FALSE 
-											
-											//WRITE_DEBUG_WITH_INT p_status p_status
-											
-											IF tri_pressed = 0
-													
-												IF IS_BUTTON_PRESSED PAD1 TRIANGLE
-													tri_pressed = 1
-													CLEAR_HELP 
+							// check the player is safe to use
+							IF NOT IS_PLAYER_USING_JETPACK player1
 
-													GOSUB bball_init_minigame
-													m_stage ++
+								GET_SCRIPT_TASK_STATUS scplayer TASK_USE_MOBILE_PHONE temp_int
+								IF temp_int = FINISHED_TASK
+
+									// check m_ball is on court
+									IF HAS_MODEL_LOADED this_hoop_model
+										GET_LEVEL_DESIGN_COORDS_FOR_OBJECT bbhoop 2 x2 y2 z2
+										GET_LEVEL_DESIGN_COORDS_FOR_OBJECT bbhoop 3 x3 y3 z3
+										IF IS_OBJECT_IN_AREA_3D m_ball x2 y2 z2 x3 y3 z3 FALSE
+											IF LOCATE_CHAR_ON_FOOT_OBJECT_3D scplayer m_ball 0.7 0.7 2.0 FALSE
+												GET_OBJECT_COORDINATES m_ball x y z
+												x2 = x - 0.71
+												y2 = y - 0.71
+												z2 = z - 0.71
+												x3 = x + 0.71
+												y3 = y + 0.71
+												z3 = z + 2.0
+												IF NOT IS_AREA_OCCUPIED x2 y2 z2 x3 y3 z3 FALSE TRUE FALSE FALSE FALSE 
+													
+													//WRITE_DEBUG_WITH_INT p_status p_status
+													
+													IF tri_pressed = 0
+															
+														IF IS_BUTTON_PRESSED PAD1 TRIANGLE
+															tri_pressed = 1
+															CLEAR_HELP 
+
+															GOSUB bball_init_minigame
+															m_stage ++
+														ENDIF
+													ELSE
+														IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
+															tri_pressed = 0
+														ENDIF
+													ENDIF
+
+												ELSE
+													SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+													CLEAR_HELP
+													m_stage += -1	
 												ENDIF
 											ELSE
-												IF NOT IS_BUTTON_PRESSED PAD1 TRIANGLE
-													tri_pressed = 0
-												ENDIF
-											ENDIF
-
+												SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+												CLEAR_HELP
+												m_stage += -1 
+											ENDIF 
 										ELSE
 											SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
 											CLEAR_HELP
-											m_stage += -1	
+											m_stage += -1
 										ENDIF
-									ELSE
-										SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
-										CLEAR_HELP
-										m_stage += -1 
-									ENDIF 
-								ELSE
-									SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
-									CLEAR_HELP
-									m_stage += -1
+									ENDIF
 								ENDIF
 							ENDIF
 						ENDIF
@@ -320,6 +337,23 @@ bball_loop:
 						// if player gets attacked quit out
 						IF IS_PLAYER_PLAYING player1
 							IF HAS_CHAR_BEEN_DAMAGED_BY_WEAPON scplayer WEAPONTYPE_ANYWEAPON
+								GOSUB bball_cleanup_minigame
+								m_stage = 1
+							ENDIF
+						ENDIF
+						
+						// if player uses jet pack quit out
+						IF IS_PLAYER_PLAYING player1
+							IF IS_PLAYER_USING_JETPACK	player1
+								GOSUB bball_cleanup_minigame
+								m_stage = 1	
+							ENDIF
+						ENDIF
+
+						// if player is using mobile phone quit out
+						IF IS_PLAYER_PLAYING player1
+							GET_SCRIPT_TASK_STATUS scplayer TASK_USE_MOBILE_PHONE temp_int
+							IF NOT temp_int = FINISHED_TASK 
 								GOSUB bball_cleanup_minigame
 								m_stage = 1
 							ENDIF
@@ -529,6 +563,7 @@ bball_init_minigame:
 	IF IS_PLAYER_PLAYING player1
 		
 		SET_PLAYER_CONTROL player1 OFF
+		CLEAR_CHAR_TASKS scplayer
 		SET_CHAR_PROOFS scplayer FALSE FALSE FALSE FALSE FALSE
 		CLEAR_CHAR_LAST_WEAPON_DAMAGE scplayer
 
@@ -1258,6 +1293,7 @@ update_bball_tasks_start:
 					CLEAR_SEQUENCE_TASK temp_seq
 					//SET_CAMERA_BEHIND_PLAYER
 					//WRITE_DEBUG DUNKSTART
+					dunc_glide_percent = 0.0
 				ELSE
 					IF IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Gli
 						IF NOT DOES_OBJECT_EXIST char_obj
@@ -1291,7 +1327,35 @@ update_bball_tasks_start:
 						//WRITE_DEBUG DUNK_GLIDE_FINISHED
 						p_status = DUNK_FINISH
 						GOTO update_bball_tasks_end
+					ELSE
+						IF NOT IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Gli
+							IF NOT IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Lnch
+								//WRITE_DEBUG DUNK_GLIDE_FINISHED2
+								p_status = DUNK_FINISH
+								GOTO update_bball_tasks_end
+							ENDIF
+						ENDIF
 					ENDIF
+
+
+
+  					IF IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Gli
+  						IF DOES_OBJECT_EXIST char_obj
+  							// catch if bug happens that halts anim
+  							IF dunc_glide_percent > 1.0
+  
+  								CLEAR_CHAR_TASKS_IMMEDIATELY scplayer
+  								OPEN_SEQUENCE_TASK temp_seq
+  									TASK_PLAY_ANIM_NON_INTERRUPTABLE -1 BBALL_Dnk	   BSKTBALL 1000.0 FALSE FALSE FALSE TRUE -1
+  									TASK_PLAY_ANIM_NON_INTERRUPTABLE -1 BBALL_Dnk_Lnd  BSKTBALL 1000.0 FALSE FALSE FALSE FALSE -1
+  								CLOSE_SEQUENCE_TASK temp_seq
+  								PERFORM_SEQUENCE_TASK scplayer temp_seq
+  								CLEAR_SEQUENCE_TASK temp_seq
+  								//WRITE_DEBUG DUNKESCAPE
+  
+  							ENDIF
+  						ENDIF
+  					ENDIF
 					
 
 				ENDIF
@@ -2171,6 +2235,8 @@ update_player_control:
 						// check angle between 2 vectors is below 90.
 						GET_ANGLE_BETWEEN_2D_VECTORS x3 y3 x2 y2 temp_float
 
+						temp_int = 0
+
 						IF temp_float < 90.0
 
 							// check if in right position for a dunk
@@ -2181,10 +2247,29 @@ update_player_control:
 								IF temp_float < 400.0
 									GET_CHAR_COORDINATES scplayer x y z
 									GET_OBJECT_COORDINATES bbhoop x2 y2 z2
-									GET_DISTANCE_BETWEEN_COORDS_3D x y z x2 y2 z2 temp_float
-									IF temp_float < 4.0
-									AND temp_float > 1.0
-										temp_int = 1
+									GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS scplayer 0.0 1.0 0.0 x3 y3 z3
+									GET_DISTANCE_BETWEEN_COORDS_2D x y x2 y2 temp_float
+									IF temp_float > 2.4
+									AND temp_float < 3.5
+										// check player is facing correct way.
+
+										//WRITE_DEBUG_WITH_FLOAT temp_float temp_float
+
+										bb_cam_vec_x = x3 - x
+										bb_cam_vec_y = y3 - y
+										temp_float = x2 - x
+										temp_float2 = y2 - y
+
+
+										GET_ANGLE_BETWEEN_2D_VECTORS bb_cam_vec_x bb_cam_vec_y temp_float temp_float2 z
+										
+										//WRITE_DEBUG_WITH_FLOAT z z
+
+										IF z < 90.0
+											temp_int = 1
+										ELSE
+											temp_int = 0
+										ENDIF
 									ENDIF
 								ENDIF
 							ENDIF
@@ -2372,59 +2457,66 @@ update_player_control:
 			GET_OBJECT_COORDINATES char_obj x y z
 			GET_DISTANCE_BETWEEN_COORDS_3D x y z bb_desired_x bb_desired_y bb_desired_z temp_float
 
-			IF temp_float > 0.07
-				x2 = bb_desired_x - x
-				y2 = bb_desired_y - y
-				z2 = bb_desired_z - z
-				x2 /= temp_float
-				y2 /= temp_float
-				z2 /= temp_float
+			IF dunc_glide_percent <= 1.0
 
-				IF temp_float > 0.065
-					x2 *= 0.065
-					y2 *= 0.065
-					z2 *= 0.065
+				IF temp_float > 0.07
+					x2 = bb_desired_x - x
+					y2 = bb_desired_y - y
+					z2 = bb_desired_z - z
+					x2 /= temp_float
+					y2 /= temp_float
+					z2 /= temp_float
 
-					x +=@ x2
-					y +=@ y2
-					z +=@ z2
-					//WRITE_DEBUG UPDATING_CHAR_OBJ
-					SET_OBJECT_COORDINATES char_obj x y z
+					IF temp_float > 0.065
+						x2 *= 0.065
+						y2 *= 0.065
+						z2 *= 0.065
 
-					GET_DISTANCE_BETWEEN_COORDS_3D x y z bb_desired_x bb_desired_y bb_desired_z temp_float
-			
-					VAR_FLOAT dunc_glide_percent
-					dunc_glide_percent = temp_float / dunk_slide_distance
-					dunc_glide_percent += -1.0
-					dunc_glide_percent *= -1.0
+						x +=@ x2
+						y +=@ y2
+						z +=@ z2
+						//WRITE_DEBUG UPDATING_CHAR_OBJ
+						SET_OBJECT_COORDINATES char_obj x y z
 
-				ELSE
+						GET_DISTANCE_BETWEEN_COORDS_3D x y z bb_desired_x bb_desired_y bb_desired_z temp_float
+				
+						VAR_FLOAT dunc_glide_percent
+						dunc_glide_percent = temp_float / dunk_slide_distance
+						dunc_glide_percent += -1.0
+						dunc_glide_percent *= -1.0
+
+					ELSE
+						SET_OBJECT_COORDINATES char_obj bb_desired_x bb_desired_y bb_desired_z
+						dunc_glide_percent = 1.0
+					ENDIF
+
+
+				ELSE		
 					SET_OBJECT_COORDINATES char_obj bb_desired_x bb_desired_y bb_desired_z
 					dunc_glide_percent = 1.0
 				ENDIF
 
-
-			ELSE		
-				SET_OBJECT_COORDINATES char_obj bb_desired_x bb_desired_y bb_desired_z
-				dunc_glide_percent = 1.0
-			ENDIF
-
-			IF IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Gli
-				IF dunc_glide_percent >= 0.0
-				AND dunc_glide_percent <= 1.0
-//					IF display_debug = 1
-//						//WRITE_DEBUG_WITH_FLOAT dunc_glide_percent dunc_glide_percent
-//					ENDIF
-					SET_CHAR_ANIM_CURRENT_TIME scplayer BBALL_Dnk_Gli dunc_glide_percent
-					IF IS_OBJECT_PLAYING_ANIM m_ball BBALL_Dnk_Gli_O
-						SET_OBJECT_ANIM_CURRENT_TIME m_ball BBALL_Dnk_Gli_O dunc_glide_percent
+				IF IS_CHAR_PLAYING_ANIM scplayer BBALL_Dnk_Gli
+					IF dunc_glide_percent >= 0.0
+					AND dunc_glide_percent <= 1.0
+	//					IF display_debug = 1
+	//						//WRITE_DEBUG_WITH_FLOAT dunc_glide_percent dunc_glide_percent
+	//					ENDIF
+						SET_CHAR_ANIM_CURRENT_TIME scplayer BBALL_Dnk_Gli dunc_glide_percent
+						IF IS_OBJECT_PLAYING_ANIM m_ball BBALL_Dnk_Gli_O
+				   			SET_OBJECT_ANIM_CURRENT_TIME m_ball BBALL_Dnk_Gli_O dunc_glide_percent
+						ENDIF
 					ENDIF
 				ENDIF
+
 			ENDIF
 
 			//IF dunc_glide_percent <= 1.0
 				//WRITE_DEBUG_WITH_FLOAT dunc_glide_percent dunc_glide_percent
 			//ENDIF
+			IF dunc_glide_percent = 1.0
+				dunc_glide_percent = 1.01
+			ENDIF
 
 		ENDIF
 

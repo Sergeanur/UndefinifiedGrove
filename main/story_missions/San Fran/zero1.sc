@@ -134,6 +134,8 @@ LVAR_INT timer_heli_time_to_leave[10]
 LVAR_INT timer_current_time_zero1
 LVAR_INT mission_start_time_zero1 time_since_mission_started_zero1
 
+LVAR_INT day_hours_zero1 day_mins_zero1
+
 								   
 
 
@@ -192,6 +194,17 @@ mission_start_zero1:
 	SET_AREA_VISIBLE 6	//zeros toy shop
 
 	SET_CHAR_COORDINATES scplayer -2214.4363 123.9208 56.4219
+
+	GET_TIME_OF_DAY day_hours_zero1 day_mins_zero1
+	
+	/////////////////////////////////
+	// TO FIX PC BUG 221 
+	IF day_hours_zero1 > 21
+	OR day_hours_zero1 < 4
+		day_hours_zero1 = 5
+   		 SET_TIME_OF_DAY day_hours_zero1 day_mins_zero1
+	ENDIF
+	/////////////////////////////////
 	
 
 

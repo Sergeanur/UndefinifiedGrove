@@ -221,6 +221,7 @@ MISSION_END
 		LOCK_CAR_DOORS c3_chase CARLOCK_LOCKED
 		SET_CAN_BURST_CAR_TYRES c3_chase FALSE
 		SET_LOAD_COLLISION_FOR_CAR_FLAG c3_chase FALSE
+		FREEZE_CAR_POSITION c3_chase TRUE
 	RETURN
 	c3_exp_car_create:
 		LVAR_INT c3_exp_car c3_exp_car_blip
@@ -950,6 +951,7 @@ IF c3_stage = 2
 //					IF IS_GROUP_MEMBER catalina players_group
 //						REMOVE_CHAR_FROM_GROUP catalina
 //					ENDIF
+					FREEZE_CAR_POSITION c3_chase FALSE
 					CLEAR_AREA 658.6589 -567.5756 15.3465 25.0 TRUE
 					SET_CAR_COORDINATES	c3_chase 658.6589 -567.5756 15.3465
 					SET_CAR_HEADING c3_chase 180.0
@@ -2130,6 +2132,11 @@ ENDIF
 					ENDIF
 				ENDIF
 			ENDIF
+		ENDIF
+	ENDIF
+	IF c3_cut < 3
+		IF IS_CAR_IN_WATER c3_truck
+			c3_cut = 3
 		ENDIF
 	ENDIF
 

@@ -6663,24 +6663,26 @@ return
 do_stadium_sound_effects:///////////////////////////////////////////////
 
 if race_audio_flag = 0
-	if race_audio_timer < game_timer
-		CLEAR_MISSION_AUDIO 4
-		generate_random_int_in_range 0 4 current_sound
-		switch current_sound
-		case 0
-			LOAD_MISSION_AUDIO 4 SOUND_CROWD_AWWS
-		break
-		case 1
-			LOAD_MISSION_AUDIO 4 SOUND_CROWD_CHEERS
-		break
-		case 2
-			LOAD_MISSION_AUDIO 4 SOUND_CROWD_CHEERS_BIG
-		break
-		case 3
-			LOAD_MISSION_AUDIO 4 SOUND_BANK_AIR_HORN
-		break
-		endswitch
-		++ race_audio_flag
+	if has_mission_audio_finished 4	 //Fix PC Bug Nos. 509 & 513
+		if race_audio_timer < game_timer
+			CLEAR_MISSION_AUDIO 4
+			generate_random_int_in_range 0 4 current_sound
+			switch current_sound
+			case 0
+				LOAD_MISSION_AUDIO 4 SOUND_CROWD_AWWS
+			break
+			case 1
+				LOAD_MISSION_AUDIO 4 SOUND_CROWD_CHEERS
+			break
+			case 2
+				LOAD_MISSION_AUDIO 4 SOUND_CROWD_CHEERS_BIG
+			break
+			case 3
+				LOAD_MISSION_AUDIO 4 SOUND_BANK_AIR_HORN
+			break
+			endswitch
+			++ race_audio_flag
+		endif
 	endif
 endif
 
@@ -6697,6 +6699,14 @@ if race_audio_flag = 1
 	endif
 endif
 
+return
+return
+return
+temp_float = 0.0
+temp_float = 0.0
+temp_float = 0.0
+return
+return
 return
 
 
@@ -6731,15 +6741,16 @@ OR exit_mode = 3
 				heading = 90.0
 			endif
 			if menu_mode = LV_RACES
+			or menu_mode = AIR_RACES
 				x = traceX[menu_mode] + 4.0
 				y = traceY[menu_mode]
 				heading = 90.0
 			endif
-			if menu_mode = AIR_RACES
-				x = traceX[menu_mode] + 4.0
-				y = traceY[menu_mode]
-				heading = 90.0
-			endif
+//			if menu_mode = AIR_RACES
+//				x = traceX[menu_mode] + 4.0
+//				y = traceY[menu_mode]
+//				heading = 90.0
+//			endif
 			IF not exit_mode = 1
 				x = traceX[menu_mode]
 				y = traceY[menu_mode]

@@ -77,6 +77,17 @@ Int_Manager_ENTRY:
 			iCreateDecisionMakers = 0
 			iTerminateAllAmbience = 0
 			iAmbienceHasTerminated = 0
+			
+			//--- Reset the global panic flags - but only if not on a mission
+			IF flag_player_on_mission = 0
+				iSetBarPanic = 0
+				iSetCasinoPanic = 0
+				iBouncerAction = 0
+				iSetPizzaPanic = 0
+				iSetOTBPanic = 0
+				iSetSTRIPPanic = 0
+				iSetRCPanic = 0
+			ENDIF
 
 			//------------------------
 			// ENTRY EXIT LABEL CHECKS

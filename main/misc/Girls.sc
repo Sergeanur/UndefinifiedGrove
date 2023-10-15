@@ -593,14 +593,25 @@ GF_Dating_Agent_State0:
 						iTemp += H_10PM // pick the right bit to find the day of the week in the diary
 						IF IS_BIT_SET iGFDiaryOfBusyHours[iGFidx] iTemp // if this is the right day
 							//--- Clean the "day to skip" and the "skip a day" bits off her diary 
-							CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] NEXT_FREE_DAY
-							CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] iTemp
+							GOSUB GF_Dating_Agent_CleanFreeDays
 							//--- This IS the next day
 							iTemp = 1
 						ELSE	
-							//--- All ok, tomorrow is her free day, so return false
-							iTemp = -1
-							RETURN
+							//--- Check that we have not skipped days and have to wait a week
+							++iTemp // look at tomorrow
+							IF iTemp > D_SAT 
+								iTemp = D_SUN 
+							ENDIF
+							IF IS_BIT_SET iGFDiaryOfBusyHours[iGFidx] iTemp // is tomorrow the free day?
+								//--- All ok, tomorrow is her free day, so return false
+								iTemp = -1
+								RETURN
+							ELSE
+								//--- Player has skipped a week!
+								GOSUB GF_Dating_Agent_CleanFreeDays
+								//--- Better mark this as the next day
+								iTemp = 1
+							ENDIF
 						ENDIF
 					ELSE
 						//--- No need to check for free day
@@ -835,6 +846,7 @@ GF_Dating_Agent_State4:
 		IF iTemp > 0 // She is in				
 			IF LOCATE_STOPPED_CHAR_ANY_MEANS_3D scplayer fOriginX fOriginY fOriginZ 1.5 1.5 1.5 TRUE
 				IF NOT IS_BIT_SET iAgentFlags MOBILE_CALL_SCRIPT_RUNNING
+				AND CAN_PLAYER_START_MISSION PLAYER1
 					SET_PLAYER_CONTROL player1 OFF
 					iAgentState = GF_LAUNCH_DATE_OR_SEX
 					iSubStateStatus = 0
@@ -1213,13 +1225,23 @@ GF_Dating_Agent_CheckGirlsDiary:
 		iTemp += H_10PM // pick the right bit to find the day of the week in the diary
 		IF IS_BIT_SET iGFDiaryOfBusyHours[iGFidx] iTemp // if this is the right day
 			//--- Clean her diary so that only one day can be set at any given time
-			CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] NEXT_FREE_DAY
-			CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] iTemp
+			GOSUB GF_Dating_Agent_CleanFreeDays
 			//--- Carry on with the rest of the diary below...
-		ELSE
-			//--- All ok, tomorrow is her free day, so return false
-			iTemp = -1
-			RETURN
+		ELSE	
+			//--- Check that we have not skipped days and have to wait a week
+			++iTemp // look at tomorrow
+			IF iTemp > D_SAT 
+				iTemp = D_SUN 
+			ENDIF
+			IF IS_BIT_SET iGFDiaryOfBusyHours[iGFidx] iTemp // is tomorrow the free day?
+				//--- All ok, tomorrow is her free day, so return false
+				iTemp = -1
+				RETURN
+			ELSE
+				//--- Player has skipped a week!
+				GOSUB GF_Dating_Agent_CleanFreeDays
+				//--- Don't return and proceed with the diary
+			ENDIF
 		ENDIF
 	ENDIF
 
@@ -1742,6 +1764,9 @@ GF_Dating_Agent_UpdateGFStats:
 		ENDIF
 	ENDIF
 
+	//--- The DATE REPORT has been read fully, so clean it for the next time
+	iDateReport = 0
+
 RETURN
 /********************************************
   CHECK IF GIRL SHOULD DUMP PLAYER (PHONE)
@@ -1822,12 +1847,29 @@ GF_Dating_Agent_RemoveGF:
 		IF iTemp > 7
 			iTemp = 1
 		ENDIF
+		//--- Clean her diary so that only one day can be set at any given time
+		GOSUB GF_Dating_Agent_CleanFreeDays
 		//--- Find the right bit to store this day in the diary		
 		iTemp += H_10PM // the last hours 
 		//--- Store the day and mark the "skip a day" bit
 		SET_BIT iGFDiaryOfBusyHours[iGFidx] iTemp
 		SET_BIT iGFDiaryOfBusyHours[iGFidx] NEXT_FREE_DAY
 	ENDIF
+
+RETURN
+/*******************************************
+		CLEAN FREE DAYS IN DIARY
+********************************************/
+GF_Dating_Agent_CleanFreeDays:
+
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] NEXT_FREE_DAY
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_SUN
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_MON
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_TUE
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_WED
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_THU
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_FRI
+	CLEAR_BIT iGFDiaryOfBusyHours[iGFidx] D_SAT
 
 RETURN
 /*******************************************
@@ -2058,14 +2100,17 @@ RETURN
 ********************************************/
 GF_Dating_Agent_MissionCleanUp:  
 
-	IF NOT iAgentState = GF_IDLE_TRY_TO_LOCATE_PLAYER // Dating Agent is not idle
-		//--- do the baisc date housekeeping and stats update			
-		GOSUB GF_Dating_Agent_RemoveGF
-		GOSUB GF_Dating_Agent_UpdateGFStats
-		//--- Put the agent back to idle
-		iAgentState = GF_IDLE_TRY_TO_LOCATE_PLAYER	
+	IF iAgentState = GF_LAUNCH_DATE_OR_SEX // Dating Agent is managing a date!
+		//--- Check that the current GF is an active one (just in case)
+		IF IS_BIT_SET iActiveGF iGFidx 
+			//--- do the baisc date housekeeping and stats update			
+			GOSUB GF_Dating_Agent_RemoveGF
+			GOSUB GF_Dating_Agent_UpdateGFStats
+		ENDIF		
 	ENDIF
 	
+	//--- Put the agent back to idle
+	iAgentState = GF_IDLE_TRY_TO_LOCATE_PLAYER	
 
 	//--- Clear all active appointments
 	iTemp2 = -1

@@ -131,6 +131,7 @@ DISPLAY_CAR_NAMES FALSE
 
 //////////////////////////////
 SET_FADING_COLOUR 0 0 0
+SET_POLICE_IGNORE_PLAYER player1 ON
 /*
 DO_FADE 1000 FADE_OUT	 
 WHILE GET_FADING_STATUS
@@ -205,7 +206,7 @@ van_death_counter = 0
 
 		
 
-timer_time_limit = 360000.0 //6 minutes
+timer_time_limit = 390000.0 //6.5 minutes
 timer_time_limit_initial = timer_time_limit 
 //timer_time_limit = 10000 //5 minutes
 
@@ -402,7 +403,7 @@ main_sub_function_zero2:
 
 	SET_ENABLE_RC_DETONATE_ON_CONTACT FALSE
 	SET_ENABLE_RC_DETONATE FALSE
-	SET_CAR_HEALTH rc_playerbaron_zero2 900	
+	SET_CAR_HEALTH rc_playerbaron_zero2 1100	
 	SET_CAR_PROOFS rc_playerbaron_zero2 FALSE TRUE TRUE FALSE FALSE
    //	SET_CAR_PROOFS CarID Bulletproof Flameproof Explosionproof Collisionproof MeleeWeaponproof
  //	SET_CAR_PROOFS CarID Bulletproof Flameproof Explosionproof Collisionproof MeleeWeaponproof
@@ -695,8 +696,7 @@ main_sub_function_zero2:
 			
 
 			IF NOT IS_CAR_DEAD rc_playerbaron_zero2
-				GET_CAR_SPEED rc_playerbaron_zero2 speed_rc_playerbaron_zero2
-				IF speed_rc_playerbaron_zero2 > 1.0 
+				IF IS_BUTTON_PRESSED PAD1 CROSS 
 					timer_time_limit-=45.0
 					timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
 					timer_time_limit_converted_float*=100.0
@@ -753,12 +753,16 @@ main_sub_function_zero2:
 			ENDIF
 
 		 	IF IS_PS2_KEYBOARD_KEY_PRESSED PS2_KEY_S
+				 WAIT 0
+				 WAIT 0
+				 WAIT 0
+				 WAIT 0
 			   //	 flag_main_sub_function_zero2 = 0
 
 				 flag_main_sub_function_zero2 = 0
 				 flag_fly_next_to_transmittor_zero2 = 0
 				 flag_heli_landing_cutscene_zero2 = 0
-			  	 flag_fly_back_to_player_zero2 = 0
+			  //	 flag_fly_back_to_player_zero2 = 0
 				 flag_mission_zero2_passed = 1
 
 				 flag_mission_zero2_failed = 0
@@ -1401,7 +1405,7 @@ land_plane_zero2:
 
 	IF NOT IS_CAR_DEAD rc_playerbaron_zero2
 		GET_CAR_SPEED rc_playerbaron_zero2 speed_rc_playerbaron_zero2
-				IF speed_rc_playerbaron_zero2 > 1.0
+				IF IS_BUTTON_PRESSED PAD1 CROSS
 					timer_time_limit-=45.0
 					timer_time_limit_converted_float = timer_time_limit / timer_time_limit_initial
 					timer_time_limit_converted_float*=100.0

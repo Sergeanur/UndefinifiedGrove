@@ -201,6 +201,9 @@ VAR_INT visible_area_shops
 VAR_INT flag_restored_camera_barbers
 flag_restored_camera_barbers = 0
 
+VAR_INT cut_hair_flag_barber
+cut_hair_flag_barber = 0
+
 // requests models
 IF $shop_name = barbers	
 	shopkeeper_model_shops = BMOBAR
@@ -636,16 +639,25 @@ shop_barbers_inner:
 																		
 					IF return_animation_time_barbers = 1.0
 					
-						TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut HAIRCUTS 4.0 FALSE FALSE FALSE FALSE -1
-						
-						RESTORE_CLOTHES_STATE			
-						BUILD_PLAYER_MODEL player1
-						STORE_CLOTHES_STATE
+						IF cut_hair_flag_barber = 0					
+							TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut HAIRCUTS 4.0 FALSE FALSE FALSE FALSE -1
+							
+							RESTORE_CLOTHES_STATE			
+							BUILD_PLAYER_MODEL player1
+							STORE_CLOTHES_STATE
+							cut_hair_flag_barber = 1
+						ENDIF
 
-						TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 4.0 FALSE FALSE FALSE TRUE -1
-						return_animation_time_barbers = 0.0
-						control_flag_barbers = 4
+					ENDIF
 
+					IF cut_hair_flag_barber = 1
+
+						IF HAS_MISSION_AUDIO_FINISHED 4
+							TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 4.0 FALSE FALSE FALSE TRUE -1
+							return_animation_time_barbers = 0.0
+							control_flag_barbers = 4
+							cut_hair_flag_barber = 0
+						ENDIF
 					ENDIF
 				ENDIF
 
@@ -813,9 +825,11 @@ shop_barbers_inner:
 				ENDIF
 				
 				IF control_flag_barbers = 12
-					TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 1000.0 FALSE FALSE FALSE TRUE -1
-					return_animation_time_barbers = 0.0
-					control_flag_barbers = 13
+					IF HAS_MISSION_AUDIO_FINISHED 4																		
+						TASK_PLAY_ANIM_NON_INTERRUPTABLE shop_keep_barbers BRB_cut_out HAIRCUTS 1000.0 FALSE FALSE FALSE TRUE -1
+						return_animation_time_barbers = 0.0
+						control_flag_barbers = 13
+					ENDIF
 				ENDIF
 
 				IF control_flag_barbers = 13
@@ -1133,6 +1147,8 @@ barbers_cleanup_small:
 	flag_viewed_hair = 0
 	flag_bought_item_already_shops = 0
 	flag_no_money_shops = 0
+
+	cut_hair_flag_barber = 0
 			
 RETURN
 
@@ -1192,6 +1208,8 @@ barbers_cleanup_big:
 	CLEAR_MISSION_AUDIO 4
 
 //	SET_PLAYER_IS_IN_STADIUM FALSE
+
+	cut_hair_flag_barber = 0
 
 	TERMINATE_THIS_SCRIPT
 	

@@ -1603,6 +1603,7 @@ LVAR_INT lf2_sequence
 	IF lf2_scene_flag = 4
 		IF TIMERA > lf2_time_check
 			DO_FADE 600 FADE_IN
+			SET_CHAR_AREA_VISIBLE scplayer 0
 			IF NOT IS_CAR_DEAD copcar_bust_cut[1]
 			AND NOT IS_CAR_DEAD copcar_bust_cut[2]
 				IF HAS_CAR_RECORDING_BEEN_LOADED 162
@@ -3064,17 +3065,23 @@ mission_la1fin2_passed:
 	            WAIT 0
 	ENDWHILE
 	 
-	REQUEST_MODEL CAMERA
+	 
 	 
 
 	DO_FADE 0 FADE_OUT
 
 	WHILE GET_FADING_STATUS
-	AND NOT HAS_MODEL_LOADED CAMERA
+	
 	            WAIT 0
 	ENDWHILE
 
 	CLEAR_CUTSCENE
+
+	REQUEST_MODEL CAMERA
+
+	WHILE NOT HAS_MODEL_LOADED CAMERA
+		WAIT 0
+	ENDWHILE
 
 	 
 	DO_FADE 1000 FADE_IN														

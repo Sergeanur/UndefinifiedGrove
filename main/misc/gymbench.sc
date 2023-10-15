@@ -202,13 +202,14 @@ WAIT 0
 	ENDIF
 
 
-IF NOT IS_CHAR_DEAD scplayer
+IF IS_PLAYER_PLAYING player1
 
 //locate around the bpress area - locate around the bpress area - locate around the bpress area - 
 IF playerexercising_flag = 0
 AND NOT IS_CHAR_DEAD scplayer
 
 	IF startbpress_flag = 0
+	AND NOT IS_PLAYER_USING_JETPACK player1
 
 		IF finishedbpress_flag = 0
 			IF LOCATE_CHAR_ON_FOOT_3D scplayer bpressx bpressy bpressz 1.2 1.2 4.0 FALSE

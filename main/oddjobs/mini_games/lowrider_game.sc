@@ -111,6 +111,9 @@ IF flag = -1
 	CREATE_CAR PONY 0.0 0.0 0.0 pcar
 	CREATE_CAR PONY 0.0 0.0 0.0 ocar
 	CREATE_CHAR PEDTYPE_CIVMALE MALE01 0.0 0.0 0.0 bounce_girl
+	WAIT 0
+	WAIT 0
+	WAIT 0
 ENDIF
 
 // check input is valid
@@ -150,14 +153,11 @@ lowrider_game_is_active = 1
 lowrider_game_loop:
 WAIT 0
 
-	IF IS_PS2_KEYBOARD_KEY_JUST_PRESSED PS2_KEY_Y 
-		IF IS_CHAR_IN_ANY_CAR scplayer 
-			STORE_CAR_CHAR_IS_IN_NO_SAVE scplayer car 
-			IF DOES_CAR_HAVE_HYDRAULICS car 
-				SET_CAR_HYDRAULICS car FALSE 
-			ELSE
-				SET_CAR_HYDRAULICS car TRUE 
-			ENDIF
+	// this is to fix the bug if player dies from starvation while on mini game
+	IF flag < 5
+		IF NOT DOES_VEHICLE_EXIST pcar
+			bd_terminate_script = 1
+			flag = 5
 		ENDIF
 	ENDIF
 
@@ -471,7 +471,9 @@ WAIT 0
 				
 				// control ocar hydraulics
 				IF NOT IS_CAR_DEAD ocar
-					CONTROL_CAR_HYDRAULICS ocar wheel_fl wheel_bl wheel_fr wheel_br
+					IF DOES_CAR_HAVE_HYDRAULICS ocar
+						CONTROL_CAR_HYDRAULICS ocar wheel_fl wheel_bl wheel_fr wheel_br
+					ENDIF
 				ENDIF
 
 

@@ -16,11 +16,12 @@ flag = 0
 IF flag = 1
     CREATE_OBJECT_NO_OFFSET ROULETTE_TBL 0.0 0.0 0.0 roulette_table
 	CREATE_OBJECT_NO_OFFSET chip_stack07 x y z placed_chips[i]
+	WRITE_DEBUG aaaaaaa
 ENDIF
 
 LVAR_INT pad1_left_pressed pad1_right_pressed pad1_up_pressed pad1_down_pressed pad1_CIRCLE_pressed pad1_cross_pressed pad1_square_pressed pad1_triangle_pressed
-pad1_left_pressed  = 0
-pad1_right_pressed = 0
+//pad1_left_pressed  = 0
+//pad1_right_pressed = 0
 pad1_up_pressed    = 0
 pad1_down_pressed  = 0
 pad1_square_pressed = 0
@@ -81,7 +82,7 @@ or spin_result = 1
 or spin_result = 2
 or spin_result = 3
 or spin_result = 4
-	chip_value = 1
+	chip_value = 2
 	lvar_int coloured_chips
 	coloured_chips = chip_stack07
 endif
@@ -90,25 +91,25 @@ or spin_result = 6
 or spin_result = 7
 or spin_result = 8
 or spin_result = 9
-	chip_value = 10
+	chip_value = 20
 	coloured_chips = chip_stack08
 endif
 if spin_result = 10
 or spin_result = 11
 or spin_result = 12
 or spin_result = 13
-	chip_value = 100
+	chip_value = 200
 	coloured_chips = chip_stack12
 endif
 if spin_result = 14
 or spin_result = 15
 or spin_result = 16
-	chip_value = 1000
+	chip_value = 2000
 	coloured_chips = chip_stack09
 endif
 if spin_result = 17
 or spin_result = 18
-	chip_value = 10000
+	chip_value = 20000
 	coloured_chips = chip_stack11
 endif
 
@@ -117,7 +118,7 @@ spin_result = 0
 
 lVAR_INT spot_bet max_table_bet
 spot_bet = 0
-max_table_bet = chip_value * 100
+max_table_bet = chip_value * 50
 
 
 
@@ -203,19 +204,19 @@ roulette_script_loop:
 								GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table -1.839 -2.4444 -0.6 x y z
 								GET_OFFSET_FROM_OBJECT_IN_WORLD_COORDS roulette_table 0.761 0.9556 0.6 x_temp y_temp z_temp
 								IF IS_CHAR_IN_AREA_ON_FOOT_3D scplayer x y z x_temp y_temp z_temp 0 //LOCATE_CHAR_ON_FOOT_3D scplayer x y z 1.3 1.7 0.6 0
-									if chip_value = 1
+									if chip_value = 2
 										PRINT_HELP_FOREVER SLOT_06 //PRESS <BUTTON> TO USE OBJECT
 									endif
-									if chip_value = 10
+									if chip_value = 20
 										PRINT_HELP_FOREVER SLOT_07 //PRESS <BUTTON> TO USE OBJECT
 									endif
-									if chip_value = 100
+									if chip_value = 200
 										PRINT_HELP_FOREVER SLOT_08 //PRESS <BUTTON> TO USE OBJECT
 									endif
-									if chip_value = 1000
+									if chip_value = 2000
 										PRINT_HELP_FOREVER SLOT_09 //PRESS <BUTTON> TO USE OBJECT
 									endif
-									if chip_value = 10000
+									if chip_value = 20000
 										PRINT_HELP_FOREVER SLOT_10 //PRESS <BUTTON> TO USE OBJECT
 									endif
 									load_MISSION_AUDIO 4 SOUND_BANK_ROULETTE 
@@ -235,7 +236,7 @@ roulette_script_loop:
 											IF IS_BUTTON_PRESSED PAD1 TRIANGLE
 												IF pad1_triangle_pressed = 0
 													GET_INT_STAT GAMBLING gambling_stat
-													if chip_value = 10
+													if chip_value = 20
 														
 														if not gambling_stat >= 1
 															
@@ -251,7 +252,7 @@ roulette_script_loop:
 															GOTO roulette_script_loop
 														endif
 													endif
-													if chip_value = 100
+													if chip_value = 200
 														
 														if not gambling_stat >= 10
 														
@@ -267,7 +268,7 @@ roulette_script_loop:
 															GOTO roulette_script_loop
 														endif
 													endif
-													if chip_value = 1000
+													if chip_value = 2000
 														
 														if not gambling_stat >= 100
 															
@@ -283,7 +284,7 @@ roulette_script_loop:
 															GOTO roulette_script_loop
 														endif
 													endif
-													if chip_value = 10000
+													if chip_value = 20000
 														
 														if not gambling_stat > 999
 															

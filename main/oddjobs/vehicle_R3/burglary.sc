@@ -201,7 +201,7 @@ burglary_garage_y[0]	 		= -2011.2740
 burglary_garage_z[0]			= 13.5869
 
 // San Fran
-burglary_drop_x[1] 				=  -2096.5396               	   
+burglary_drop_x[1] 				=  -2102.5396               	   
 burglary_drop_y[1] 				=  -15.5931 
 burglary_drop_z[1]				=  34.3203
 $burglary_garage[1]				= brgSFSE
@@ -211,7 +211,7 @@ burglary_garage_z[1]			=  34.3203
 
 // Vegas
 burglary_drop_x[2] 				= 2609.2476
-burglary_drop_y[2] 				= 1435.3466
+burglary_drop_y[2] 				= 1439.3466
 burglary_drop_z[2]				= 9.8203  
 $burglary_garage[2]				= vgElock
 burglary_garage_x[2] 			= 2609.0117
@@ -733,8 +733,8 @@ ENDIF
 		
 					
 	IF NOT IS_CAR_DEAD burglary_truck
-		IF LOCATE_CHAR_ANY_MEANS_3D scplayer  burglary_drop_x[burglary_city] burglary_drop_y[burglary_city] burglary_drop_z[burglary_city] 15.0 15.0 4.0 FALSE
-		OR LOCATE_CAR_3D burglary_truck burglary_drop_x[burglary_city] burglary_drop_y[burglary_city] burglary_drop_z[burglary_city] 15.0 15.0 4.0 FALSE	
+		IF LOCATE_CHAR_ANY_MEANS_3D scplayer  burglary_drop_x[burglary_city] burglary_drop_y[burglary_city] burglary_drop_z[burglary_city] 20.0 20.0 4.0 FALSE
+		OR LOCATE_CAR_3D burglary_truck burglary_drop_x[burglary_city] burglary_drop_y[burglary_city] burglary_drop_z[burglary_city] 20.0 20.0 4.0 FALSE	
 			IF NOT IS_GARAGE_OPEN $burglary_garage[burglary_city]
 				OPEN_GARAGE $burglary_garage[burglary_city]
 			ENDIF
@@ -1051,6 +1051,8 @@ ENDIF
 						IF NOT IS_CHAR_HOLDING_OBJECT scplayer burglary_object //burglary_object					   													
 							burglary_player_holding_object = 0																	
 						ENDIF 
+					ELSE
+						burglary_player_holding_object = 0	
 					ENDIF														
 				ENDIF																																																																																																													
 			    																	

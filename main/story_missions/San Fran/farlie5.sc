@@ -365,8 +365,8 @@ WAIT 0
 			AND TIMERB > 2000
 				IF NOT IS_CHAR_DEAD d6_chase_bike_passengers[0]
 				AND NOT IS_CHAR_DEAD d6_chase_bike_passengers[1]
-					TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
-					TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+					TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+					TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 					d6_first_bikes_started_driveby = 1
 				ENDIF
 			ENDIF
@@ -813,14 +813,14 @@ GOTO driv6_loop
 			AND NOT IS_CAR_DEAD d6_chase_bikes[0]
 				SET_CAR_STRAIGHT_LINE_DISTANCE d6_chase_bikes[0] 250
 				TASK_CAR_MISSION d6_chase_bike_drivers[0] d6_chase_bikes[0] d6_player_car MISSION_ESCORT_LEFT 10.0 DRIVINGMODE_AVOIDCARS
-				//TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+				//TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 			ENDIF
 			IF NOT IS_CHAR_DEAD d6_chase_bike_drivers[1]
 			AND NOT IS_CHAR_DEAD d6_chase_bike_passengers[1]
 			AND NOT IS_CAR_DEAD d6_chase_bikes[1]
 				SET_CAR_STRAIGHT_LINE_DISTANCE d6_chase_bikes[1] 250
 				TASK_CAR_MISSION d6_chase_bike_drivers[1] d6_chase_bikes[1] d6_player_car MISSION_ESCORT_RIGHT 10.0 DRIVINGMODE_AVOIDCARS
-				//TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+				//TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 			ENDIF
 		ENDIF
 
@@ -857,7 +857,7 @@ GOTO driv6_loop
 					d6_chase_bike_z = -100.0
 					SET_CAR_COORDINATES d6_chase_bikes[0] d6_chase_bike_x d6_chase_bike_y d6_chase_bike_z
 //					TASK_CAR_MISSION d6_chase_bike_drivers[0] d6_chase_bikes[0] d6_player_car MISSION_ESCORT_LEFT 30.0 DRIVINGMODE_AVOIDCARS
-					//TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+					//TASK_DRIVE_BY d6_chase_bike_passengers[0] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 				ENDIF
 				IF NOT IS_CHAR_DEAD d6_chase_bike_drivers[1]
 				AND NOT IS_CHAR_DEAD d6_chase_bike_passengers[1]
@@ -866,7 +866,7 @@ GOTO driv6_loop
 					d6_chase_bike_z = -100.0
 					SET_CAR_COORDINATES d6_chase_bikes[1] d6_chase_bike_x d6_chase_bike_y d6_chase_bike_z
 //					TASK_CAR_MISSION d6_chase_bike_drivers[1] d6_chase_bikes[1] d6_player_car MISSION_ESCORT_RIGHT 30.0 DRIVINGMODE_AVOIDCARS
-					//TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+					//TASK_DRIVE_BY d6_chase_bike_passengers[1] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 				ENDIF
 			ENDIF
 		ENDIF
@@ -1050,7 +1050,7 @@ GOTO driv6_loop
 //						ENDIF
 					ENDIF
 					GIVE_WEAPON_TO_CHAR d6_chase_bike_passengers[d6_index] WEAPONTYPE_MP5 99999
-					TASK_DRIVE_BY d6_chase_bike_passengers[d6_index] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+					TASK_DRIVE_BY d6_chase_bike_passengers[d6_index] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 
 					IF d6_player_reached_second_creation_pt = 1
 					AND NOT d6_player_reached_third_creation_pt = 1
@@ -1182,7 +1182,7 @@ GOTO driv6_loop
 //										TASK_CAR_MISSION d6_chase_bike_drivers[d6_index] d6_chase_bikes[d6_index] d6_player_car MISSION_ESCORT_REAR 30.0 DRIVINGMODE_AVOIDCARS
 //									ENDIF
 								ENDIF
-								TASK_DRIVE_BY d6_chase_bike_passengers[d6_index] scplayer -1 0.0 0.0 0.0 1000.0 DRIVEBY_AI_ALL_DIRN FALSE 60
+								TASK_DRIVE_BY d6_chase_bike_passengers[d6_index] scplayer -1 0.0 0.0 0.0 999999.0 DRIVEBY_AI_ALL_DIRN FALSE 60
 								d6_driver_getting_back_on_bike[d6_index] = 0
 								d6_passenger_getting_back_on_bike[d6_index] = 0
 

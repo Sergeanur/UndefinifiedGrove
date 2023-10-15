@@ -1391,6 +1391,7 @@ WAIT 0
 			ENDIF	
 			
 			IF LOCATE_STOPPED_CAR_2D m3_dgcar1[1] m3_x m3_y 10.0 10.0 FALSE
+			AND IS_CHAR_SITTING_IN_CAR scplayer m3_dgcar1[1] 
 				REMOVE_BLIP m3_docg_manager_blip 
 				//PRINT_NOW ( STP3_12 ) 7000 1 //Wait for Doc G to get into your vehicle.
 				CLEAR_PRINTS

@@ -116,8 +116,16 @@ LVAR_INT flag_make_char_go_past_final_checkpoint[10]
 
 LOAD_CHAR_DECISION_MAKER DM_PED_MISSION_EMPTY dm_racers_mtbiker
 
+
+temp_int_mtbikerace = 0
+WHILE temp_int_mtbikerace < 9
+	flag_make_char_go_past_final_checkpoint[temp_int_mtbikerace] = 0
+	has_mtbiker_fallen[temp_int_mtbikerace] = 0
+	temp_int_mtbikerace++
+ENDWHILE
+
 	
-flag_make_char_go_past_final_checkpoint[0] = 0
+/*flag_make_char_go_past_final_checkpoint[0] = 0
 flag_make_char_go_past_final_checkpoint[1] = 0
 flag_make_char_go_past_final_checkpoint[2] = 0
 flag_make_char_go_past_final_checkpoint[3] = 0
@@ -127,6 +135,20 @@ flag_make_char_go_past_final_checkpoint[6] = 0
 flag_make_char_go_past_final_checkpoint[7] = 0
 flag_make_char_go_past_final_checkpoint[8] = 0
 flag_make_char_go_past_final_checkpoint[9] = 0
+
+has_mtbiker_fallen[0] = 0
+has_mtbiker_fallen[1] =	0
+has_mtbiker_fallen[2] =	0
+has_mtbiker_fallen[3] =	0
+has_mtbiker_fallen[4] =	0
+has_mtbiker_fallen[5] =	0
+has_mtbiker_fallen[6] =	0
+has_mtbiker_fallen[7] =	0
+has_mtbiker_fallen[8] =	0
+has_mtbiker_fallen[9] =	0	*/
+
+
+
 					
 
 
@@ -183,16 +205,17 @@ x_scale[6] = 58.2072
 y_scale[6] = 58.2072 
 
 
-has_mtbiker_fallen[0] = 0
-has_mtbiker_fallen[1] =	0
-has_mtbiker_fallen[2] =	0
-has_mtbiker_fallen[3] =	0
-has_mtbiker_fallen[4] =	0
-has_mtbiker_fallen[5] =	0
-has_mtbiker_fallen[6] =	0
-has_mtbiker_fallen[7] =	0
-has_mtbiker_fallen[8] =	0
-has_mtbiker_fallen[9] =	0	
+
+
+
+
+
+
+
+
+
+
+
 
 
 LVAR_INT total_checkpoints_mtbike_mtbikerace
@@ -774,7 +797,7 @@ LOAD_SCENE checkpoints_mtbike_x[0] checkpoints_mtbike_y[0] checkpoints_mtbike_z[
 
 
 
-DISABLE_ALL_ENTRY_EXITS TRUE
+//DISABLE_ALL_ENTRY_EXITS TRUE
 
 
 
@@ -1468,37 +1491,52 @@ IF race_flag_mtbikerace > 6
 									seconds = 0
 								ENDIF
 								IF falling_timer < game_timer
-									last_check_point = cpcounter_mtbikerace[a] - 1
+										last_check_point = cpcounter_mtbikerace[a] - 1
 
-									SET_PLAYER_CONTROL Player1 OFF
-									DO_FADE 500 FADE_OUT
+									 	IF Player_fall_state <= 2  //when player isn’t using the chute
 
-									WHILE GET_FADING_STATUS
-										WAIT 0
-									ENDWHILE
+											IF Player_fall_state > 0
+												Player_fall_state = 6
+											ENDIF
 
-									IF NOT IS_CAR_DEAD racers_mtbike[playaz_mtbikerace]
-										IF NOT IS_CHAR_IN_CAR mtbikeracer[a] racers_mtbike[playaz_mtbikerace]
-											WARP_CHAR_INTO_CAR mtbikeracer[a] racers_mtbike[playaz_mtbikerace]
+											SET_PLAYER_CONTROL Player1 OFF
+										   	SET_PLAYER_CONTROL Player1 OFF
+											SET_PLAYER_CONTROL Player1 OFF
+											DO_FADE 500 FADE_OUT
 
-										ENDIF
-										SET_CAR_COORDINATES racers_mtbike[playaz_mtbikerace] checkpoints_mtbike_x[last_check_point] checkpoints_mtbike_y[last_check_point] checkpoints_mtbike_z[last_check_point]
-										SET_CAR_HEADING racers_mtbike[playaz_mtbikerace] checkpoint_headings[last_check_point]
-										//	SET_CAR_HEADING racers_mtbike[playaz_mtbikerace] new_heading_mtbike
-										//	TURN_CAR_TO_FACE_COORD racers_mtbike[playaz_mtbikerace] racer_cp_x_mtbikerace[a] racer_cp_y_mtbikerace[a]
-									ENDIF
+											WHILE GET_FADING_STATUS
+												WAIT 0
+											ENDWHILE
 
-								
+											IF NOT IS_CAR_DEAD racers_mtbike[playaz_mtbikerace]
+												IF NOT IS_CHAR_IN_CAR mtbikeracer[a] racers_mtbike[playaz_mtbikerace]
+													WARP_CHAR_INTO_CAR mtbikeracer[a] racers_mtbike[playaz_mtbikerace]
 
-									DO_FADE 500 FADE_IN
-									SET_CAMERA_BEHIND_PLAYER
-									RESTORE_CAMERA_JUMPCUT
+												ENDIF
+												SET_CAR_COORDINATES racers_mtbike[playaz_mtbikerace] checkpoints_mtbike_x[last_check_point] checkpoints_mtbike_y[last_check_point] checkpoints_mtbike_z[last_check_point]
+												SET_CAR_HEADING racers_mtbike[playaz_mtbikerace] checkpoint_headings[last_check_point]
+											  //	SET_CAR_HEADING racers_mtbike[playaz_mtbikerace] new_heading_mtbike
+											  //	TURN_CAR_TO_FACE_COORD racers_mtbike[playaz_mtbikerace] racer_cp_x_mtbikerace[a] racer_cp_y_mtbikerace[a]
+											ENDIF
 
-									WHILE GET_FADING_STATUS
-										WAIT 0
-									ENDWHILE
-									SET_CAMERA_BEHIND_PLAYER
-									SET_PLAYER_CONTROL Player1 ON
+									  
+
+											DO_FADE 500 FADE_IN
+											SET_CAMERA_BEHIND_PLAYER
+											RESTORE_CAMERA_JUMPCUT
+
+											WHILE GET_FADING_STATUS
+												WAIT 0
+											ENDWHILE
+											SET_CAMERA_BEHIND_PLAYER
+											SET_PLAYER_CONTROL Player1 ON
+									  	ELSE
+
+										 	PRINT_NOW RACES25 5000 1 //"~r~You failed to win the race!"	// abandoned race
+										  	GOTO mission_mtbikerace_failed	
+
+
+									 	ENDIF
 								ENDIF
 							ENDIF
 						ELSE
@@ -2352,7 +2390,7 @@ mission_cleanup_mtbikerace:
    //	SWITCH_ROADS_ON -2999.5276 -2629.4624 0.8299 -1612.5211 -979.4300  480.2183 
 	GET_GAME_TIMER timer_mobile_start
 
-	DISABLE_ALL_ENTRY_EXITS FALSE
+	//DISABLE_ALL_ENTRY_EXITS FALSE
 
 
 	//SET_CAR_DENSITY_MULTIPLIER 1.0

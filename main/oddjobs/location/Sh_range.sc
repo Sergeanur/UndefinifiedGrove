@@ -365,6 +365,7 @@ SR_mission:
 				sr_skill_won = 0
 				SET_PLAYER_CONTROL player1 OFF
 				SET_FADING_COLOUR 0 0 0
+				SHOW_UPDATE_STATS FALSE
 				DO_FADE 1000 FADE_OUT
 				
 				SR_flag = 1
@@ -728,7 +729,7 @@ SR_mission:
 				
 					DO_FADE 1000 FADE_OUT
 					
-					SR_time_check = TIMERA + 1500
+					SR_time_check = TIMERA + 2500
 
 					SR_flag = 17
 				ENDIF
@@ -760,6 +761,7 @@ SR_mission:
 					
 					DO_FADE 1000 FADE_IN
 
+					CLEAR_PRINTS			
 					RESTORE_CAMERA_JUMPCUT
 					SWITCH_WIDESCREEN OFF
 					SET_PLAYER_CONTROL player1 ON
@@ -841,7 +843,7 @@ SR_mission:
 				OR SR_skill_won = 3
 				OR SR_skill_won = 6
 				OR SR_skill_won = 9
-					PRINT_BIG ANR_41 3000 1
+					PRINT_BIG ANR_41 2000 1
 				ENDIF
 
 				IF SR_skill_won = 1
@@ -856,7 +858,7 @@ SR_mission:
 				OR SR_skill_won = 5
 				OR SR_skill_won = 8
 					CLEAR_THIS_BIG_PRINT ANR_42
-					sr_time_check = TIMERA + 4000
+					sr_time_check = TIMERA + 5500
 
 					SR_target_state[0] = 5
 					SR_target_state[1] = 5
@@ -967,7 +969,7 @@ SR_mission:
 					SR_ped_state[0] = 1
 
 					SR_ped_state[2] = 1
-					PRINT_BIG ANR_29 3000 1
+					PRINT_BIG ANR_29 2000 1
 				ENDIF
 
 				IF SR_skill_won = 5
@@ -977,7 +979,7 @@ SR_mission:
 					SR_ped_state[0] = 1
 
 					SR_ped_state[2] = 1
-					PRINT_BIG ANR_53 3000 1
+					PRINT_BIG ANR_53 2000 1
 				ENDIF
 
 				IF SR_skill_won = 8
@@ -987,7 +989,7 @@ SR_mission:
 					SR_ped_state[0] = 1
 
 					SR_ped_state[2] = 1
-					PRINT_BIG ANR_31 3000 1
+					PRINT_BIG ANR_31 2000 1
 
 				ENDIF
 
@@ -1037,16 +1039,18 @@ SR_mission:
 					SR_range_level[1] = 4
 					SR_range_level[2] = 4		
 					SR_flag = 1
-					sr_time_check = TIMERA + 3000
+					sr_time_check = TIMERA + 6000
 
 			ENDIF
 
 			IF SR_flag = 1
 				IF TIMERA > sr_time_check
-  
-					SET_FADING_COLOUR 0 0 0
-					DO_FADE 1000 FADE_OUT
-					
+
+					IF range_cuts_watched < 3
+						SET_FADING_COLOUR 0 0 0
+						DO_FADE 1000 FADE_OUT
+
+					ENDIF
 					SR_flag = 2
 					SR_time_check = TIMERA + 1500
 				ENDIF
@@ -1069,7 +1073,6 @@ SR_mission:
 						SR_target_state[2] = 0
 						SR_flag = 3
 						SR_time_check = 0
-						DO_FADE 800 FADE_OUT
 				ELSE
 
 					IF TIMERA > SR_time_check
@@ -1252,9 +1255,6 @@ SR_mission:
 				IF SR_flag < 4
 				AND sr_flag > 1
 					sr_time_check = 0
-					CLEAR_PRINTS 
-					CLEAR_THIS_BIG_PRINT ANR_18
-					CLEAR_THIS_BIG_PRINT ANR_19
 					SR_flag = 4
 				ENDIF
 			ENDIF
@@ -1279,13 +1279,16 @@ SR_mission:
 				SR_range_level[1] = 5
 				SR_range_level[2] = 0		
 				SR_flag = 1
-				sr_time_check = TIMERA + 3000
+				sr_time_check = TIMERA + 8000
 			ENDIF
 
 			IF SR_flag = 1
 				IF TIMERA > sr_time_check					
-					SET_FADING_COLOUR 0 0 0
-					DO_FADE 1000 FADE_OUT
+					IF range_cuts_watched < 3
+						SET_FADING_COLOUR 0 0 0
+						DO_FADE 1000 FADE_OUT
+						
+					ENDIF
 					SR_flag = 2
 					SR_time_check = TIMERA + 1500
 				ENDIF
@@ -1336,7 +1339,9 @@ SR_mission:
 			IF SR_flag = 3
 				IF TIMERA > SR_time_check
 
-					DO_FADE 1000 FADE_OUT						
+					IF range_cuts_watched < 3
+						DO_FADE 1000 FADE_OUT		
+					ENDIF				
 					SR_time_check = TIMERA + 1500
 					SR_flag = 4
 
@@ -1351,22 +1356,26 @@ SR_mission:
 				IF TIMERA > SR_time_check
 					IF NOT GET_FADING_STATUS
 
-						IF range_cuts_watched = 2
-							range_cuts_watched = 3
-						ELSE
-							PRINT_BIG ANR_19 2000 1
-						ENDIF
-
 						DISPLAY_ONSCREEN_COUNTER_WITH_STRING sr_Score[0] COUNTER_DISPLAY_NUMBER ANR_37
 						DISPLAY_NTH_ONSCREEN_COUNTER_WITH_STRING sr_Score[1] COUNTER_DISPLAY_NUMBER 2 ANR_39
 						DISPLAY_NTH_ONSCREEN_COUNTER_WITH_STRING sr_Score[2] COUNTER_DISPLAY_NUMBER 3 ANR_38
 
 						DO_FADE 1000 FADE_IN
+						
+						IF range_cuts_watched < 3
 
-						DETACH_CHAR_FROM_CAR scplayer
-						ATTACH_CHAR_TO_OBJECT scplayer sr_obj 0.0 0.0 1.0 FACING_FORWARD 90.0 WEAPONTYPE_PISTOL
-					
-						RESTORE_CAMERA_JUMPCUT
+							DETACH_CHAR_FROM_CAR scplayer
+							ATTACH_CHAR_TO_OBJECT scplayer sr_obj 0.0 0.0 1.0 FACING_FORWARD 90.0 WEAPONTYPE_PISTOL
+						
+							RESTORE_CAMERA_JUMPCUT
+
+						ENDIF
+
+						IF range_cuts_watched = 2
+							range_cuts_watched = 3
+						ELSE
+							PRINT_BIG ANR_19 2000 1
+						ENDIF
 
 						SR_targets_created[0] = 0
 						SR_targets_created[1] = 0
@@ -1375,10 +1384,6 @@ SR_mission:
 						SR_target_state[0] = 5
 						SR_target_state[1] = 0
 						SR_target_state[2] = 5
-						
-						CLEAR_PRINTS 
-						CLEAR_THIS_BIG_PRINT ANR_19
-						CLEAR_THIS_BIG_PRINT ANR_18
 
 				       PRINT_BIG ( RACE2 ) 1000 4 //"3"
 
@@ -1519,7 +1524,8 @@ SR_mission:
 			IF SR_flag = 2
 				IF NOT GET_FADING_STATUS
 					sr_time_check = TIMERA + 500
-					
+					SHOW_UPDATE_STATS TRUE
+
 					SR_flag = 3					
 				ENDIF
 			ENDIF

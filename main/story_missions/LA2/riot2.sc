@@ -3362,32 +3362,33 @@ WAIT 0
 				ENDIF
 			ENDIF
 		
+			IF timera > 15000
+			OR IS_CHAR_IN_AREA_2D scplayer 1893.6 -2043.3 1888.1 -2175.6 FALSE
+				r2_triggering_launcher_death = 1
+			ENDIF
 		ENDIF 
 			
 		IF r2_triggering_launcher_death = 1
-			IF timera > 15000
-			OR r2_triggering_launcher_death = 1
-			OR IS_CHAR_IN_AREA_2D scplayer 1893.6 -2043.3 1888.1 -2175.6 FALSE
-				// Behind us!
-				r2_speech_goals = 9
-				GENERATE_RANDOM_INT_IN_RANGE 0 3 r2_speech_control_flag
-				r2_random_last_label = r2_speech_control_flag + 1 
-				GOSUB r2_dialogue_setup 
-				
-				IF NOT IS_CHAR_DEAD r2_car_mechanics[0] 
-					REMOVE_BLIP r2_car_mechanics_blips[0] 
-					ADD_BLIP_FOR_CHAR r2_car_mechanics[0] r2_car_mechanics_blips[0]
-					CHANGE_BLIP_SCALE r2_car_mechanics_blips[0] 1
-				ENDIF 					
-				
-				IF NOT IS_CHAR_DEAD r2_car_mechanics[1] 
-					REMOVE_BLIP r2_car_mechanics_blips[1] 
-					ADD_BLIP_FOR_CHAR r2_car_mechanics[1] r2_car_mechanics_blips[1]
-					CHANGE_BLIP_SCALE r2_car_mechanics_blips[1] 1
-				ENDIF
-									
-				r2_triggering_launcher_death = 2
+			
+			// Behind us!
+			r2_speech_goals = 9
+			GENERATE_RANDOM_INT_IN_RANGE 0 3 r2_speech_control_flag
+			r2_random_last_label = r2_speech_control_flag + 1 
+			GOSUB r2_dialogue_setup 
+			
+			IF NOT IS_CHAR_DEAD r2_car_mechanics[0] 
+				REMOVE_BLIP r2_car_mechanics_blips[0] 
+				ADD_BLIP_FOR_CHAR r2_car_mechanics[0] r2_car_mechanics_blips[0]
+				CHANGE_BLIP_SCALE r2_car_mechanics_blips[0] 1
+			ENDIF 					
+			
+			IF NOT IS_CHAR_DEAD r2_car_mechanics[1] 
+				REMOVE_BLIP r2_car_mechanics_blips[1] 
+				ADD_BLIP_FOR_CHAR r2_car_mechanics[1] r2_car_mechanics_blips[1]
+				CHANGE_BLIP_SCALE r2_car_mechanics_blips[1] 1
 			ENDIF
+			 					
+			r2_triggering_launcher_death = 2
 		ENDIF
 			
 		IF r2_triggering_launcher_death = 2 	
