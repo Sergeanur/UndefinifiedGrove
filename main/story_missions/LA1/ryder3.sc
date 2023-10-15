@@ -3498,6 +3498,7 @@ mission_ryder3_cleanup:
 	CLEAR_ONSCREEN_COUNTER throw_power_bar
 	CLEAR_ONSCREEN_TIMER box_timer
 
+	DETACH_CHAR_FROM_CAR ryder
 	DETACH_CHAR_FROM_CAR scplayer
 	SWITCH_RANDOM_TRAINS ON
 
