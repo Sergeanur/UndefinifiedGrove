@@ -2651,8 +2651,14 @@ SYN2_m_stage_6:
 	
 	ENDIF
 
+	LVAR_INT reset_timerb
+
 	IF m_goals > 2
 		IF IS_BUTTON_PRESSED PAD1 CROSS
+			IF reset_timerb = 0
+				TIMERB = 0	
+				reset_timerb = 1
+			ENDIF
 			m_goals = 99
 		ENDIF
 	ENDIF
@@ -2689,7 +2695,7 @@ SYN2_m_stage_6:
 
 	// dialogue
 	IF m_goals >= 5
-		IF TIMERB > 1000
+		IF TIMERB > 2000
 			IF audio_line_is_active = 0
 				SWITCH dialogue_flag
 					CASE 0

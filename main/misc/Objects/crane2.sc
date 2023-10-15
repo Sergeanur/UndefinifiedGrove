@@ -644,6 +644,7 @@ crane2_script_loop:
 									player_is_in_crane = 0
 									remove_player_from_crane = 0
 									flag = 0
+									SET_OBJECT_VELOCITY magno_base 0.0 0.0 0.0
 
 								ENDIF
 							ENDIF

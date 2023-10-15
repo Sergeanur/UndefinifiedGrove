@@ -289,9 +289,26 @@ bball_loop:
 											CLEAR_HELP
 											m_stage += -1
 										ENDIF
+									ELSE
+										SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+										CLEAR_HELP
+										m_stage += -1
 									ENDIF
+								ELSE
+									SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+									CLEAR_HELP
+									m_stage += -1	
 								ENDIF
+							ELSE
+								SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+								CLEAR_HELP
+								m_stage += -1	
 							ENDIF
+						ELSE
+							SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+							MARK_OBJECT_AS_NO_LONGER_NEEDED m_ball
+							bball_active = 0
+							m_stage = 0	
 						ENDIF
 					ELSE	
 						SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
@@ -788,11 +805,6 @@ bball_cleanup_minigame:
 
 		////////////////////////////////////////////
 
-		SET_PLAYER_CYCLE_WEAPON_BUTTON player1 TRUE
-		CLEAR_CHAR_TASKS scplayer
-		SET_PLAYER_CONTROL player1 ON
-		SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
-
 		IF DOES_OBJECT_EXIST m_ball
 			IF IS_OBJECT_ATTACHED m_ball
 				DETACH_OBJECT m_ball 0.0 0.0 0.0 TRUE		
@@ -837,6 +849,11 @@ bball_cleanup_minigame:
 
 		SET_PED_DENSITY_MULTIPLIER 1.0
 		SET_CAR_DENSITY_MULTIPLIER 1.0
+
+		SET_PLAYER_CYCLE_WEAPON_BUTTON player1 TRUE
+		CLEAR_CHAR_TASKS scplayer
+		SET_PLAYER_ENTER_CAR_BUTTON player1 TRUE
+		SET_PLAYER_CONTROL player1 ON
 		
 		SET_MINIGAME_IN_PROGRESS FALSE
 		//terminate_script = 1

@@ -3008,7 +3008,7 @@ cutscene_6:
 //				CAMERA_PERSIST_TRACK TRUE                   
 //				CAMERA_PERSIST_POS TRUE
 
-		SET_CHAR_HEADING scplayer 180.0
+
 	   
 //		move_X = cam_end_x - cam_start_x
 //		move_y = cam_end_y - cam_start_y
@@ -3038,7 +3038,7 @@ cutscene_6:
 		move_y = y - 5.0
 
 
-		SET_FIXED_CAMERA_POSITION move_x move_y move_z 0.0 0.0 0.0
+//		SET_FIXED_CAMERA_POSITION move_x move_y move_z 0.0 0.0 0.0
 
 		move_X = point_end_x - point_start_x
 		move_y = point_end_y - point_start_y
@@ -3059,7 +3059,15 @@ cutscene_6:
 
 //		CAMERA_SET_VECTOR_MOVE move_x move_Y move_Z move_x move_Y point_end_Z 8070 TRUE
 //		CAMERA_SET_VECTOR_TRACK 560.3911 -1234.2836 17.4052 557.8772 -1234.4658 16.1925 2000 TRUE
-		POINT_CAMERA_AT_CHAR scplayer FIXED JUMP_CUT
+
+		ATTACH_CAMERA_TO_CHAR scplayer 0.0 5.0 1.5 0.0 -5.0 -1.5 0.0 JUMP_CUT
+
+//		POINT_CAMERA_AT_CHAR scplayer FIXED JUMP_CUT
+		d9_cut_flag = 1020
+	ENDIF
+
+	IF D9_CUT_FLAG = 1020
+		SET_CHAR_HEADING scplayer 180.0
 	ENDIF
 
 

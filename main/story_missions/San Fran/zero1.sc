@@ -119,6 +119,8 @@ LVAR_INT index_random_coord
 
 LVAR_INT transmitter1_health_zero1 transmitter2_health_zero1 transmitter3_health_zero1 transmitter4_health_zero1
 
+LVAR_INT weapontype_zero1 ammo_zero1 model_for_weapon_zero1
+
 
 VAR_INT transmitter_overallhealth
 VAR_INT mission_countdown_zero1 
@@ -396,6 +398,7 @@ mission_start_zero1:
 
    	CREATE_OBJECT minigun_base coord_rc_van_x coord_rc_van_y coord_rc_van_z object_turret_zero1
 	SET_OBJECT_COLLISION object_turret_zero1 FALSE
+	GET_CHAR_WEAPON_IN_SLOT scplayer 8 weapontype_zero1 ammo_zero1 model_for_weapon_zero1
 	SET_CURRENT_CHAR_WEAPON scplayer WEAPONTYPE_UNARMED
 
 
@@ -3194,6 +3197,9 @@ RETURN
 // *****************************
 
 mission_cleanup_zero1:
+
+	IF NOT HAS_DEATHARREST_BEEN_EXECUTED
+	ENDIF 
 
 
   	DETACH_CHAR_FROM_CAR scplayer

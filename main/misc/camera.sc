@@ -548,12 +548,13 @@ Camera_CleanUp:
 		ENDIF
 	ENDIF
 
+/*	This was marking Catalina as no longer needed if the player lost the camera during one of her missions.
 //	The gang members are never marked as mission peds by the camera script anyway so the following lines aren't needed.
 	REPEAT MAX_GANG_IN_PHOTO iTemp		
 		GET_GROUP_MEMBER players_group iTemp iGangGuy
 		MARK_CHAR_AS_NO_LONGER_NEEDED iGangGuy
 	ENDREPEAT
-
+*/	
 	SET_PHOTO_CAMERA_EFFECT	FALSE
 
 	MARK_MODEL_AS_NO_LONGER_NEEDED CAMERA
